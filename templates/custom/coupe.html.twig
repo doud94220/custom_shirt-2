@@ -1,0 +1,29 @@
+{% extends "layout.html.twig" %} 
+{% block title 'Customisation' %}
+    
+
+{% block content %}
+    <h1> Choix de votre coupe </h1>
+    <form method="post">
+        <div class="form-group">
+           <table class="table">
+               <tr>
+                   <th>Coupe</th>
+                   <th>Description</th>
+                   <th>Photo</th>
+                   <th width="200px"></th>
+               </tr>
+            {% for coupe in coupes %}
+               <tr>
+                   <td>{{ coupe.titre }} </td>
+                   <td>{{ coupe.description }} </td>
+                   <td><img src="{{ coupe.photo }}" alt="" width="200" class="select_img" data-id="{{ coupe.id_coupe }}"/> </td>
+               </tr>
+            {% endfor %}   
+           </table>
+        </div>
+        <button type="submit" class="btn btn-primary" > Validation du formulaire </button>
+        <input type="hidden" name="custom_product" id="custom_product">        
+    </form>
+
+{% endblock %}

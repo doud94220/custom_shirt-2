@@ -1,0 +1,76 @@
+{% extends "layout.html.twig" %}
+
+{% block title 'Inscription' %}
+
+
+{% block content %}
+    <h1>Inscription</h1>
+    <div class="container">
+    <row class="col-xl-12">
+    <form method="post">
+        <div class="form-group">
+            <label for="prenom" class="form-control">Prénom</label>
+            <input type="text" name="prenom" class="form-control" id="prenom" value={{ user.prenom }}>
+        </div>
+
+        <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" name="nom" class="form-control" id="nom" value={{ user.nom }}>
+        </div>
+
+        <div class="form-group">
+            <label for="date_naissance">Date de naissance</label>
+            <input type="date" name="date_naissance" class="form-control" id="date_naissance" value={{ user.date_naissance }}>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Courriel</label>
+            <input type="email" name="email" class="form-control" id="email" value={{ user.email }}>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" class="form-control" id="password" value={{ user.password }}>
+        </div>
+
+        <div class="form-group">
+            <label for="adresse">Adresse</label>
+            <input type="text" name="adresse" class="form-control" id="adresse" value={{ user.adresse }}>
+        </div>
+
+        <div class="form-group">
+            <label for="complement_adresse">Complément d'adresse</label>
+            <input type="text" name="complement_adresse" class="form-control" id="complement_adresse" value={{ user.complement_adresse }}>
+        </div>
+
+        <div class="form-group">
+            <label for="code_postal">Code postal</label>
+            <input type="number" name="code_postal" class="form-control" id="code_postal" value={{ user.code_postal }}>
+        </div>
+
+        <div class="form-group">
+            <label for="ville">Ville</label>
+            <input type="text" name="ville" class="form-control" id="ville" value={{ user.ville }}>
+        </div>
+
+        <div class="form-group">
+            <label for="tel">Téléphone</label>
+            <input type="text" name="tel" class="form-control" id="tel" value={{ user.tel }}>
+        </div>
+
+
+        <div class="form-group">
+            <label for="">Sexe</label>
+            <select name="depart" id="depart">
+                                <option value="masculin">Masculin</option>
+                <option value="feminin">Féminin</option>
+                            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" Value="Envoi">
+            Enregistrer
+        </button>
+    </form>
+    </row>
+    </div>
+{% endblock %}

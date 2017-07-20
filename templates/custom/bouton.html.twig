@@ -1,0 +1,30 @@
+{% extends "layout.html.twig" %} 
+{% block title 'Customisation' %}
+    
+
+{% block content %}
+    <h1> Choix de vos boutons </h1>
+    <form name="choix_tissu" method="post">
+        <div class="form-group">
+           <table class="table">
+               <tr>
+                   <th>Titre</th>
+                   <th>Description</th>
+                   <th>Photo</th>
+                   <th>Prix</th> 
+                   <th width="200px"></th>
+               </tr>
+            {% for bouton in boutons %}
+               <tr>
+                   <td>{{ bouton.titre }} </td>
+                   <td>{{ bouton.description }} </td>
+                   <td><img src="{{ bouton.photo }}" alt="" width="200" class="select_img" data-id="{{ bouton.id_bouton }}"/> </td>
+                   <td>{{ bouton.prix }} € </td>                   
+               </tr>
+            {% endfor %}   
+           </table>
+        <button type="submit" class="btn btn-primary" > Etape suivante </button>
+        <input type="hidden" name="custom_product" id="custom_product">
+    </form>
+
+{% endblock %}

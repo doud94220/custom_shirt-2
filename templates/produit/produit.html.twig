@@ -1,0 +1,37 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-6">
+                <img class="img_template" src="{{ 'http://localhost/test/img/' ~ produits.photo }}" alt="chemise">
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-12 description title">
+                        <h1 id="{{ produits.id }}">{{ produits.titre }}</h1>
+                        <h4>{{ produits.prix ~ '€'}} </h4>
+                    </div>
+                    <div class="col-sm-12 description desc">
+                        <p>{{ produits.description }}</p>
+                    </div>
+                    <div class="col-sm-12 button">
+                        <button class="btn btn-default ajout_panier">Ajouter au panier</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script>
+            var ajaxApiUrlPanier = "{{ path('ajax_api_panier') }}";
+        </script>
+        <script src="{{ asset('script/script.js') }}"></script>
+    {% endblock %}
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "layout.html.twig" %}
+
+{% block title 'Gestion commandes' %}
+    
+{% block content %}
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>Prix livraison</th>
+            <th>Total</th>
+            <th>Date commande</th>
+            <th>Etat</th>
+            <th width="200px">Actions</th>
+        </tr>
+        {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id_commande }}</td>
+                <td>{{ commande.prix_livraison }}</td>
+                <td>{{ commande.total }}</td>
+                <td>{{ commande.date_commande|date('d/m/Y') }}</td>
+                <td>
+                    <form method="post">
+                        <select name="etat" class="form-control">
+                            <option value="en préparation" {% if commande.etat == 'en préparation' %}selected{% endif %}>En préparation</option>
+                            <option value="expédié" {% if commande.etat == 'expédié' %}selected{% endif %}>Expédié</option>
+                            <option value="en livraison" {% if commande.etat == 'en livraison' %}selected{% endif %}>En livraison</option>
+                            <option value="livré" {% if commande.etat == 'livré' %}selected{% endif %}>Livré</option>
+                            <option value="retour" {% if commande.etat == 'retour' %}selected{% endif %}>Retour</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">
+                            Enregistrer
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    {#<a href ="{{ path('admin_edit_commande', {id: commande.id_commande}) }}" class="btn btn-primary">Enregistrer</a>
+                    <a href ="{{ path('admin_show_details', {id:commande.id_commande}) }} " class="btn btn-primary">Afficher les détails de la commande</a>#}
+                    <a href ="{{ path('admin_delete_commande', {id: commande.id_commande}) }}" class="btn btn-danger">Supprimer la commande</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <table class="table">
+
+    </table>
+{% endblock %}

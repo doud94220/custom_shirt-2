@@ -1,0 +1,66 @@
+{% extends "layout.html.twig" %}
+
+{% block title 'Inscription' %}
+
+{% block content %}
+    <div class="container">
+        <h1>Inscription</h1>
+        <form method="post">
+            <div class="form-group">
+                <label>Nom</label>
+                <input type="text" name="nom" value="{{ user.nom }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Prénom</label>
+                <input type="text" name="prenom" value="{{ user.prenom }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Date de naissance</label>
+                <input type="date" name="date_naissance" value="{% if user.date_naissance is not null %}{{ user.date_naissance|date('d/m/Y') }}{% endif %}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" name="email" value="{{ user.email }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Mot de passe</label>
+                <input type="password" name="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Confirmation du mot de passe</label>
+                <input type="password" name="password_confirm" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Adresse</label>
+                <input type="text" name="adresse" value="{{ user.adresse }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Complément d'adresse</label>
+                <input type="text" name="complement_adresse" value="{{ user.complement_adresse }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Code postal</label>
+                <input type="number" name="code_postal" value="{{ user.code_postal }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Ville</label>
+                <input type="text" name="ville" value="{{ user.ville }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Téléphone</label>
+                <input type="text" name="tel" value="{{ user.tel }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Sexe</label>
+                <select name='sexe'>
+                    <option value=''>Quel est votre sexe ?</option>
+                    <option value='m'>Homme</option>
+                    <option value='f'>Femme</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                Enregistrer
+            </button>
+        </form>
+    </div>
+{% endblock %}

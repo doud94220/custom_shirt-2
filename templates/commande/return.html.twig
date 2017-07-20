@@ -1,0 +1,35 @@
+{% extends 'layout.html.twig' %}
+
+{% block title 'Retour commande' %}
+      
+{% block content %}
+    <h1>Retour commande</h1>
+    <br>
+    <a href="{{ path('profile', {user:user_manager.user}) }}" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Retourner sur la page 'Mon compte'</a>
+    <br>
+    <br>
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>Prix livraison</th>
+            <th>Total</th>
+            <th>Date commande</th>
+            <th>Etat</th>
+            <th width="200px">Action</th>
+        </tr>
+        <tr>
+            <td>{{ commande.id_commande }}</td>
+            <td>{{ commande.prix_livraison }}</td>
+            <td>{{ commande.total }}</td>
+            <td>{{ commande.date_commande|date('d/m/Y') }}</td>
+            <td>{{ commande.etat }}</td>
+            <td>
+                <a href ="" class="btn btn-primary"><span class="glyphicon glyphicon-print"></span> Imprimer le bordereau de retour</a>
+            </td>
+        </tr>
+    </table>
+
+    <table class="table">
+
+    </table>
+{% endblock %}

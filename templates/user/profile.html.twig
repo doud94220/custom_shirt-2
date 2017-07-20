@@ -1,0 +1,83 @@
+{% extends "layout.html.twig" %}
+
+{% block title 'Mon compte' %}
+
+{% block content %}
+    {% block commandes %}
+        <div class="container">
+            <h1>Mon compte</h1>
+            <h2>Mes informations</h2>
+            <table class="table">
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Date de naissance</th>
+                    <th>Email</th>
+                    <th>Téléphone</th>
+                    <th>Adresse</th>
+                    <th>Complément d'adresse</th>
+                    <th>Code postal</th>
+                    <th>Ville</th>
+                    <th>Sexe</th>
+                    {% if user_manager.admin %}
+                        <th>Statut</th>
+                    {% endif %}
+                    <th width="200px">Actions</th>
+                </tr>
+                <tr>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{#{{ user.date_naissance|date('d/m/Y') }}#}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.tel }}</td>
+                    <td>{{ user.adresse }}</td>
+                    <td>{{ user.complement_adresse }}</td>
+                    <td>{{ user.code_postal }}</td>
+                    <td>{{ user.ville }}</td>
+                    <td>{{ user.sexe }}</td>
+                    {% if user_manager.admin %}
+                        <td>{{ user.statut }}</td>
+                    {% endif %}
+                    <td>
+                        {#<a href ="{{ path('edit_user', {id: user.id_user}) }}" class="btn btn-primary">Modifier mes informations de profil</a>
+                        <a href ="{{ path('delete_user', {id: user.id_user}) }}" class="btn btn-danger">Supprimer mon profil</a>#}
+                    </td>
+                </tr>
+                
+            </table>
+            
+            <br>        
+            <h2>Mes commandes</h2>
+            <table class="table">
+                <tr>
+                    <th>Id</th>
+                    <th>Prix livraison</th>
+                    <th>Total</th>
+                    <th>Date commande</th>
+                    <th>Etat</th>
+                    <th width="200px">Action</th>
+                </tr>
+                {% for commande in commandes %}
+                    <tr>
+                        <td>{{ commande.id_commande }}</td>
+                        <td>{{ commande.prix_livraison }}</td>
+                        <td>{{ commande.total }}</td>
+                        <td>{{ commande.date_commande|date('d/m/Y') }}</td>
+                        <td>{{ commande.etat }}</td>
+                        <td>
+                            {% if commande.etat != 'livré' %}
+                                <a href ="{#{{ path('suivi_commande', {id: commande.id_commande}) }}#}https://www.laposte.fr/particulier/outils/suivre-vos-envois" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-right"></span> Suivre ma commande</a>
+                            {% endif %}
+                            {% if commande.etat == 'en préparation' or commande.etat == 'expédié' or commande.etat == 'en livraison' %}
+                                <a href ="{{ path('delete_commande', {id: commande.id_commande}) }}" class="btn btn-danger"><span class="glyphicon glyphicon-trash" ></span> Annuler ma commande</a>
+                            {% elseif commande.etat == 'livré' %}
+                                <a href ="{{ path('return_commande', {id: commande.id_commande}) }}" class="btn btn-warning"><span class="glyphicon glyphicon-remove-sign"></span> Retourner ma commande</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                
+            </table>
+        </div>
+    {% endblock %}
+{% endblock %}

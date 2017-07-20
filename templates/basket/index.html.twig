@@ -1,0 +1,81 @@
+{% extends "layout.html.twig" %}
+
+
+{#
+    Faudra ajouter plus tard :
+    - affectation productOrConfig en config ou produit
+    - lien au click sur produit pour avoir tous les details
+#}
+
+
+{% block content %}
+
+    {% if basket is not empty %} {# Si panier passé en paramètre n'est pas null #}
+    
+        <!-- CSS TEMPORAIRE EN DUR pour tableau ci-dessous -->
+        <style>
+                table, td
+                {
+                        border:solid 1px black;
+                        background: grey;
+                }
+                td
+                {
+                        background: #BBDEFB; /* bleu clair */
+                }
+        </style>
+
+        <h2>Voici votre panier :</h2><br><br>
+
+        <table>  
+            <tr>
+                <th>Titre</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th colspan="2">Modifier la quantité</th>
+                <th>Retirer le produit du panier</th>
+             </tr>
+         
+            {% for productOrConfig in basket %} {# On boucle sur le tableau 'basket' qui contient des produits et des configs #}
+
+                {# Le if else va p'etre etre retiré (si mêmes champs pour config et produit) #}
+
+                {% if productOrConfig.id_config is defined %} {# Si on est dans le cas d'une config => cad une chemise en demi-mesure #}
+
+                    <tr>
+                        <td>Chemise Custom</td> {# TITRE EN DUR #}
+                        <td>{{ productOrConfig.prix }}</td>
+                        <td>{{ productOrConfig.quantite }}</td>  
+                        <td><a href={{ path('basket_increment', {idProduitEnSession: loop.index0}) }}> + </a></td> {# loop.index0 permet de commencer à numéroter à 0 et non 1 #}
+                        <td><a href={{ path('basket_decrement', {idProduitEnSession: loop.index0}) }}> - </a></td>
+                        <td><a href={{ path('basket_delete', {idProduitEnSession: loop.index0}) }}> Retirer le produit </a></td>
+                    </tr> 
+
+                {% else %} {# Si on est dans le cas d'un produit => prêt à porter #}
+
+                    <tr>
+                        <td>{{ productOrConfig.titre }}</td>
+                        <td>{{ productOrConfig.prix }}</td>
+                        <td>{{ productOrConfig.quantite }}</td>
+                        <td><a href={{ path('basket_increment', {idProduitEnSession: loop.index0}) }}> + </a></td> {# loop.index0 permet de commencer à numéroter à 0 et non 1 #}
+                        <td><a href={{ path('basket_decrement', {idProduitEnSession: loop.index0}) }}> - </a></td>
+                        <td><a href={{ path('basket_delete', {idProduitEnSession: loop.index0}) }}> Retirer le produit </a></td>
+                    </tr>
+
+                {% endif %}
+
+            {% endfor %}
+    
+        </table><br><br>
+        
+        {# Lien vers le paiement #}
+        <hr>
+        <a href="urlPageJulien">Passer au paiement</a><br><br><br>
+
+    {% else %} {# Si panier vide #}
+        
+        <h2>Votre panier est vide !</h2><br><br>
+        
+    {% endif %}
+ 
+{% endblock %}
