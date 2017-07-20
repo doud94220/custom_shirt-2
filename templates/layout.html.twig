@@ -31,6 +31,9 @@
             
             <!-- Css créé nous mêmes -->
             <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" />
+            
+            <!-- Pour les icones fontawsome -->
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         {% endblock %}
         
     </head>
@@ -67,6 +70,11 @@
                     <ul class="nav navbar-nav navbar-right">
                         {# voir l'ajout de la globale user_manager dans twig dans src/app.php #}
                         {% if user_manager.user %}
+                            <li>
+
+                                <a href="{{ path('basket_consult') }}"><span class="glyphicon glyphicon-shopping-cart fa-2x"></span></a>
+
+                            </li>
                             <li>
 
                                 <a href="{{ path('profile', {user:user_manager.user}) }}"><span class="glyphicon glyphicon-user"></span> {{ user_manager.userName }}</a>
