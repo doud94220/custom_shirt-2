@@ -13,15 +13,23 @@
     {% if basket is not empty %} {# Si panier passé en paramètre n'est pas null #}
     
         <!-- CSS TEMPORAIRE EN DUR pour tableau ci-dessous -->
-        <style>
-                table, td
+        <style>      
+                table, td, th
                 {
-                        border:solid 1px black;
-                        background: grey;
+                    border:solid 1px black;
+                    text-align:center;
                 }
+                
+                th
+                {
+                    background: grey;
+                    padding : 5px;
+                }
+                
                 td
                 {
-                        background: #BBDEFB; /* bleu clair */
+                    background: #BBDEFB; /* bleu clair */
+                    padding : 5px;
                 }
         </style>
 
@@ -43,22 +51,22 @@
                 {% if productOrConfig.id_config is defined %} {# Si on est dans le cas d'une config => cad une chemise en demi-mesure #}
 
                     <tr>
-                        <td>Chemise Custom</td> {# TITRE EN DUR #}
-                        <td>{{ productOrConfig.prix }}</td>
+                        <td><strong>Chemise Custom</strong></td> {# TITRE EN DUR #}
+                        <td>{{ productOrConfig.prix }} €</td>
                         <td>{{ productOrConfig.quantite }}</td>  
-                        <td><a href={{ path('basket_increment', {idProduitEnSession: loop.index0}) }}> + </a></td> {# loop.index0 permet de commencer à numéroter à 0 et non 1 #}
-                        <td><a href={{ path('basket_decrement', {idProduitEnSession: loop.index0}) }}> - </a></td>
+                        <td><a href={{ path('basket_increment', {idProduitEnSession: loop.index0}) }}><strong> + </strong></a></td> {# loop.index0 permet de commencer à numéroter à 0 et non 1 #}
+                        <td><a href={{ path('basket_decrement', {idProduitEnSession: loop.index0}) }}><strong> - </strong></a></td>
                         <td><a href={{ path('basket_delete', {idProduitEnSession: loop.index0}) }}> Retirer le produit </a></td>
                     </tr> 
 
                 {% else %} {# Si on est dans le cas d'un produit => prêt à porter #}
 
                     <tr>
-                        <td>{{ productOrConfig.titre }}</td>
-                        <td>{{ productOrConfig.prix }}</td>
+                        <td><strong> {{ productOrConfig.titre }} </strong></td>
+                        <td>{{ productOrConfig.prix }} €</td>
                         <td>{{ productOrConfig.quantite }}</td>
-                        <td><a href={{ path('basket_increment', {idProduitEnSession: loop.index0}) }}> + </a></td> {# loop.index0 permet de commencer à numéroter à 0 et non 1 #}
-                        <td><a href={{ path('basket_decrement', {idProduitEnSession: loop.index0}) }}> - </a></td>
+                        <td><a href={{ path('basket_increment', {idProduitEnSession: loop.index0}) }}><strong> + </strong></a></td> {# loop.index0 permet de commencer à numéroter à 0 et non 1 #}
+                        <td><a href={{ path('basket_decrement', {idProduitEnSession: loop.index0}) }}><strong> - </strong></a></td>
                         <td><a href={{ path('basket_delete', {idProduitEnSession: loop.index0}) }}> Retirer le produit </a></td>
                     </tr>
 

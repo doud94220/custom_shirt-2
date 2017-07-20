@@ -10,6 +10,12 @@ use Entity\Basket;
 use Entity\Produit;
 use Entity\Custom;
 
+//Pour test mail
+use Silex\Provider\SwiftmailerServiceProvider;
+use Swift_SmtpTransport;
+use Swift_Mailer;
+use Swift_Message;
+
 class BasketController extends ControllerAbstract
 {
     /*
@@ -81,6 +87,29 @@ class BasketController extends ControllerAbstract
         $productsAndConfigs = $this->app['basket.manager']->readBasket(); //auto-completion marche pas mais normal
         //echo '<pre>'; print_r($productsAndConfigs); echo '</pre><br><br>';
         
+        
+        ///////////////// TEMPORAIRE /////////////////
+        ////////////  TEST DU MAIL////////////
+        // Create the Transport
+        $transport = (new Swift_SmtpTransport('smtp.gmail.com', 587))
+        ->setUsername('doud')
+        ->setPassword('doud')
+        ->setEncryption(null)
+        ->start()
+       ;
+       // Create the Mailer using your created Transport
+       $mailer = new Swift_Mailer($transport);
+       // Create a message
+       $message = (new Swift_Message('Objet du mail de doud'))
+         ->setFrom(['doud75@gmail.com' => 'Doud75'])
+         ->setTo(['edouard.anthony@gmail.com' => 'Mr ANTHONY'])
+         ->setBody('Contenu de mon premier mail via Swiftmailer')
+         ;
+       // Send the message
+       $result = $mailer->send($message);
+        
+        
+       
         //Render vers la vue "basket"
         return $this->render(
                                 'basket/index.html.twig',
