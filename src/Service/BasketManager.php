@@ -33,21 +33,19 @@ class BasketManager
            $basket = new Basket();
            
            //Y placer un tableau de produit(s) et config(s)
-
-
            $productsAndConfigs = [];
-           $basket = $productsAndConfigs;
+           $this->session->set('basket', $productsAndConfigs);
         }
         else //Si y'a un panier
         {
-           $productsAndConfigs[] = $this->session->get('basket'); //Je recup la value correspondant à la key 'basket'
+           $productsAndConfigs = $this->session->get('basket'); //Je recup la value correspondant à la key 'basket'
         }
         
         //Ajouter le produit (en arg de la focntion) dans le $productsAndConfigs[] du panier
-        $productsAndConfigs[] = $produit;
+        array_push($productsAndConfigs, $produit);
         
         //Maj panier en session
-        $this->session->set('basket', $productsAndConfigs[]);
+        $this->session->set('basket', $productsAndConfigs);
         
     }//Fin putProductToBasket()
   

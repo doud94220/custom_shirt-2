@@ -27,6 +27,7 @@ $(function() {
 
     $('.ajout_panier').click(function (e) {
         e.preventDefault();
+        console.log($(".title h1").attr('id'));
         $.ajax({
             url: ajaxApiUrlPanier,
             method: "POST",
@@ -37,6 +38,11 @@ $(function() {
 
             .done(function (data) {
                 console.log('ok');
+
+            })
+            
+            .fail(function (data) {
+                console.log('KO l ajout au panier...');
 
             })
 

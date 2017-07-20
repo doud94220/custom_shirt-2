@@ -8,6 +8,8 @@
 
 namespace Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\BrowserKit\Response;
 
 /**
  * Class IndexController
@@ -97,6 +99,7 @@ class ProduitController extends ControllerAbstract
     {
         $produit = $this->app['produit.repository']->findById($_POST['id']);
         $this->app['basket.manager']->putProductToBasket($produit);
+        //return new Response('Ok');
     }
 
 }
