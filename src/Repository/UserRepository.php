@@ -12,10 +12,11 @@ class UserRepository extends RepositoryAbstract
     }
     
     public function save(User $user){
+
         $data = [
             'prenom' => $user->getPrenom(),
             'nom' => $user->getNom(),
-            'date_naissance'=> $user->getDate_naissance()->format('d-m-Y'),
+            'date_naissance'=> $user->getDate_naissance()->format('Y-m-d'),
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'adresse' => $user->getAdresse(),
@@ -28,7 +29,7 @@ class UserRepository extends RepositoryAbstract
         ];
         
         $where = !empty($user->getId_user())
-            ? ['id' => $user->getId_user()]
+            ? ['id_user' => $user->getId_user()]
             : null
         ;
         
