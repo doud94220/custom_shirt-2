@@ -96,4 +96,25 @@ class UserRepository extends RepositoryAbstract
         
         return $user;
     }
+
+    public function findAllUsers(){
+        $query = <<<EOS
+SELECT *
+FROM user
+ORDER BY nom DESC
+EOS;
+
+        $dbAllUsers = $this->db->fetchAll($query);
+        $users = [];
+
+        foreach($dbAllUsers as $key){
+            $user = $this->buildFromArray($key);
+
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
+
 }

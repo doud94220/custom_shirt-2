@@ -140,16 +140,19 @@ $app
 ;
 
 
+
+
+
 /********************* ADMIN **************************/
 // crée un groupe de routes pour la partie admin
 $admin = $app['controllers_factory'];
 
 //protection de l'accès au backoffice
-$admin->before(function () use ($app){
+/*$admin->before(function () use ($app){
     if(!$app['user.manager']->isAdmin()){
         $app->abort(403, 'Accès refusé');
     }
-});
+});*/
 
 
 // toutes les routes définies dans le groupe admin
@@ -177,6 +180,17 @@ $admin
     ->get('/commande/details{id_commande}', 'admin.details_commande.controller:listAction')
     ->bind('admin_details_commande')
 ;
+
+
+//-------------------------------------Gestion des utilisateurs
+
+$admin
+    ->match('/user/panel', 'user.controller:showAllUsers')
+    ->bind('admin_panel')
+
+;
+
+
 
 //-------------------------------------------------------------------------//
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {

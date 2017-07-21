@@ -1,15 +1,16 @@
 {% extends "layout.html.twig" %}
 
-{% block title 'Modification de votre profil' %}
+{% block title "Modification de votre profil" %}
 
 
 {% block content %}
-    <h1>Inscription</h1>
+    <h1>Modification de votre profil</h1>
     <div class="container">
-    <row class="col-xl-12">
+    <div class="row">
+        <div class="col-xl-12 col-sm-12 col-xs-12">
     <form method="post">
         <div class="form-group">
-            <label for="prenom" class="form-control">Prénom</label>
+            <label for="prenom">Prénom</label>
             <input type="text" name="prenom" class="form-control" id="prenom" value={{ user.prenom }}>
         </div>
 
@@ -71,6 +72,7 @@
             Enregistrer
         </button>
     </form>
-    </row>
+            </div>
+    </div>
     </div>
 {% endblock %}

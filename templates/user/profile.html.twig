@@ -5,9 +5,11 @@
 {% block content %}
     {% block commandes %}
         <div class="container">
+
             <h1>Mon compte</h1>
             <h2>Mes informations</h2>
             <table class="table">
+
                 <tr>
                     <th>Nom</th>
                     <th>Prénom</th>
@@ -27,7 +29,7 @@
                 <tr>
                     <td>{{ user.nom }}</td>
                     <td>{{ user.prenom }}</td>
-                    <td>{#{{ user.date_naissance|date('d/m/Y') }}#}</td>
+                    <td>{{ user.date_naissance|date('d/m/Y') }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.tel }}</td>
                     <td>{{ user.adresse }}</td>
@@ -35,6 +37,7 @@
                     <td>{{ user.code_postal }}</td>
                     <td>{{ user.ville }}</td>
                     <td>{{ user.sexe }}</td>
+                    <td><a href="{{ path('profile_edit') }}"><span class="glyphicon glyphicon-pencil"></span> Modifier mes infos</a></td>
                     {% if user_manager.admin %}
                         <td>{{ user.statut }}</td>
                     {% endif %}
@@ -78,6 +81,8 @@
                 {% endfor %}
                 
             </table>
+                </div>
+            </div>
         </div>
     {% endblock %}
 {% endblock %}

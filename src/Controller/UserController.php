@@ -217,5 +217,44 @@ class UserController extends ControllerAbstract
                 'commandes' => $commandes
                 ] 
         );
+
     }
+
+
+
+    public function showAllUsers()
+    {
+
+        $users = $this->app['user.repository']->findAllUsers();
+
+        return $this->render(
+            'admin/user/panel.html.twig',
+            ['user' => $users]
+
+        );
+
+
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

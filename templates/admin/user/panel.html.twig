@@ -1,0 +1,60 @@
+{% extends "layout.html.twig" %}
+
+{% block title 'Admin - gestion de produit' %}
+
+{% block content %}
+
+
+    {#CREATION DE LA LIGNE DE PRESENTATION - Génération de la ligne titre contenant les champs-titres de la table users#}
+    <table style='border: 1px black solid';>
+   <th style='border: 1px black solid';>
+
+        </th>
+{# Création de la ligne de présentation (champs)#}
+
+
+        </table>
+
+
+
+    <div class="container">
+
+    <h1>Mon compte</h1>
+    <h2>Mes informations</h2>
+    <table class="table">
+
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de naissance</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Adresse</th>
+            <th>Complément d'adresse</th>
+            <th>Code postal</th>
+            <th>Ville</th>
+            <th>Sexe</th>
+            {% if user_manager.admin %}
+                <th>Statut</th>
+            {% endif %}
+            <th width="200px">Actions</th>
+        </tr>
+
+
+        {#{% for detail_commandes in key %}
+        <tr>
+    <th style='border: 1px black solid';>
+     $key;
+    </th>;
+        </tr>*/#}
+
+
+    </table>
+
+
+
+
+
+
+
+{% endblock %}
