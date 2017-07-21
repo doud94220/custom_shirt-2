@@ -49,6 +49,7 @@
             <br>        
             <h2>Mes commandes</h2>
             <table class="table">
+                <caption>Commandes</caption>
                 <tr>
                     <th>Id</th>
                     <th>Prix livraison</th>
@@ -75,8 +76,24 @@
                             {% endif %}
                         </td>
                     </tr>
+                   {# <caption>Détail commande n°{{ commande.id_commande }}</caption>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Quantité</th>
+                        <th>Prix</th>
+                    </tr>
+                    {% for detail_commande in detail_commandes %}  
+                        <tr>
+                        {% if {{ detail_commande.produit_id }} not null %}
+                            <td>{{ produit.titre }}</td>
+                        {% else %}
+                            <td>{{ custom.titre_custom }}</td>
+                        {% endif %}
+                            <td>{{ detail_commande.quantite }}</td>
+                            <td>{{ detail_commande.prix }}</td>
+                        </tr>
+                    {% endfor %}#}
                 {% endfor %}
-                
             </table>
         </div>
     {% endblock %}

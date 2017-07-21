@@ -146,11 +146,15 @@ class UserController extends ControllerAbstract
         $commandes = $this->app['commande.repository']->findAllByUser($user);
         
         return $this->render(
-            'user/profile.html.twig',
-            [
-                'user' => $user,
-                'commandes' => $commandes
-                ] 
+        'user/profile.html.twig',
+        [
+            'user' => $user,
+            'commandes' => $commandes
+        ]        
         );
+        
+//        if(empty($commandes)){
+//            $this->addFlashMessage("Vous n'avez pas de commande", 'warning');
+//        }
     }
 }

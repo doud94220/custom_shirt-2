@@ -5,7 +5,7 @@ use Entity\Commande;
 use Repository\CommandeRepository;
 /**
  * Description of CommandeController
- *
+ * controlleur de l'entité Commande côté front
  * @author Julien
  */
 class CommandeController extends ControllerAbstract
@@ -17,13 +17,7 @@ class CommandeController extends ControllerAbstract
     public function showAction(){
         $user = $this->app['user.manager']->getUser();
         $commandes = $this->app['commande.repository']->findAllByUser($user);
-        var_dump($commandes);
-        if(is_null($commandes)){
-            return $this->render('');
-        }
-        else{
-            
-        }
+        
         return $this->render(
             'user/profile.html.twig',
             ['commandes' => $commandes]

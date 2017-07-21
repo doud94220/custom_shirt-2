@@ -5,8 +5,8 @@ namespace Entity;
 class Custom 
 {
 
-    private $id_config;
-    
+    private $id_custom;
+    private $titre_custom;
     private $tissu_id;
     private $button_id;
     private $col;
@@ -16,8 +16,8 @@ class Custom
     
     /**********GETTERS****************/
     
-    function getId_config() {
-        return $this->id_config;
+    function getId_custom() {
+        return $this->id_custom;
     }
 
     function getTissu_id() {
@@ -43,11 +43,15 @@ class Custom
     public function getQuantite() {
         return $this->quantite;
     }
+    
+    public function getTitre_custom() {
+        return $this->titre_custom;
+    }
 
         /**********SETTERS****************/
     
-    function setId_config($id_config) {
-        $this->id_config = $id_config;
+    function setId_custom($id_custom) {
+        $this->id_custom = $id_custom;
     }
 
     function setTissu_id($tissu_id) {
@@ -73,5 +77,12 @@ class Custom
     public function setQuantite($quantite) {
         $this->quantite = $quantite;
     }
+
+    public function setTitre_custom($titre_custom) {
+        $this->titre_custom = 'Chemise sur mesure '.$this->coupe;
+        return $this;
+    }
+
+
 }
 

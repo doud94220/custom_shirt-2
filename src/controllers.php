@@ -159,12 +159,12 @@ $app->mount('/admin', $admin);
 
 // gestion des commandes -------------------------------------- 
 $admin
-    ->get('/commandes', 'admin.commande.controller:listAction')
+    ->match('/commandes', 'admin.commande.controller:listAction')
     ->bind('admin_commandes')
 ;
 
 $admin
-    ->match('/commande/edit/{id}', 'admin.commande.controller:editAction')
+    ->post('/commande/edit/{id}', 'admin.commande.controller:editAction')
     ->bind('admin_edit_commande')
 ;
 
@@ -174,8 +174,8 @@ $admin
 ;
 
 $admin
-    ->get('/commande/details{id_commande}', 'admin.details_commande.controller:listAction')
-    ->bind('admin_details_commande')
+    ->get('/commande/details/{id_commande}', 'admin.commande.controller:detailsByCommande')
+    ->bind('admin_detail_commande')
 ;
 
 //-------------------------------------------------------------------------//

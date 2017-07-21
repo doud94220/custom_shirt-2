@@ -1,5 +1,6 @@
 <?php
 
+use Controller\Admin\DetailCommandeController as AdminDetailCommandeController;
 use Controller\Admin\CommandeController as AdminCommandeController;
 use Controller\BasketController;
 use Controller\CommandeController;
@@ -147,7 +148,12 @@ $app['detail.commande.controller'] = function () use ($app){
 /* ADMIN */
 $app['admin.commande.controller'] = function () use ($app)
 {
-    return new CommandeController($app);
+    return new AdminCommandeController($app);
+};
+
+$app['admin.detail_commande.controller'] = function () use ($app)
+{
+    return new AdminDetailCommandeController($app);
 };
 
 $app['custom.controller'] = function() use ($app)

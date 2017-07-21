@@ -1,0 +1,50 @@
+{% extends "layout.html.twig" %}
+
+{% block title 'Détails commande' %}
+
+{% block content %}
+    <h1>Détails</h1>
+    <br>
+    <a href="{{ path('admin_commandes') }}" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Retourner sur la page 'Gestion commandes'</a>
+    <br>
+    <br>
+    <table class="table">
+        <caption>Commande n°{{ commande.id_commande }}</caption>
+        <tr>
+            <th>Id</th>
+            <th>Prix livraison</th>
+            <th>Total</th>
+            <th>Date commande</th>
+            <th>Etat</th>
+        </tr>
+        <tr>
+            <td>{{ commande.id_commande }}</td>
+            <td>{{ commande.prix_livraison }}</td>
+            <td>{{ commande.total }}</td>
+            <td>{{ commande.date_commande|date('d/m/Y') }}</td>
+            <td>{{ commande.etat }}</td>
+        </tr>
+    </table>
+    <br>    
+    <hr>
+    <br>
+    <table class="table">
+        <caption>Détail de la commande n°{{ commande.id_commande }}</caption>
+        <tr>
+            <th>Titre</th>
+            <th>Quantité</th>
+            <th>Prix</th>
+        </tr>
+        {% for detail_commande in detail_commandes %}  
+            <tr>
+                {#{% if titre in detail_commande %}
+                    <td>{{ produit.titre }}</td>
+                {% else  %}
+                    <td> {{ custom.titre_custom }}</td>
+                {% endif %}#}<td></td>
+                <td>{{ detail_commande.quantite }}</td>
+                <td>{{ detail_commande.prix }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
