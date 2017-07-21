@@ -93,11 +93,6 @@ $app['produit.controller'] = function () use ($app) {
 
     return new ProduitController($app);
 };
-
-$app['basket.manager'] = function() use ($app)
-{
-   return new BasketManager($app['session']);
-};
             
 
 $app['index.controller'] = function () use ($app) {

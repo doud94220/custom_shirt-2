@@ -27,27 +27,11 @@ $(function() {
 
     $('.ajout_panier').click(function (e) {
         e.preventDefault();
-        console.log($(".title h1").attr('id'));
-        $.ajax({
-            url: ajaxApiUrlPanier,
-            method: "POST",
-            data: {
-                id: $(".title h1").attr('id')
-            }
-        })
 
-            .done(function (data) {
-                console.log('ok');
-
-            })
-            
-            .fail(function (data) {
-                console.log('KO l ajout au panier...');
-
-            })
+        // On met en localStorage une KEy='panier et une VALUE=id_produit
+        localStorage.setItem("panier",$(".title h1").attr('id'))
 
     });
-
 
 
 

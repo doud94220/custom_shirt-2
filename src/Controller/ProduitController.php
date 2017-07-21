@@ -10,6 +10,7 @@ namespace Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\BrowserKit\Response;
+use Service\BasketManager;
 
 /**
  * Class IndexController
@@ -95,11 +96,11 @@ class ProduitController extends ControllerAbstract
 
     }
 
-    public function ajaxApiPanier()
-    {
-        $produit = $this->app['produit.repository']->findById($_POST['id']);
-        $this->app['basket.manager']->putProductToBasket($produit);
-        //return new Response('Ok');
-    }
+//    public function ajaxApiPanier()
+//    {
+//        $produit = $this->app['produit.repository']->findById($_POST['id']);
+//        $this->app['basket.manager']->putProductToBasket($produit);
+//        die();
+//    }
 
 }

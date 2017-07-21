@@ -14,6 +14,19 @@ class Custom
     private $prix;
     private $quantite;
     
+    private $produitOrCustom; //booleen ///Rajoute par Edouard
+    
+    //Constructeur ///Rajoute par Edouard
+    public function __construct()
+    {
+        $this->setProduitOrCustom('custom');
+    }
+    
+    public function getProduitOrCustom() {
+        return $this->produitOrCustom;
+    }
+
+    
     /**********GETTERS****************/
     
     function getId_config() {
@@ -73,5 +86,8 @@ class Custom
     public function setQuantite($quantite) {
         $this->quantite = $quantite;
     }
+    
+     public function setProduitOrCustom($produitOrCustom) {
+        $this->produitOrCustom = $produitOrCustom;
+    }
 }
-

@@ -28,9 +28,9 @@
 
     {% block javascripts %}
         {{ parent() }}
-        <script>
+        {#<script>
             var ajaxApiUrlPanier = "{{ path('ajax_api_panier') }}";
-        </script>
+        </script>#}
         <script src="{{ asset('script/script.js') }}"></script>
     {% endblock %}
 

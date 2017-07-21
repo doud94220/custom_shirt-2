@@ -52,6 +52,24 @@ class Produit
     private $prix;
 
     private $quantite;
+    
+    private $produitOrCustom; //booleen ///Rajoute par Edouard
+    
+    //Constructeur ///Rajoute par Edouard
+    public function __construct()
+    {
+        $this->setProduitOrCustom('produit');
+    }
+
+    public function getProduitOrCustom()
+    {
+        return $this->produitOrCustom;
+    }
+
+    public function setProduitOrCustom($produitOuCustom)
+    {
+        $this->produitOrCustom = '$produit';
+    }
 
     /**
      * @return int

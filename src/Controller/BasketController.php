@@ -84,34 +84,33 @@ class BasketController extends ControllerAbstract
 //        }
         //Fin du focage en dur de la session
 
+         
+        //Je recupère le basket en localµStorage
+        //$productsAndConfigs = $this->app['basket.manager']->readBasket(); //auto-completion marche pas mais normal
+
         
-        //Je recupère le basket en session
-        $productsAndConfigs = $this->app['basket.manager']->readBasket(); //auto-completion marche pas mais normal
-        //echo '<pre>'; print_r($productsAndConfigs); echo '</pre><br><br>';
-        
-        
-        ///////////////// TEMPORAIRE /////////////////
-        ////////////  TEST 2 DU MAIL////////////
-                    //        $this->app['mailer']->send(\Swift_Message::newInstance()
-                    //                ->setSubject('sujet mail test')
-                    //                ->setFrom(array('doud75@gmail.com'))
-                    //                ->setTo(array('edouard.anthony@gmail.com'))
-                    //                ->setBody('corps du mail test');
-                
-        ////////////  TEST 3 DU MAIL////////////
-                            // Create the mail transport configuration
-                    //        $transport = Swift_MailTransport::newInstance();
-                            // Create the message
-                    //        $message = Swift_Message::newInstance();
-                    //        $message->setTo(array(
-                    //          "doud75@gmail.com" => "doud"
-                    //        ));
-                    //        $message->setSubject("Test Mail SwiftMailer");
-                    //        $message->setBody("Chai pas quoi mettre dans le body");
-                    //        $message->setFrom("edouard.anthony@gmail.com", "MrAnthony");
-                            // Send the email
-                    //        $mailer = Swift_Mailer::newInstance($transport);
-                    //        $mailer->send($message);
+                            ///////////////// TEMPORAIRE /////////////////
+                            ////////////  TEST 2 DU MAIL////////////
+                                        //        $this->app['mailer']->send(\Swift_Message::newInstance()
+                                        //                ->setSubject('sujet mail test')
+                                        //                ->setFrom(array('doud75@gmail.com'))
+                                        //                ->setTo(array('edouard.anthony@gmail.com'))
+                                        //                ->setBody('corps du mail test');
+
+                            ////////////  TEST 3 DU MAIL////////////
+                                                // Create the mail transport configuration
+                                        //        $transport = Swift_MailTransport::newInstance();
+                                                // Create the message
+                                        //        $message = Swift_Message::newInstance();
+                                        //        $message->setTo(array(
+                                        //          "doud75@gmail.com" => "doud"
+                                        //        ));
+                                        //        $message->setSubject("Test Mail SwiftMailer");
+                                        //        $message->setBody("Chai pas quoi mettre dans le body");
+                                        //        $message->setFrom("edouard.anthony@gmail.com", "MrAnthony");
+                                                // Send the email
+                                        //        $mailer = Swift_Mailer::newInstance($transport);
+                                        //        $mailer->send($message);
         
        
         //Render vers la vue "basket"

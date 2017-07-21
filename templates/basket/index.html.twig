@@ -80,10 +80,14 @@
         <hr>
         <a href="urlPageJulien">Passer au paiement</a><br><br><br>
 
+         {% block javascripts %}
+            <script src="{{ asset('script/scriptBasket.js') }}"></script>
+        {% endblock %}
+        
     {% else %} {# Si panier vide #}
         
         <h2>Votre panier est vide !</h2><br><br>
         
     {% endif %}
- 
+
 {% endblock %}
