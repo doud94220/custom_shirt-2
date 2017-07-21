@@ -33,7 +33,7 @@ class UserController extends ControllerAbstract
                 $errors['prenom'] = 'Le prénom est obligatoire';
             }
             
-            if (empty($_POST['date_naissance'])) {
+            if(empty($_POST['date_naissance'])) {
                 $errors['date_naissance'] = 'La date de naissance est obligatoire';
             }
             

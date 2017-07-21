@@ -1,10 +1,8 @@
 <?php
 
-
 namespace Controller;
 
 use Entity\Custom;
-use Repository\CustomRepository;
 
 class CustomController extends ControllerAbstract
 {
@@ -147,128 +145,50 @@ class CustomController extends ControllerAbstract
         );
     }
     
-
-
-    public function fillMeasure_tissu()
+    public function taillepoidsAction()
     {
         $custom = new Custom();
-        //$user = new User();
         $errors = [];
         
-        if(!empty($_GET))
+        if(!empty($_POST))
         {
-            $custom->setTissu_id($_GET['tissu_id']);
-            $custom = $this->app['custom.repository']->save($custom);
+            $custom
+                   ->setPoids($_POST['poids'])
+                   ->setTaille($_POST['taille'])
+            ;
             
-            $customManager = $this->app('custom.manager');
-            $customManager->setTissu($_GET['tissu_id']);
+            if(empty($_POST['poids']))
+            {
+                $errors['poids'] = 'Merci de renseigner votre poids';
+            }
             
+            if(empty($_POST['taille']))
+            {
+                $errors['taille'] = 'Merci de renseigner votre taille';
+            }
+            
+            if(!is_numeric($_POST['poids']))
+            {
+                $errors['poids'] = 'Merci de renseigner un chiffre';
+            }
+            if(!is_numeric($_POST['taille']))
+            {
+                $errors['taille'] = 'Merci de renseigner un chiffre';   
+            }
+            
+            if(empty($errors))
+            {
+                $custom->app['user.repository']->save($custom);
+                return $this->redirectRoute('etape_5_tronc');
+            }
             return $this->render
             (
-                'custom/tissu.html.twig'
+                'custom/mesure_etape1.html.twig',
+                [
+                    'user' => $user
+                ]
             );
-        }
-        else
-        {
-            $errors['tissu_id'] = 'Merci de choisir un tissu';
-        }
-
-    }   
-        
-    public function fillMeasure_bouton()
-    {       
-        $custom = new Custom();
-        //$user = new User();
-        $errors = [];
-
-        if(!empty($_GET))
-        {
-            $custom->setButton_id($_GET['bouton_id']);
-            $custom = $this->app['custom.repository']->save($custom);
-            
-            $customManager = $this->app('custom.manager');
-            $customManager->setBouton($_GET['bouton_id']);
-            
-            return $this->render
-            (
-                'custom/bouton.html.twig' //à modif
-            );
-        }
-        else
-        {
-            $errors['bouton_id'] = 'Merci de choisir un type de bouton';
-        }
-    }    
-        
-    public function fillMeasure_col()
-    {
-        $custom = new Custom();
-        //$user = new User();
-        $errors = [];
-        
-        if(!empty($_GET))
-        {
-            $custom->setCol($_GET['col']);
-            $custom = $this->app['custom.repository']->save($custom);
-            
-
-            $customManager = $this->app('custom.manager');
-            $customManager->setCol($_GET['col_id']);
-            
-            return $this->render
-            (
-                'custom/col.html.twig'
-            );
-        }
-        else
-        {
-            $errors['col'] = 'Merci de choisir un type de col';
         }
     }
-    
-    public function fillMeasure_coupe()
-    {    
-        $custom = new Custom();
-        //$user = new User();
-        $errors = [];
-        
-        if(!empty($_GET))
-        {
-            $custom->setCoupe($_GET['coupe']);
-            $custom = $this->app['custom.repository']->save($custom);
-            
-            $customManager = $this->app('custom.manager');
-            $customManager->setCoupe($_GET['coupe_id']);
-            
-            return $this->render
-            (
-                'custom/coupe.html.twig'
-            );
-        }
-        else
-        {
-            $errors['coupe'] = 'Merci de choisir une coupe';
-        }
-
-    } 
-}    
-
-
-
-   // Champs à vide si utilisateur non connecté via un champs hidden
-   //JS en récupérant id_image dans une balise type="hidden"
-   //ou aller directement au choix des matières sans le formulaire (appeler les Setter venant de la l'objet User)
-   // Si on a un utilisateur connecté
-   // Setpoids= userpoids
-//        $user = $this->app['user.manager']->getUser();
-//        
-//        if (!is_null($user)) 
-//        {
-//            $config->setCol($user->getCol())...
-//        } 
-//        else 
-//        {
-//            $this->redirectRoute('la route du form pour le mensurations')
-//        }
-//        
+}
 

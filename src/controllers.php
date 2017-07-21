@@ -73,7 +73,7 @@ $app
 ;
 
 $app
-   ->match('/custom_poidstaille', 'user.controller:fillMeasureWeightHeight')
+   ->get('/custom_poidstaille', 'custom.controller:taillepoidsAction')
    ->bind('etape_5_poidstaille')
 ;
 

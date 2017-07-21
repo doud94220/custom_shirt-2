@@ -1,6 +1,5 @@
 <?php
 
-use Controller\Admin\CommandeController as AdminCommandeController;
 use Controller\BasketController;
 use Controller\CommandeController;
 use Controller\CustomController;
@@ -9,9 +8,8 @@ use Controller\IndexController;
 use Controller\ProduitController;
 use Controller\UserController;
 use Repository\BoutonRepository;
-use Repository\CoupeRepository;
 use Repository\ColRepository;
-use Repository\CommandeRepository;
+use Repository\CoupeRepository;
 use Repository\CustomRepository;
 use Repository\DetailCommandeRepository;
 use Repository\ProduitRepository;
@@ -70,7 +68,6 @@ $app['user.manager'] = function () use ($app)
     return new UserManager($app['session']);
 };
 
-
 $app['basket.manager'] = function() use ($app)
 {
    return new BasketManager($app['session']);
@@ -80,44 +77,28 @@ $app['custom.manager'] = function() use ($app)
 {
    return new CustomManager($app['session']);
 };
-     
-
-$app['index.controller'] = function () use ($app) {
-
-    return new IndexController($app);
-
-};
-
-
-$app['produit.controller'] = function () use ($app) {
-
-    return new ProduitController($app);
-};
 
 $app['basket.manager'] = function() use ($app)
 {
    return new BasketManager($app['session']);
 };
-            
+     
+/* Déclaration des CONTROLERS */
 
-$app['index.controller'] = function () use ($app) {
-
+$app['index.controller'] = function () use ($app) 
+{
     return new IndexController($app);
-
 };
 
-$app['produit.repository'] = function () use ($app) {
-
-    return new ProduitRepository($app['db']);
-
+$app['produit.controller'] = function () use ($app) 
+{
+    return new ProduitController($app);
 };
 
-
-$app['bouton.repository'] = function () use ($app) {
-
-    return new BoutonRepository($app['db']);
+$app['index.controller'] = function () use ($app) 
+{
+    return new IndexController($app);
 };
-
 
 /* Déclaration des contrôleurs en service */
 /* FRONT */
@@ -142,7 +123,6 @@ $app['basket.controller'] = function() use ($app)
 $app['detail.commande.controller'] = function () use ($app){
     return new DetailCommandeController($app);
 };
-
 
 /* ADMIN */
 $app['admin.commande.controller'] = function () use ($app)
@@ -178,11 +158,19 @@ $app['coupe.repository'] = function() use ($app)
     return new CoupeRepository($app['db']);
 };
 
+$app['produit.repository'] = function () use ($app) 
+{
+    return new ProduitRepository($app['db']);
+};
+
+$app['bouton.repository'] = function () use ($app) 
+{
+    return new BoutonRepository($app['db']);
+};
 
 $app['commande.repository'] = function () use ($app)
 {
     return new CommandeRepository($app['db']);
-
 };
 
 $app['produit.repository'] = function () use ($app) {
