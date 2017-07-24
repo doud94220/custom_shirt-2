@@ -19,8 +19,11 @@ class CustomController extends ControllerAbstract {
                 $this->addFlashMessage("Merci de choisir un tissu", 'error');
               
             } else {
-                //var_dump($_POST['custom_product']);
+                var_dump($_POST['custom_product']);
+
                 $this->app['custom.manager']->setTissu($_POST['custom_product']);
+                
+
                 //var_dump($this->app['custom.manager']->readCustom());
                 return $this->redirectRoute('etape_2_bouton');
                 
@@ -314,7 +317,7 @@ class CustomController extends ControllerAbstract {
 
     //Fonction pour voir tout le panier
     public function consultSessionCustom() 
-        {
+    {
         if (!$this->session->has('custom')) 
         { //S'il n'y a pas de session existante
             return $this->redirectRoute('etape_1_tissu');
@@ -322,14 +325,43 @@ class CustomController extends ControllerAbstract {
         
         else 
         {
-            $custom = $this->app['custom.manager']->readCustom(); //S'il y a une session affichage des informations
+            $custom = $this->session->get('custom');
+            //$custom = $this->app['custom.manager']->readCustom()->getTissu(); //S'il y a une session affichage des informations
+            //print_r($custom['tissu']);
         }
+        $elements = [];
+        $tissu = $this->app['customrecap.repository']->findTissuById($custom['tissu']);
+        $elements[] = $tissu;
+        
+        //print_r($elements);die;
+        
         return $this->render
                         (
-                        'custom/customrecap.html.twig', [
-                    'tissus' => $custom
+                    'custom/customrecap.html.twig', [
+                    'custom' => $tissu
                         ]
         );
     }
+    
+//        //Fonction pour supprimer un produit du panier
+//    public function deleteAction($idProduitEnSession)
+//    {
+//        //// TEMPORAIRE (Debug)
+//        //$messagePourDebug = "je vais supprimer le produit en position " . $idProduitEnSession . " dans le panier";
+//        //$this->addFlashMessage($messagePourDebug);
+//
+//        //Je recupère le basket de la session
+//        $productsAndConfigs = $this->app['basket.manager']->readBasket();
+//
+//        //Je retire le produit à supprimer
+//        array_splice($productsAndConfigs, $idProduitEnSession, 1);
+//
+//        //Je mets le nouveau panier 'allégé d'un produit' en session
+//        $this->session->set('basket', $productsAndConfigs);
+//
+//        //Je redirige vers la page consultation panier
+//        return $this->redirectRoute('basket_consult');
+//
+//    }//Fin deleteAction()
 
 }

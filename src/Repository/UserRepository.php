@@ -32,9 +32,9 @@ class UserRepository extends RepositoryAbstract {
         $this->persist($data, $where);
     }
 
-    // Faire  une méthode avec UPDATE sur les champs tailles en
-    //en récupérant les informations en session
-    //https://openclassrooms.com/courses/programmez-en-oriente-objet-en-php/manipulation-de-donnees-stockees
+// Faire  une méthode avec UPDATE sur les champs tailles en
+//en récupérant les informations en session
+//https://openclassrooms.com/courses/programmez-en-oriente-objet-en-php/manipulation-de-donnees-stockees
 //    //    public function updateUser(User $user)
 //    {
 //        $data =

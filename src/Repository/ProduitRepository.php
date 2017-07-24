@@ -39,7 +39,8 @@ EOS;
         $dbProduits = $this->db->fetchAll($query);
         $produits = []; // le tableau dans lequel vont être stockées les entités Article
 
-        foreach ($dbProduits as $dbProduit) {
+        foreach ($dbProduits as $dbProduit) 
+            {
             $produit = $this->buildFromArray($dbProduit);
 
             $produits[] = $produit;
@@ -65,7 +66,8 @@ EOS;
             [':id' => $id]
         );
 
-        if (!empty($dbProduit)) {
+        if (!empty($dbProduit)) 
+            {
             return $this->buildFromArray($dbProduit);
         }
 

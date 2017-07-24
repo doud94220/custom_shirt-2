@@ -88,10 +88,10 @@ class CustomManager {
 //
 //        }
 //    }
-//    /*     * **** affichage des informations mises en session******** */
+//    /* **** affichage des informations mises en session******** */
 //
     public function readCustom() 
-            {
+    {
         if (!$this->session->has('custom')) { //Si y'a pas de panier
             return null;
         } 
@@ -99,6 +99,38 @@ class CustomManager {
             return $this->session->get('custom'); //lecture du panier
         }
     }
+    
+
+    
+      /* **** Méthode qui met en session les infos de la CONFIG choisi**/
+    
+    public function showCustomSession($custom)
+    {
+        //Initialisation variable basket
+        if(!$this->session->get('custom')) //Si y'a pas de panier
+        {
+          $this->addFlashMessage("Vous n'avez pas configuré de chemise sur mesure", 'error');
+          return $this->redirectRoute('etape_1_tissu'); 
+           //Y placer un tableau de produit(s) et config(s)
+        }
+        else //Si y'a une session custom
+        {
+           $custom[] = $this->session->get('custom'); //Je recup la value correspondant à la key 'custom'
+                   return $this->render
+                        (
+                        'custom/custom_recap.html.twig', [
+                    'custom' => $custom
+                        ]
+        );
+        }
+        
+        //Ajouter la config (en arg de la focntion) dans le $productsAndConfigs[] du panier
+        $productsAndConfigs[] = $config;
+        
+        //Maj panier en session
+        $this->session->set('basket', $productsAndConfigs[]);
+        
+    }//Fin putConfigToBasket()
 
 
 }

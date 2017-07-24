@@ -1,6 +1,7 @@
 {% extends "layout.html.twig" %}
 {% block title 'Récapitulatif' %}
     {% block content %}
+        {% if custom is not empty %}
 
         <h2> Voici votre configuration </h2>
         <table>  
@@ -14,8 +15,8 @@
              </tr>
              
              <tr>
-                 <td></td>
-                 <td></td>
+                 <td>{{custom.nom}}</td>
+                 <td>{{custom.descr}}</td>
                  <td></td>
                  <td><a {#href="{{}}"#}>Modifier l'élément</td>
              </tr>
@@ -25,4 +26,9 @@
         <hr>
         <a href="urlPageEdouard">Valider votre configuration</a><br><br><br>
 
+            {% else %} {# Si panier vide #}
+        
+        <h2>Vous n'avez pas créé de chemise !</h2><br><br>
+        
+    {% endif %}
     {% endblock %}

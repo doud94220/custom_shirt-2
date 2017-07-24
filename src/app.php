@@ -8,6 +8,7 @@ use Controller\IndexController;
 use Controller\ProduitController;
 use Controller\UserController;
 use Repository\BoutonRepository;
+use Repository\CustomRecapRepository;
 use Repository\ColRepository;
 use Repository\CoupeRepository;
 use Repository\CustomRepository;
@@ -39,6 +40,7 @@ $app['twig'] = $app->extend('twig', function ($twig, $app) {
     // add custom globals, filters, tags, ...
     $twig->addGlobal('user_manager', $app['user.manager']); // Global est une fonction de TWIG
     $twig->addGlobal('basket_manager', $app['basket.manager']);
+    
     return $twig;
 });
 
@@ -131,7 +133,6 @@ $app['custom.controller'] = function() use ($app)
     return new CustomController($app);
 };
 
-            
 /* Déclaration des repositories en service */
 
 
@@ -162,6 +163,11 @@ $app['produit.repository'] = function () use ($app)
 $app['bouton.repository'] = function () use ($app) 
 {
     return new BoutonRepository($app['db']);
+};
+
+$app['customrecap.repository'] = function()use($app)
+{
+    return new CustomRecapRepository($app['db']);
 };
 
 $app['commande.repository'] = function () use ($app)

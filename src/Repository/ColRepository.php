@@ -18,8 +18,6 @@ SELECT *
 FROM col
 ORDER BY id_col DESC
 EOS;
-    
-
         $dbCols = $this->db->fetchAll($query);
         $collars = [];
 

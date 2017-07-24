@@ -17,7 +17,6 @@ class CoupeRepository extends RepositoryAbstract
         $query = <<<EOS
 SELECT *
 FROM coupe
-ORDER BY id_coupe DESC
 EOS;
     
 
