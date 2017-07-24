@@ -1,0 +1,28 @@
+{% extends "layout.html.twig" %}
+{% block title 'Récapitulatif' %}
+    {% block content %}
+
+        <h2> Voici votre configuration </h2>
+        <table>  
+            <tr>
+                <th>Titre</th>
+                <th>Photo</th>
+                <th>Prix</th>
+                <th>Modifier de la configuration</th>
+                <th>Recommencez la configuration</th>
+                <th>Supprimer la configuration</th>
+             </tr>
+             
+             <tr>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td><a {#href="{{}}"#}>Modifier l'élément</td>
+             </tr>
+        </table><br><br>
+        
+        {# Lien vers le panier #}
+        <hr>
+        <a href="urlPageEdouard">Valider votre configuration</a><br><br><br>
+
+    {% endblock %}

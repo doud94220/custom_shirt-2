@@ -1,30 +1,49 @@
-{% extends "layout.html.twig" %} 
+{% extends "layout.html.twig" %}
 {% block title 'Customisation' %}
-    
 
-{% block content %}
-    <h1> Choix de vos boutons </h1>
-    <form name="choix_tissu" method="post">
-        <div class="form-group">
-           <table class="table">
-               <tr>
-                   <th>Titre</th>
-                   <th>Description</th>
-                   <th>Photo</th>
-                   <th>Prix</th> 
-                   <th width="200px"></th>
-               </tr>
-            {% for bouton in boutons %}
-               <tr>
-                   <td>{{ bouton.titre }} </td>
-                   <td>{{ bouton.description }} </td>
-                   <td><img src="{{ bouton.photo }}" alt="" width="200" class="select_img" data-id="{{ bouton.id_bouton }}"/> </td>
-                   <td>{{ bouton.prix }} € </td>                   
-               </tr>
-            {% endfor %}   
-           </table>
-        <button type="submit" class="btn btn-primary" > Etape suivante </button>
-        <input type="hidden" name="custom_product" id="custom_product">
-    </form>
 
-{% endblock %}
+    {% block content %}
+        <label>Etape suivante ! </label>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:10%;">10%</div>
+        </div>
+        <h1> Choix de vos boutons </h1>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 col-lg-8">
+                    <form name="choix_tissu" method="post">
+                        <div class="form-group">
+                            <table class="table">
+                                <tr>
+                                    <th>Titre</th>
+                                    <th>Description</th>
+                                    <th>Photo</th>
+                                    <th>Prix</th>
+                                </tr>
+                                {% for bouton in boutons %}
+                                    <tr>
+                                        <td>{{ bouton.titre }} </td>
+                                        <td>{{ bouton.description }} </td>
+                                        <td><img src="{{ bouton.photo }}" alt="" width="200" class="select_img" data-id="{{ bouton.id_bouton }}"/> </td>
+                                        <td>{{ bouton.prix }} € </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                            <button type="submit" class="btn btn-primary" > Etape suivante </button>
+                            <input type="hidden" name="custom_product" id="custom_product">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-4 col-lg-4">
+
+                    {#rajouter les liens de la config et des mesures prises au fur et à mesure#}
+
+
+                </div>
+            </div>
+        </div>
+
+    {% endblock %}
+

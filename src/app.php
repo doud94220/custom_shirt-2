@@ -77,11 +77,6 @@ $app['custom.manager'] = function() use ($app)
 {
    return new CustomManager($app['session']);
 };
-
-$app['basket.manager'] = function() use ($app)
-{
-   return new BasketManager($app['session']);
-};
      
 /* Déclaration des CONTROLERS */
 
@@ -107,7 +102,8 @@ $app['commande.controller'] = function () use ($app)
     return new CommandeController($app);
 };
 
-$app['detail.commande.controller'] = function () use ($app){
+$app['detail.commande.controller'] = function () use ($app)
+{
     return new DetailCommandeController($app);
 };
 

@@ -5,7 +5,7 @@ namespace Entity;
 class Custom 
 {
 
-    private $id_config;
+    private $id_custom;
     
     private $tissu_id;
     private $button_id;

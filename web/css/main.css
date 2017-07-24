@@ -87,3 +87,11 @@ body {
 .button {
     text-align: center;
 }
+
+li{
+    list-style-type: none;
+}
+
+footer{
+    border-top:1px solid #ccc;
+}

@@ -44,7 +44,6 @@ $(function() {
 
 
 
-
 /********STOCKAGE INFORMATIONS DANS BALISE HIDDEN************/
 
 $('.select_img').click(function(){
@@ -53,7 +52,7 @@ $('.select_img').click(function(){
     $('#custom_product').val(id);
 });
 
-
-
-
 });
+
+
+
