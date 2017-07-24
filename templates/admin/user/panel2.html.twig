@@ -35,7 +35,7 @@
         {% for user in users %}
             <tr>
                 <td><a href="{{ path('admin_cc',{id_user:user.id_user}) }}"><span class="glyphicon glyphicon-pencil"></span>Editer</a></th></td>
-                <td><a href="{{ path('admin_panel2',{id_user:user.id_user}) }}"><span class="glyphicon glyphicon-remove"></span>Ôter</a></th></td>
+                <td><a href="{{ path('admin_panel',{id_user:user.id_user}) }}"><span class="glyphicon glyphicon-remove"></span>Ôter</a></th></td>
                 <td>{{ user.id_user}}</td>
                 <td>{{ user.nom}}</td>
                 <td>{{ user.prenom}}</td>

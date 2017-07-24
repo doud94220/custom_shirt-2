@@ -97,11 +97,11 @@ class UserRepository extends RepositoryAbstract
         return $user;
     }
 
-    public function findAllUsers(){
+    public function findAllByUsers(){
         $query = <<<EOS
 SELECT *
 FROM user
-ORDER BY nom DESC
+ORDER BY id_user ASC 
 EOS;
 
         $dbAllUsers = $this->db->fetchAll($query);
@@ -115,6 +115,51 @@ EOS;
 
         return $users;
     }
+
+    public function find($id_user){
+        $dbUser = $this->db->fetchAssoc(
+            'SELECT * FROM user WHERE id_user = :id_user',
+            [':id_user' => $id_user]
+        );
+
+        if (!empty($dbUser)) {
+            return $this->buildFromArray($dbUser);
+        }
+
+        return null;
+    }
+
+
+   /* public function removeUser($id_user){
+       $dbuser = $this ->db->fetchAssoc(
+           'DELETE id_user FROM user where id_user= :id_user',
+           [':id_user' => $id_user]
+       );
+
+        if (!empty($dbUser)) {
+            return $this->buildFromArray($dbUser);
+        }
+
+        return null;
+    }*/
+
+
+       /* public function removeUser($id)
+        {
+
+            ("DELETE FROM user WHERE id_user = :id_user");
+
+        }*/
+
+
+
+    public function removeUser(User $user)
+    {
+        $this->db->delete('user', ['id_user' => $user->getId_user()]);
+    }
+
+
+
 
 
 }

@@ -187,10 +187,19 @@ $admin
 $admin
     ->match('/user/panel', 'user.controller:showAllUsers')
     ->bind('admin_panel')
+;
 
+$admin
+    ->match('/user/panel2/{id_user}', 'user.controller:AdminRemoveUser')
+    ->bind('admin_panel2')
 ;
 
 
+
+$admin
+    ->match('/user/admin_clients/{id_user}', 'user.controller:AdminModifAction')
+    ->bind('admin_cc')
+;
 
 //-------------------------------------------------------------------------//
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {

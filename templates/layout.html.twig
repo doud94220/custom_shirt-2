@@ -47,7 +47,7 @@
                             {#<a href="{{ path('admin_produits') }}">Gestion produits</a>#}
                         </li>
                         <li>
-                            {#<a href="{{ path('admin_users') }}">Gestion utilisateurs</a>#}
+                            <a href="{{ path('admin_panel') }}">Gestion utilisateurs</a>
 
                         </li>
                         <li>
@@ -67,6 +67,8 @@
                     <ul class="nav navbar-nav navbar-right">
                         {# voir l'ajout de la globale user_manager dans twig dans src/app.php #}
                         {% if user_manager.user %}
+
+
                             <li>
 
                                 <a href="{{ path('profile', {user:user_manager.user}) }}"><span class="glyphicon glyphicon-user"></span> {{ user_manager.userName }}</a>

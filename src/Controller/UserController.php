@@ -225,15 +225,112 @@ class UserController extends ControllerAbstract
     public function showAllUsers()
     {
 
-        $users = $this->app['user.repository']->findAllUsers();
-
+        $users = $this->app['user.repository']->findAllByUsers();
         return $this->render(
             'admin/user/panel.html.twig',
-            ['user' => $users]
+            ['users' => $users]
 
         );
 
 
+    }
+
+
+
+    public function AdminModifAction($id_user)
+    {
+        $user= $this->app['user.repository']->find($id_user);
+
+       if (!empty($_POST)) {
+            $user
+                ->setPrenom($_POST['prenom'])
+                ->setNom($_POST['nom'])
+                ->setDate_naissance(\DateTime::createFromFormat('d/m/Y', $_POST['date_naissance']))
+                ->setEmail($_POST['email'])
+                ->setPassword($_POST['password'])
+                ->setAdresse($_POST['adresse'])
+                ->setComplement_adresse($_POST['complement_adresse'])
+                ->setCode_postal($_POST['code_postal'])
+                ->setVille($_POST['ville'])
+                ->setTel($_POST['tel'])
+                ->setSexe($_POST['sexe'])
+            ;
+
+
+            if (empty($_POST['prenom'])) {
+                $errors['prenom'] = 'Le nom est obligatoire';
+            }
+
+            if (empty($_POST['nom'])) {
+                $errors['nom'] = 'Le prénom est obligatoire';
+            }
+
+            if (empty($_POST['date_naissance'])) {
+                $errors['date_naissance'] = 'La date de naissance est obligatoire';
+            }
+
+
+            if (empty($_POST['adresse'])) {
+                $errors['adresse'] = "Veuillez indiquer votre adresse";
+            }
+
+            if (empty($_POST['code_postal'])) {
+                $errors['code_postal'] = 'Veuillez indiquer votre code postal';
+            }
+
+            if (empty($_POST['ville'])) {
+                $errors['ville'] = 'Veuillez indiquer votre ville';
+            }
+
+            if (empty($_POST['tel'])) {
+                $errors['tel'] = 'Veuillez indiquer votre numéro de téléphone svp';
+            }
+
+            if (empty($_POST['sexe'])) {
+                $errors['sexe'] = 'Veuillez indiquer votre genre svp';
+            }
+
+
+            if (empty($errors)) {
+                $user->setPassword($this->app['user.manager']->encodePassword($_POST['password']));
+                $this->app['user.repository']->save($user);
+
+                return $this->redirectRoute('admin_panel');
+            } else {
+                $msg = '<strong>Le formulaire contient des erreurs</strong>';
+                $msg .= '<br>' . implode('<br>', $errors);
+
+                $this->addFlashMessage($msg, 'error');
+            }
+        }
+
+        return $this->render(
+            'admin/user/admin_clients.html.twig',
+            ['user' => $user]
+        );
+    }
+
+
+   /* public function AdminRemoveUser($id_user)
+    {
+        $users= $this->app['user.repository']->removeUser($id_user);
+        return $this->render(
+            'admin/user/panel2.html.twig',
+            ['users' => $users]
+
+        );
+
+    }*/
+
+
+    public function AdminRemoveUser($id_user){
+        $user = $this->app['user.repository']->find($id_user);
+
+        $this->app['user.repository']->removeUser($user);
+
+        $this->addFlashMessage("Le client est supprimé de la BDD");
+
+        return $this->redirectRoute('admin_panel');
     }
 
 
