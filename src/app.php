@@ -147,7 +147,7 @@ $app['detail.commande.controller'] = function () use ($app){
 };
 
 
-/* ADMIN */
+/* ADMIN *///bla
 $app['admin.produit.controller'] = function () use ($app) {
 
     return new AdminProduitController($app);
