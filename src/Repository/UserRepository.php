@@ -129,7 +129,6 @@ EOS;
         return null;
     }
 
-
    /* public function removeUser($id_user){
        $dbuser = $this ->db->fetchAssoc(
            'DELETE id_user FROM user where id_user= :id_user',
@@ -150,8 +149,6 @@ EOS;
             ("DELETE FROM user WHERE id_user = :id_user");
 
         }*/
-
-
 
     public function removeUser(User $user)
     {

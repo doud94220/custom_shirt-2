@@ -6,6 +6,43 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 //Request::setTrustedProxies(array('127.0.0.1'));
+/*HOMEPAGE*/
+
+
+$app
+    ->get('/', 'index.controller:homepage')
+    ->bind('homepage')// nom de la route
+;
+
+$app
+    ->match('/produit/stock/{id}', 'admin.stock.controller:editAction')
+    ->bind('admin_stock_edit')
+;
+
+
+$app
+    ->get('/template/{id}', 'index.controller:idAction')
+    ->bind('show_product')// nom de la route
+;
+
+
+//Ajax---------------------------------------------
+$app
+    ->get('/ajax_api', 'produit.controller:ajaxApi')
+    ->bind('ajax_api')// nom de la route
+;
+
+$app
+    ->match('/ajax_api_panier', 'produit.controller:ajaxApiPanier')
+    ->bind('ajax_api_panier')// nom de la route
+;
+
+$app
+    ->match('/ajax_api_produit_admin', 'produit.controller:ajaxApiAdmin')
+    ->bind('ajax_api_produit_admin')// nom de la route
+;
+
+
 
 /*********************FRONT****************************/
 
@@ -75,9 +112,9 @@ $app
 $app
     ->match('/ajax_api_produit_admin', 'produit.controller:ajaxApiAdmin')
     ->bind('ajax_api_produit_admin')// nom de la route
+
 ;
 
-//---------------------------------------------
 
 $app
     ->match('/custom', 'custom.controller:listTissu')
@@ -184,6 +221,10 @@ $app
     ->bind('create_command')
 ;
 
+$app
+    ->get('/produits', 'index.controller:indexAction')
+    ->bind('produits')// nom de la route
+;
 
 /********************* ADMIN **************************/
 // crée un groupe de routes pour la partie admin
@@ -196,10 +237,9 @@ $admin->before(function () use ($app){
     }
 });
 
-
+$app->mount('/admin', $admin);
 // toutes les routes définies dans le groupe admin
 // auront le préfixe /admin
-$app->mount('/admin', $admin);
 
 //gestion des produits ----------------------------------------
 $admin

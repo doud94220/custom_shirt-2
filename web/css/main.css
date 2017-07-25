@@ -58,6 +58,7 @@ body {
     text-align: center;
     width: 100%;
     border-radius: 5px;
+
 }
 
 .img_template {
@@ -98,6 +99,7 @@ body {
     height: 150px;
 }
 
+
 .info {
     color: #9E9E9E;
     border-radius: 5px;
@@ -124,4 +126,5 @@ body {
     
 .navbar-inverse{
     margin-bottom : 0;
+
 }

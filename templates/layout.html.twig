@@ -85,6 +85,8 @@
                                 <a href="{{ path('basket_consult') }}"><span class="glyphicon glyphicon-shopping-cart fa-2x"></span></a> {# Icone Panier #}
                             </li>
                         {% if user_manager.user %}
+
+
                             <li>
 
                                 <a href="{{ path('profile', {user:user_manager.user}) }}"><span class="glyphicon glyphicon-user"></span> {{ user_manager.userName }}</a>

@@ -35,6 +35,7 @@ use Silex\Provider\SwiftmailerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 
 
+
 $app = new Application();
 $app->register(new ServiceControllerServiceProvider());
 $app->register(new AssetServiceProvider());
@@ -143,7 +144,9 @@ $app['detail.commande.controller'] = function () use ($app){
 };
 
 
-/* ADMIN *///bla
+
+/* ADMIN */
+
 $app['admin.produit.controller'] = function () use ($app) {
 
     return new AdminProduitController($app);
@@ -183,10 +186,6 @@ $app['custom.repository'] = function() use ($app) {
     return new CustomRepository($app['db']);
 };
 
-$app['tissu.repository'] = function() use ($app)
-{
-    return new TissuRepository($app['db']);
-};
 
 $app['col.repository'] = function() use ($app)
 {
@@ -220,8 +219,19 @@ $app['detail.commande.repository'] = function () use ($app)
     return new DetailCommandeRepository($app['db']);
 };
 
+$app['detail.commande.repository'] = function () use ($app)
+{
+    return new DetailCommandeRepository($app['db']);
+};
+
+
 $app['user.repository'] = function () use ($app){
     return new UserRepository($app['db']);
+};
+
+$app['stock.repository'] = function () use ($app) {
+
+    return new StockRepository($app['db']);
 };
 
 return $app;

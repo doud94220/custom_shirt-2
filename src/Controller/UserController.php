@@ -133,6 +133,8 @@ class UserController extends ControllerAbstract
     {
         $user = $this->app['user.manager']->getUser();
 
+        //echo'<pre>';print_r($user);echo '</pre>';
+
         if (!empty($_POST)) {
             $user
                 ->setPrenom($_POST['prenom'])
@@ -186,9 +188,8 @@ class UserController extends ControllerAbstract
             if (empty($errors)) {
                 $user->setPassword($this->app['user.manager']->encodePassword($_POST['password']));
                 $this->app['user.repository']->save($user);
-                $this->app['user.manager']->login($user);
+                return $this->redirectRoute('profile');
 
-                return $this->redirectRoute('homepage');
             } else {
                 $msg = '<strong>Le formulaire contient des erreurs</strong>';
                 $msg .= '<br>' . implode('<br>', $errors);
@@ -207,6 +208,7 @@ class UserController extends ControllerAbstract
 
     public function showProfile(){
         $user = $this->app['user.manager']->getUser();
+        echo '<pre>';print_r($user);echo '</pre>';
         $commandes = $this->app['commande.repository']->findAllByUser($user);
         $details_commandes =[];
         foreach($commandes as $commande){
@@ -250,10 +252,7 @@ class UserController extends ControllerAbstract
 
         );
 
-
     }
-
-
 
     public function AdminModifAction($id_user)
     {
@@ -328,7 +327,6 @@ class UserController extends ControllerAbstract
         );
     }
 
-
    /* public function AdminRemoveUser($id_user)
     {
         $users= $this->app['user.repository']->removeUser($id_user);
@@ -353,19 +351,8 @@ class UserController extends ControllerAbstract
 
 
 
-}
 
 
-
-
-
-
-
-
-
-
-
-        
    /* public function showDetails($id_commande){
         $detail_commandes = $this->app['detail.commande.repository']->findAllByCommande($id_commande);
         
@@ -380,4 +367,4 @@ class UserController extends ControllerAbstract
 //        if(empty($commandes)){
 //            $this->addFlashMessage("Vous n'avez pas de commande", 'warning');
 //        }
-    
+}
