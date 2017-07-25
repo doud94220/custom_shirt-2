@@ -44,6 +44,9 @@ EOS;
             ->setDesc($dbTissu['desc'])
             ->setPhoto($dbTissu['photo'])
             ->setPrix($dbTissu['prix'])
+            ->setComposition($dbTissu['composition'])
+            ->setGrammage($dbTissu['grammage'])
+            ->setTirage($dbTissu['tirage'])
         ;
         return $tissus;
     }

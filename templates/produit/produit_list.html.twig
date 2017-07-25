@@ -2,20 +2,20 @@
 {% set nbRows = (produits|length/3)|round(0, 'ceil') %}
 
 {% for i in 0..nbRows %}
-
-
+{#{{ dump(produits) }}#}
+    <hr>
     <div class="row">
         {% for j in 0..2 %}
             {% if produits[produitId] is defined %}
                 <div class="col-sm-4 chemise">
-                    <a href="{{ path('show_product', {"id":  produits[produitId].id}) }}"><img src="{{ 'http://localhost/custom-shirt/web/img/' ~ produits[produitId].photo }}" alt="chemise"></a>
+                    <a href="{{ path('show_product', {"id":  produits[produitId].id}) }}"><img src="{{ 'http://localhost/custom_hirt-2/web/img/' ~ produits[produitId].photo }}" alt="chemise"></a>
                     <hr>
                     <div class="desc">
-                        <p class="title"><a href="{{ path('show_product', {"id":  produits[produitId].id}) }}">{{ produits[produitId].titre }}</a></p>
+                        <p class="title"><a href="{{ path('show_product', {"id":  produits[produitId].id}) }}">{{ produits[produitId].tissu.nom }}</a></p>
                         <p class="price">{{ produits[produitId].prix ~ ' €'}}</p>
                     </div>
                     <hr>
-                    <p>{{ produits[produitId].description }}</p>
+                    <p>{{ produits[produitId].description|slice(0, 111) }}...</p>
                 </div>
             {% endif %}
             {% set produitId = produitId + 1 %}
