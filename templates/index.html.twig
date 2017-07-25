@@ -1,21 +1,6 @@
-{#{% extends "layout.html.twig" %}
+{% extends "layout.html.twig" %}
 
 {% block content %}
-
-
- <h1>Accueil</h1>
-    {% include 'custom/tissu.html.twig' %}
-
-    {% if user_manager.admin %}
-        <h1>Hello Admin {{ user_manager.userName }}</h1>
-    {% elseif user_manager.user %}
-        <h1>Hello {{ user_manager.userName }}</h1>
-    {% else %}
-    <h1>Hello visiteur</h1>
-    {% endif %} #}
-    {% extends "layout.html.twig" %}
-
-    {% block content %}
 
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
@@ -62,14 +47,5 @@
             </a>
         </div>
 
-
-
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        var ajaxApiUrl = "{{ path('ajax_api') }}";
-    </script>
-    <script src="{{ asset('script/script.js') }}"></script>
-{% endblock %}

@@ -49,7 +49,8 @@ class BasketController extends ControllerAbstract
             $custom1->setButton_id(3);
             $custom1->setCol(3);
             $custom1->setCoupe(3);   
-            $custom1->setId_config(1);
+            $custom1->setId_custom(1);
+            $custom1->setTitre_custom("Titre custom 1");
             $custom1->setPrix(70);   
             $custom1->setTissu_id(7);
             $custom1->setQuantite(1); //J'ai rajouté l'attribut quantité dans l'Entity 'Custom' de Guillaume
@@ -58,7 +59,8 @@ class BasketController extends ControllerAbstract
             $custom2->setButton_id(5);
             $custom2->setCol(5);
             $custom2->setCoupe(5);   
-            $custom2->setId_config(2);
+            $custom2->setId_custom(2);
+            $custom1->setTitre_custom("Titre custom 2");
             $custom2->setPrix(80);   
             $custom2->setTissu_id(5);
             $custom2->setQuantite(2);
@@ -67,7 +69,8 @@ class BasketController extends ControllerAbstract
             $custom3->setButton_id(7);
             $custom3->setCol(7);
             $custom3->setCoupe(7);   
-            $custom3->setId_config(3);
+            $custom3->setId_custom(3);
+            $custom1->setTitre_custom("Titre custom 3");
             $custom3->setPrix(90);   
             $custom3->setTissu_id(7);
             $custom3->setQuantite(3);
@@ -149,5 +152,27 @@ class BasketController extends ControllerAbstract
  
     }//Fin decrementAction()
     
+    /**
+     * Cette méthode sert à envoyer sur la page de paiement lorsque l'utilisateur valide son panier
+     */
+    public function payAction(){
+        if ($this->session->has("basket")){
+            $basket = $this->app["basket.controller"]->consultAction();
+            
+            return $this->render(
+                'paiement/paiement.html.twig',
+                ['basket' => $basket]
+            );
+        }else{
+            $this->addFlashMessage("Votre panier est vide !", "warning");
+            
+            return $this->redirectRoute('basket_consult');
+        }
+    }
     
+    public function payChargeAction(){
+        return $this->render(
+            'paiement/charge.html.twig'
+        );
+    }
 }//Fin BasketController

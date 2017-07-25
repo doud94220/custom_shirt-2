@@ -1,22 +1,27 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
+
 {{ dump(produits) }}
+
     <div class="container">
         <div class="row">
 
             <div class="col-sm-6">
-                <img class="img_template" src="{{ 'http://localhost/custom-shirt_2/web/img/' ~ produits.photo }}" alt="chemise">
+
+                <img class="img_template" src="{{ 'http://localhost/custom_shirt-2/web/img/' ~ produits.photo }}" alt="chemise">
             </div>
             <div class="col-sm-6">
                 <div class="row">
                     <div class="col-sm-12 description title">
                         <div class="row">
                             <div class="col-sm-12 description title">
+
                                 <h2 id="{{ produits.id }}">{{ produits.tissu.nom }}</h2>
                                 <h4>{{ produits.prix ~ '€'}} </h4>
                             </div>
                         </div>
+<<<<<<< HEAD
                         <div class="row">
                             <div class="col-sm-12 description desc">
                                 <p>{{ produits.description }}</p>

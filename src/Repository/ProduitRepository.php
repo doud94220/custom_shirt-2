@@ -33,7 +33,8 @@ class ProduitRepository extends RepositoryAbstract
     public function findAllforAdmin()
     {
         $query = <<<EOS
-SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, t.categorie_id, cat.categorie
+
+SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie
 FROM produit p
 JOIN type t ON p.type_id=t.id
 JOIN categorie cat ON cat.id=t.categorie_id
@@ -59,7 +60,8 @@ EOS;
     public function findAll()
     {
         $query = <<<EOS
-SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, t.categorie_id, cat.categorie
+
+SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie
 FROM produit p
 JOIN type t ON p.type_id=t.id
 JOIN categorie cat ON cat.id=t.categorie_id
@@ -160,7 +162,8 @@ EOS;
             ->setGrammage($dbProduit['grammage'])
             ->setDesc($dbProduit['desc'])
             ->setTirage($dbProduit['tirage'])
-            /*->setFil($dbProduit['fil'])*/
+
+//            ->setFil($dbProduit['fil'])
         ;
 
         $category

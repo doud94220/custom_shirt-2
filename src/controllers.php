@@ -62,17 +62,39 @@ $app
     ->match('/basket/delete/{idProduitEnSession}', 'basket.controller:deleteAction')
     ->bind('basket_delete');
 
+$app
+    ->match('/basket/paiement', 'basket.controller:payAction')
+    ->bind('basket_pay')
+;
+
+$app
+    ->post('/basket/charge', 'basket.controller:payChargeAction')
+    ->bind('basket_charge')   
+;
 
 
+/*HOMEPAGE*/
 
+$app
+    ->get('/', 'index.controller:homePage')
+    ->bind('homepage')// nom de la route
+;
 
+$app
+    ->get('/produits', 'index.controller:indexAction')
+    ->bind('produits')// nom de la route
+;
 
+$app
+    ->get('/template/{id}', 'index.controller:idAction')
+    ->bind('show_product')// nom de la route
+;
 
-
-
-
-
-
+//Ajax---------------------------------------------
+$app
+    ->match('/contact', 'index.controller:contactAction')
+    ->bind('contact')
+;
 
 $app
     ->get('/ajax_api', 'produit.controller:ajaxApi')
@@ -80,13 +102,14 @@ $app
 ;
 
 $app
-    ->post('/ajax_api_panier', 'produit.controller:ajaxApiPanier')
+    ->match('/ajax_api_panier', 'produit.controller:ajaxApiPanier')
     ->bind('ajax_api_panier')// nom de la route
 ;
 
 $app
     ->match('/ajax_api_produit_admin', 'produit.controller:ajaxApiAdmin')
     ->bind('ajax_api_produit_admin')// nom de la route
+
 ;
 
 
@@ -95,10 +118,6 @@ $app
     ->bind('etape_1_tissu')
 ;
 
-$app
-    ->get('/template/{id}', 'index.controller:idAction')
-    ->bind('show_product')// nom de la route
-;
 
 $app
    ->match('/custom_bouton', 'custom.controller:listBouton')
@@ -163,9 +182,16 @@ $app
 ;
 
 $app
+    ->match('profile/commande/detail', 'user.controller:showDetails')
+    ->bind('detail_commande')
+;
+
+
+
+/*$app
     ->get('/profile', 'commande.controller:showAction')
     ->bind('profile_commandes')
-;
+;*/
 
 $app
     ->get('/profile/suivi_commandes', 'commande.controller:followAction')
@@ -192,10 +218,6 @@ $app
     ->bind('produits')// nom de la route
 ;
 
-
-
-
-
 /********************* ADMIN **************************/
 // crée un groupe de routes pour la partie admin
 $admin = $app['controllers_factory'];
@@ -211,7 +233,7 @@ $app->mount('/admin', $admin);
 // toutes les routes définies dans le groupe admin
 // auront le préfixe /admin
 
-
+//gestion des produits ----------------------------------------
 $admin
     ->get('/produits', 'admin.produit.controller:listAction')
     ->bind('admin_produits')
@@ -238,17 +260,14 @@ $admin
     ->bind('admin_stock_edit')
 ;
 
-
-
-
 // gestion des commandes -------------------------------------- 
 $admin
-    ->get('/commandes', 'admin.commande.controller:listAction')
+    ->match('/commandes', 'admin.commande.controller:listAction')
     ->bind('admin_commandes')
 ;
 
 $admin
-    ->match('/commande/edit/{id}', 'admin.commande.controller:editAction')
+    ->post('/commande/edit/{id}', 'admin.commande.controller:editAction')
     ->bind('admin_edit_commande')
 ;
 
@@ -258,10 +277,9 @@ $admin
 ;
 
 $admin
-    ->get('/commande/details{id_commande}', 'admin.details_commande.controller:listAction')
-    ->bind('admin_details_commande')
+    ->get('/commande/details/{id_commande}', 'admin.commande.controller:detailsByCommande')
+    ->bind('admin_detail_commande')
 ;
-
 
 //-------------------------------------Gestion des utilisateurs
 
@@ -274,8 +292,6 @@ $admin
     ->match('/user/panel2/{id_user}', 'user.controller:AdminRemoveUser')
     ->bind('admin_panel2')
 ;
-
-
 
 $admin
     ->match('/user/admin_clients/{id_user}', 'user.controller:AdminModifAction')

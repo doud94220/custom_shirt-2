@@ -1,6 +1,7 @@
 <?php
 
 use Controller\Admin\ProduitController as AdminProduitController;
+use Controller\Admin\DetailCommandeController as AdminDetailCommandeController;
 use Controller\Admin\CommandeController as AdminCommandeController;
 use Controller\Admin\StockController as AdminStockController;
 use Controller\BasketController;
@@ -45,7 +46,6 @@ $app->register(new SwiftmailerServiceProvider());
 $app['twig'] = $app->extend('twig', function ($twig, $app) {
     // add custom globals, filters, tags, ...
     $twig->addGlobal('user_manager', $app['user.manager']); // Global est une fonction de TWIG
-    $twig->addGlobal('basket_manager', $app['basket.manager']);
     return $twig;
 });
 
@@ -59,7 +59,7 @@ $app->register
                 'host'      => 'localhost',
                 'dbname'    => 'custom_shirt',
                 'user'      => 'root',
-                'password'  => '',
+                'password'  => 'root',
                 'charset'   => 'utf8'
 
             ]
@@ -149,7 +149,9 @@ $app['detail.commande.controller'] = function () use ($app){
 };
 
 
+
 /* ADMIN */
+
 $app['admin.produit.controller'] = function () use ($app) {
 
     return new AdminProduitController($app);
@@ -160,10 +162,14 @@ $app['admin.stock.controller'] = function () use ($app) {
     return new AdminStockController($app);
 };
 
-
 $app['admin.commande.controller'] = function () use ($app)
 {
-    return new CommandeController($app);
+    return new AdminCommandeController($app);
+};
+
+$app['admin.detail_commande.controller'] = function () use ($app)
+{
+    return new AdminDetailCommandeController($app);
 };
 
 $app['custom.controller'] = function() use ($app)
@@ -177,14 +183,14 @@ $app['type.repository'] = function () use ($app) {
     return new TypeRepository($app['db']);
 };
 
-$app['custom.repository'] = function() use ($app) {
-    return new CustomRepository($app);
-};
-
-$app['tissu.repository'] = function() use ($app)
-{
+$app['tissu.repository'] = function () use ($app) {
     return new TissuRepository($app['db']);
 };
+
+$app['custom.repository'] = function() use ($app) {
+    return new CustomRepository($app['db']);
+};
+
 
 $app['col.repository'] = function() use ($app)
 {
@@ -206,6 +212,11 @@ $app['commande.repository'] = function () use ($app)
 $app['produit.repository'] = function () use ($app) {
 
     return new ProduitRepository($app['db']);
+};
+
+$app['stock.repository'] = function () use ($app) {
+
+    return new StockRepository($app['db']);
 };
 
 $app['detail.commande.repository'] = function () use ($app)

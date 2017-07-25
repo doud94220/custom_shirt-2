@@ -95,7 +95,7 @@ EOS;
     }
     
     public function edit(Commande $commande){
-        $data = [
+        /*$data = [
             'etat' => $commande->getEtat()
         ];
         
@@ -106,7 +106,10 @@ EOS;
             : null // création
         ;
         
-        $this->persist($data, $where);
+        $this->persist($data, $where);*/
+        
+        $this->app['db']->insert('commande', array(                                                                                                                                                                                                                                                         
+            'etat' => $_POST['etat']));
     }
     
     public function delete(Commande $commande){

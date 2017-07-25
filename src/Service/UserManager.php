@@ -37,7 +37,6 @@ class UserManager
      */
     public function verifyPassword($plainPassword, $encodePassword)
     {
-        var_dump(password_verify($plainPassword, $encodePassword));
         return password_verify($plainPassword, $encodePassword);
     }
     

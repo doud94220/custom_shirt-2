@@ -13,20 +13,26 @@ class DetailCommande
      */
     private $id_detail_commande;
     
-    /**
-     * @var int
-     */
     private $commande_id;
     
-    /**
-     * @var int
-     */
     private $produit_id;
     
-    /**
-     * @var int
-     */
     private $custom_id;
+    
+    /**
+     * @var Commande
+     */
+    private $commande;
+    
+    /**
+     * @var Produit
+     */
+    private $produit;
+    
+    /**
+     * @var Custom
+     */
+    private $custom;
     
     /**
      * @var int
@@ -39,6 +45,25 @@ class DetailCommande
     private $prix;
     
     /**
+     * @var string
+     */
+    private $titre;
+    
+    
+    
+    public function getCommande_id() {
+        return $this->commande_id;
+    }
+
+    public function getProduit_id() {
+        return $this->produit_id;
+    }
+
+    public function getCustom_id() {
+        return $this->custom_id;
+    }
+
+    /**
      * @return int
      */
     public function getId_detail_commande() {
@@ -48,22 +73,22 @@ class DetailCommande
     /**
     * @return int
     */
-    public function getCommande_id() {
-        return $this->commande_id;
+    public function getCommande() {
+        return $this->commande;
     }
 
     /**
     * @return int
     */
-    public function getProduit_id() {
-        return $this->produit_id;
+    public function getProduit() {
+        return $this->produit;
     }
 
     /**
     * @return int
     */
-    public function getCustom_id() {
-        return $this->custom_id;
+    public function getCustom() {
+        return $this->custom;
     }
 
     /**
@@ -90,29 +115,29 @@ class DetailCommande
     }
 
     /**
-     * @param int $commande_id
+     * @param Commande $commande
      * @return DetailCommande
      */
-    public function setCommande_id($commande_id) {
-        $this->commande_id = $commande_id;
+    public function setCommande(Commande $commande) {
+        $this->commande = $commande;
         return $this;
     }
 
     /**
-     * @param int $produit_id
+     * @param Produit $produit
      * @return DetailCommande
      */
-    public function setProduit_id($produit_id) {
-        $this->produit_id = $produit_id;
+    public function setProduit(Produit $produit) {
+        $this->produit = $produit;
         return $this;
     }
 
     /**
-     * @param int $custom_id
+     * @param Custom $custom
      * @return DetailCommande
      */
-    public function setCustom_id($custom_id) {
-        $this->custom_id = $custom_id;
+    public function setCustom(Custom $custom) {
+        $this->custom = $custom;
         return $this;
     }
 
@@ -131,6 +156,70 @@ class DetailCommande
      */
     public function setPrix($prix) {
         $this->prix = $prix;
+        return $this;
+    }
+
+    /***** fonctions proxy *****/
+    
+    /**
+     * return string
+     */
+    public function getTitreProduit(){
+        if(!is_null($this->produit)){
+            return $this->produit->getTitre();
+        }
+    }
+    
+    /**
+     * 
+     * @return int
+     */
+    public function getProduitId(){
+        if(!is_null($this->produit)){
+            return $this->produit->getId();
+        }
+    }
+    
+    /**
+     * return string
+     */
+    public function getTitreCustom(){
+        if(!is_null($this->custom)){
+            return $this->custom->getTitre_custom();
+        }
+    }
+    
+    /**
+     * return int
+     */
+    public function getCustomId(){
+        if(!is_null($this->custom)){
+            return $this->custom->getId_custom();
+        }
+    }
+
+     /**
+     * 
+     * @return int
+     */
+    public function getCommandeId(){
+        if(!is_null($this->commande)){
+            return $this->commande->getId_commande();
+        }
+    }
+    
+    public function setCommande_id($commande_id) {
+        $this->commande_id = $commande_id;
+        return $this;
+    }
+
+    public function setProduit_id($produit_id) {
+        $this->produit_id = $produit_id;
+        return $this;
+    }
+
+    public function setCustom_id($custom_id) {
+        $this->custom_id = $custom_id;
         return $this;
     }
 

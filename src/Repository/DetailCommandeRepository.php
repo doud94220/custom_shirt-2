@@ -1,6 +1,11 @@
 <?php
 namespace Repository;
 
+use Entity\Commande;
+use Entity\Custom;
+use Entity\DetailCommande;
+use Entity\Produit;
+use Entity\User;
 /**
  * Description of DetailCommandeRepository
  *
@@ -12,22 +17,27 @@ class DetailCommandeRepository extends RepositoryAbstract
         return 'detail_commande';
     }
     
-    public function findAllByCommande(Commande $commande){
+    /**
+     * cette méthode récupère en base tous les détails d'une commande, ainsi que le titre des produits et des customs
+     * @param \Repository\Commande $commande
+     * @return array
+     */
+    public function findAllByCommande($id_commande){
         $query = <<<EOS
-SELECT d.*, cs.titre_custom, p.titre
+SELECT d.*, c.id_commande, cs.titre_custom, cs.prix, p.titre, p.prix
 FROM detail_commande d
 JOIN commande c ON d.commande_id = c.id_commande
-JOIN produit p ON d.produit_id = p.id
-JOIN custom cs ON d.custom_id = cs.id_custom
+LEFT JOIN produit p ON d.produit_id = p.id
+LEFT JOIN custom cs ON d.custom_id = cs.id_custom
 WHERE d.commande_id = :id_commande
-ORDER BY id_detail_commande DESC
+ORDER BY d.id_detail_commande DESC
 EOS;
         
-        $dbCommandes = $this->db->fetchAll(
+        $dbDetailCommandes = $this->db->fetchAll(
             $query,
-            [':id_commande' => $commande->getId_commande()]
+            [':id_commande' => $id_commande]
         );
-        $detail_commandes = []; // le tableau dans lequel vont être stockées les entités Article
+        $detail_commandes = []; // le tableau dans lequel vont être stockées les entités DetailCommande
         
         foreach($dbDetailCommandes as $dbDetailCommande){
             $detail_commande = $this->buildFromArray($dbDetailCommande);
@@ -36,5 +46,62 @@ EOS;
         }
         
         return $detail_commandes; 
+    }
+    
+    public function save(DetailCommande $detail_commande){
+        $data = [
+            'commande_id' => $detail_commande->getCommande_id(),
+            'produit_id' => $detail_commande->getProduit_id(),
+            'custom_id' => $detail_commande->getCustom_id(),
+            'quantite' => $detail_commande->getQuantite(),
+            'prix' => $detail_commande->getPrix()
+        ];
+          
+        $this->persist($data);
+    }
+    
+    
+    /**
+     * 
+     * @param array $dbDetailCommande
+     * @return DetailCommande
+     */
+    public function buildFromArray(array $dbDetailCommande){
+        $detail_commande = new DetailCommande();
+        
+        $commande = new Commande();
+        
+        $commande
+            ->setId_commande($dbDetailCommande['commande_id'])
+        ;
+        
+        $produit = new Produit();
+        
+        $produit
+            ->setId($dbDetailCommande['produit_id'])
+            ->setTitre($dbDetailCommande['titre'])
+            ->setPrix($dbDetailCommande['prix'])
+        ;
+
+        $custom = new Custom();
+        
+        $custom
+            ->setId_custom($dbDetailCommande['custom_id'])
+            ->setTitre_custom($dbDetailCommande['titre_custom'])
+            ->setPrix($dbDetailCommande['prix'])
+        ;
+        
+        $detail_commande
+            ->setId_detail_commande($dbDetailCommande['id_detail_commande'])
+            ->setCommande_id($dbDetailCommande['commande_id'])
+            ->setProduit_id($dbDetailCommande['produit_id'])
+            ->setCustom_id($dbDetailCommande['custom_id'])
+            ->setCustom($custom)
+            ->setProduit($produit)
+            ->setQuantite($dbDetailCommande['quantite'])
+            ->setPrix($dbDetailCommande['prix'])
+        ;
+        
+        return $detail_commande;
     }
 }

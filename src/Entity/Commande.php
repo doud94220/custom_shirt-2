@@ -41,6 +41,13 @@ class Commande
     private $etat = 'en préparation';
     
     /**
+     * pour récupérer les entrées de la table détail_commande
+     * @var array
+     */
+    private $details = [];
+    
+    /***** GETTERS *****/
+    /**
      * @return int
      */
     public function getId_commande() {
@@ -81,6 +88,15 @@ class Commande
         return $this->etat;
     }
 
+    /**
+     * 
+     * @return array
+     */
+    public function getDetails() {
+        return $this->details;
+    }
+    
+    /***** SETTERS *****/
     /**
      * @param int $id_commande
      * @return Commande
@@ -132,6 +148,16 @@ class Commande
      */
     public function setEtat($etat) {
         $this->etat = $etat;
+        return $this;
+    }
+    
+    /**
+     * 
+     * @param array $details
+     * @return Commande
+     */
+    public function setDetails(array $details) {
+        $this->details = $details;
         return $this;
     }
 
