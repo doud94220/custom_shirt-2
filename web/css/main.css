@@ -1,6 +1,7 @@
 body {
     background: #F9F9F7;
     font-family: 'Open Sans', sans-serif;
+    padding-bottom: 120px;
 }
 .chemise img {
     width: 100%;
@@ -86,4 +87,8 @@ body {
 
 .button {
     text-align: center;
+}
+
+.navbar-inverse{
+    margin-bottom : 0;
 }

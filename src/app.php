@@ -1,5 +1,6 @@
 <?php
 
+use Controller\Admin\DetailCommandeController as AdminDetailCommandeController;
 use Controller\Admin\CommandeController as AdminCommandeController;
 use Controller\BasketController;
 use Controller\CommandeController;
@@ -54,7 +55,7 @@ $app->register
                 'host'      => 'localhost',
                 'dbname'    => 'custom_shirt',
                 'user'      => 'root',
-                'password'  => '',
+                'password'  => 'root',
                 'charset'   => 'utf8'
 
             ]
@@ -147,7 +148,12 @@ $app['detail.commande.controller'] = function () use ($app){
 /* ADMIN */
 $app['admin.commande.controller'] = function () use ($app)
 {
-    return new CommandeController($app);
+    return new AdminCommandeController($app);
+};
+
+$app['admin.detail_commande.controller'] = function () use ($app)
+{
+    return new AdminDetailCommandeController($app);
 };
 
 $app['custom.controller'] = function() use ($app)
@@ -160,7 +166,7 @@ $app['custom.controller'] = function() use ($app)
 
 
 $app['custom.repository'] = function() use ($app) {
-    return new CustomRepository($app);
+    return new CustomRepository($app['db']);
 };
 
 $app['tissu.repository'] = function() use ($app)

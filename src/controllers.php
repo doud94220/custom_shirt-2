@@ -25,11 +25,27 @@ $app
     ->match('/basket/delete/{idProduitEnSession}', 'basket.controller:deleteAction')
     ->bind('basket_delete');
 
+$app
+    ->match('/basket/paiement', 'basket.controller:payAction')
+    ->bind('basket_pay')
+;
+
+$app
+    ->post('/basket/charge', 'basket.controller:payChargeAction')
+    ->bind('basket_charge')   
+;
+
+
 /*HOMEPAGE*/
 
 $app
     ->get('/', 'index.controller:indexAction')
     ->bind('homepage')// nom de la route
+;
+
+$app
+    ->match('/contact', 'index.controller:contactAction')
+    ->bind('contact')
 ;
 
 $app
@@ -115,9 +131,16 @@ $app
 ;
 
 $app
+    ->match('profile/commande/detail', 'user.controller:showDetails')
+    ->bind('detail_commande')
+;
+
+
+
+/*$app
     ->get('/profile', 'commande.controller:showAction')
     ->bind('profile_commandes')
-;
+;*/
 
 $app
     ->get('/profile/suivi_commandes', 'commande.controller:followAction')
@@ -159,12 +182,12 @@ $app->mount('/admin', $admin);
 
 // gestion des commandes -------------------------------------- 
 $admin
-    ->get('/commandes', 'admin.commande.controller:listAction')
+    ->match('/commandes', 'admin.commande.controller:listAction')
     ->bind('admin_commandes')
 ;
 
 $admin
-    ->match('/commande/edit/{id}', 'admin.commande.controller:editAction')
+    ->post('/commande/edit/{id}', 'admin.commande.controller:editAction')
     ->bind('admin_edit_commande')
 ;
 
@@ -174,8 +197,8 @@ $admin
 ;
 
 $admin
-    ->get('/commande/details{id_commande}', 'admin.details_commande.controller:listAction')
-    ->bind('admin_details_commande')
+    ->get('/commande/details/{id_commande}', 'admin.commande.controller:detailsByCommande')
+    ->bind('admin_detail_commande')
 ;
 
 //-------------------------------------------------------------------------//
