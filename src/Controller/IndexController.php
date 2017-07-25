@@ -35,5 +35,9 @@ class IndexController extends ControllerAbstract
 
         return $this->render('produit/produit.html.twig', ['produits' => $produits]);
     }
+    
+    public function contactAction(){
+        return $this->render('annexes/page_contact.html.twig');
+    }
 }
 
