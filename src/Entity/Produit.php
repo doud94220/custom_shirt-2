@@ -61,16 +61,6 @@ class Produit
         $this->setProduitOrCustom('produit');
     }
 
-    public function getProduitOrCustom()
-    {
-        return $this->produitOrCustom;
-    }
-
-    public function setProduitOrCustom($produitOuCustom)
-    {
-        $this->produitOrCustom = '$produit';
-    }
-
     /**
      * @return int
      */
@@ -241,5 +231,16 @@ class Produit
         $this->quantite = $quantite;
         return $this;
     }
+    
+    //Rajouté par Edouard
+    
+    public function getProduitOrCustom()
+    {
+        return $this->produitOrCustom;
+    }
 
+    public function setProduitOrCustom($produitOuCustom)
+    {
+        $this->produitOrCustom = $produitOuCustom;
+    }
 }

@@ -15,17 +15,13 @@ class Custom
     private $quantite;
     
     private $produitOrCustom; //booleen ///Rajoute par Edouard
+    private $titre;
     
     //Constructeur ///Rajoute par Edouard
     public function __construct()
     {
         $this->setProduitOrCustom('custom');
     }
-    
-    public function getProduitOrCustom() {
-        return $this->produitOrCustom;
-    }
-
     
     /**********GETTERS****************/
     
@@ -55,6 +51,17 @@ class Custom
     
     public function getQuantite() {
         return $this->quantite;
+    }
+    
+    //Rajouté par Edouard
+    
+    public function getProduitOrCustom()
+    {
+        return $this->produitOrCustom;
+    }
+    
+    public function getTitre() {
+        return $this->titre;
     }
 
         /**********SETTERS****************/
@@ -87,7 +94,15 @@ class Custom
         $this->quantite = $quantite;
     }
     
-     public function setProduitOrCustom($produitOrCustom) {
+    //Rajouté par Edouard
+    
+    public function setProduitOrCustom($produitOrCustom)
+    {
         $this->produitOrCustom = $produitOrCustom;
+    }
+    
+    public function setTitre($titre) {
+        $this->titre = $titre;
+        return $this;
     }
 }

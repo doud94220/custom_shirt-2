@@ -14,7 +14,7 @@ class UserController extends ControllerAbstract
             $user
                 ->setNom($_POST['nom'])
                 ->setPrenom($_POST['prenom'])
-                ->setDate_naissance(new \DateTime($_POST['date_naissance']))
+                //->setDate_naissance(new \DateTime($_POST['date_naissance']))
                 ->setEmail($_POST['email'])
                 ->setPassword($_POST['password'])
                 ->setAdresse($_POST['adresse'])
@@ -23,6 +23,7 @@ class UserController extends ControllerAbstract
                 ->setVille($_POST['ville'])
                 ->setTel($_POST['tel'])
                 ->setSexe($_POST['sexe'])
+                ->setStatut('membre')
             ;
             
             if(empty($_POST['nom'])){
@@ -33,9 +34,9 @@ class UserController extends ControllerAbstract
                 $errors['prenom'] = 'Le prénom est obligatoire';
             }
             
-            if (empty($_POST['date_naissance'])) {
-                $errors['date_naissance'] = 'La date de naissance est obligatoire';
-            }
+//            if (empty($_POST['date_naissance'])) {
+//                $errors['date_naissance'] = 'La date de naissance est obligatoire';
+//            }
             
             if(empty($_POST['email'])){
                 $errors['email'] = "L'e-mail est obligatoire";

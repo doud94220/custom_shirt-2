@@ -1,6 +1,8 @@
 <?php
 namespace Repository;
 
+use Entity\DetailCommande;
+
 /**
  * Description of DetailCommandeRepository
  *
@@ -37,4 +39,18 @@ EOS;
         
         return $detail_commandes; 
     }
+    
+    public function save(DetailCommande $detailCommande)
+    {
+        $data = [
+            'commande_id' => $detailCommande->getCommande_id(),
+            'produit_id' => $detailCommande->getProduit_id(),
+            'custom_id' => $detailCommande->getCustom_id(),
+            'quantite' => $detailCommande->getQuantite(),
+            'prix' => $detailCommande->getPrix()
+        ];
+
+        $this->persist($data);
+    }
+    
 }

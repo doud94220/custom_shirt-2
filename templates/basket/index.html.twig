@@ -1,13 +1,5 @@
 {% extends "layout.html.twig" %}
 
-
-{#
-    Faudra ajouter plus tard :
-    - affectation productOrConfig en config ou produit
-    - lien au click sur produit pour avoir tous les details
-#}
-
-
 {% block content %}
 
     {% if basket is not empty %} {# Si panier passé en paramètre n'est pas null #}
@@ -31,58 +23,78 @@
                     background: #BBDEFB; /* bleu clair */
                     padding : 5px;
                 }
+                
+                tfoot tr td
+                {
+                    background: #E0E0E0;
+                }
         </style>
 
         <h2>Voici votre panier :</h2><br><br>
-
-        <table>  
-            <tr>
-                <th>Titre</th>
-                <th>Prix</th>
-                <th>Quantité</th>
-                <th colspan="2">Modifier la quantité</th>
-                <th>Retirer le produit du panier</th>
-             </tr>
-         
-            {% for productOrConfig in basket %} {# On boucle sur le tableau 'basket' qui contient des produits et des configs #}
-
-                {# Le if else va p'etre etre retiré (si mêmes champs pour config et produit) #}
-
-                {% if productOrConfig.id_config is defined %} {# Si on est dans le cas d'une config => cad une chemise en demi-mesure #}
-
-                    <tr>
-                        <td><strong>Chemise Custom</strong></td> {# TITRE EN DUR #}
-                        <td>{{ productOrConfig.prix }} €</td>
-                        <td>{{ productOrConfig.quantite }}</td>  
-                        <td><a href={{ path('basket_increment', {idProduitEnSession: loop.index0}) }}><strong> + </strong></a></td> {# loop.index0 permet de commencer à numéroter à 0 et non 1 #}
-                        <td><a href={{ path('basket_decrement', {idProduitEnSession: loop.index0}) }}><strong> - </strong></a></td>
-                        <td><a href={{ path('basket_delete', {idProduitEnSession: loop.index0}) }}> Retirer le produit </a></td>
-                    </tr> 
-
-                {% else %} {# Si on est dans le cas d'un produit => prêt à porter #}
-
-                    <tr>
-                        <td><strong> {{ productOrConfig.titre }} </strong></td>
-                        <td>{{ productOrConfig.prix }} €</td>
-                        <td>{{ productOrConfig.quantite }}</td>
-                        <td><a href={{ path('basket_increment', {idProduitEnSession: loop.index0}) }}><strong> + </strong></a></td> {# loop.index0 permet de commencer à numéroter à 0 et non 1 #}
-                        <td><a href={{ path('basket_decrement', {idProduitEnSession: loop.index0}) }}><strong> - </strong></a></td>
-                        <td><a href={{ path('basket_delete', {idProduitEnSession: loop.index0}) }}> Retirer le produit </a></td>
-                    </tr>
-
-                {% endif %}
-
-            {% endfor %}
-    
-        </table><br><br>
         
-        {# Lien vers le paiement #}
-        <hr>
-        <a href="urlPageJulien">Passer au paiement</a><br><br><br>
+        <form method="post" action={{ path('basket_pay') }} > {#'http://localhost/custom_shirt-2/web/index_dev.php/basket/pay'#}
 
-         {% block javascripts %}
-            <script src="{{ asset('script/scriptBasket.js') }}"></script>
-        {% endblock %}
+            <table class='table'>  
+                <tr>
+                    <th>Titre</th>
+                    <th>Prix unitaire</th>
+                    <th>Quantité</th>
+                    <th colspan="2">Modifier la quantité</th>
+                    <th>Retirer le produit du panier</th>
+                    <th>Prix par type de produit</th>
+                 </tr>
+
+                <div class='container'>
+
+                    {% for productOrConfig in basket %} {# On boucle sur le tableau 'basket' qui contient des produits et des configs #}
+
+                        {# Le if else va p'etre etre retiré (si mêmes champs pour config et produit) #}
+
+                        {% if productOrConfig.id_config is defined %} {# Si on est dans le cas d'une config => cad une chemise en demi-mesure #}
+
+                            <tr class="customOrProduct">
+                                <td><strong>{{ productOrConfig.titre }}</strong></td>
+                                <td class='prix'>{{ productOrConfig.prix }} €</td>
+                                <td class='quantite'>{{ productOrConfig.quantite }}</td>  
+                                <td><a href={{ path('basket_increment', {idProduitEnSession: loop.index0}) }}><strong> + </strong></a></td> {# loop.index0 permet de commencer à numéroter à 0 et non 1 #}
+                                <td><a href={{ path('basket_decrement', {idProduitEnSession: loop.index0}) }}><strong> - </strong></a></td>
+                                <td><a href={{ path('basket_delete', {idProduitEnSession: loop.index0}) }}> Retirer le produit </a></td>
+                                <td>{{ productOrConfig.prix * productOrConfig.quantite }} €</td>
+                            </tr> 
+
+                        {% else %} {# Si on est dans le cas d'un produit => prêt à porter #}
+
+                            <tr class="customOrProduct">
+                                <td><strong> {{ productOrConfig.titre }} </strong></td>
+                                <td class='prix'>{{ productOrConfig.prix }} €</td>
+                                <td class='quantite'>{{ productOrConfig.quantite }}</td>
+                                <td><a href={{ path('basket_increment', {idProduitEnSession: loop.index0}) }}><strong> + </strong></a></td> {# loop.index0 permet de commencer à numéroter à 0 et non 1 #}
+                                <td><a href={{ path('basket_decrement', {idProduitEnSession: loop.index0}) }}><strong> - </strong></a></td>
+                                <td><a href={{ path('basket_delete', {idProduitEnSession: loop.index0}) }}> Retirer le produit </a></td>
+                                <td>{{ productOrConfig.prix * productOrConfig.quantite }} €</td>
+                            </tr>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+                <tfoot>
+                    <tr>
+                        <td><u><strong>Prix total du panier : </strong></u></td>
+                        <td class='montantPanier'></td>
+                    </tr>
+                </tfoot>
+
+            </table>
+            
+            <hr>
+        
+            <input class='montantPanierPourPost' type='hidden' name='montantTotalPanier'> {# Cette ligne sert pour passer le montant total du panier dans $_POST, la value du champ est géré par le javascript #}
+            
+            <button type ="submit" class=btn-primary">Passer au paiement</button> {# Lien vers le paiement #}
+        </form>
         
     {% else %} {# Si panier vide #}
         
@@ -90,4 +102,13 @@
         
     {% endif %}
 
+{% endblock %}
+
+
+{% block javascripts %}
+    
+    {{ parent() }}
+    
+    <script src="{{ asset('script/scriptBasket.js') }}"></script>
+    
 {% endblock %}

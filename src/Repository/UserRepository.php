@@ -15,7 +15,7 @@ class UserRepository extends RepositoryAbstract
         $data = [
             'prenom' => $user->getPrenom(),
             'nom' => $user->getNom(),
-            'date_naissance'=> $user->getDate_naissance()->format('d-m-Y'),
+            //'date_naissance'=> $user->getDate_naissance()->format('d-m-Y'),
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'adresse' => $user->getAdresse(),
@@ -81,7 +81,7 @@ class UserRepository extends RepositoryAbstract
             ->setId_user($dbUser['id_user'])
             ->setNom($dbUser['nom'])
             ->setPrenom($dbUser['prenom'])
-            ->setDate_naissance(new DateTime($dbUser['date_naissance']))
+            //->setDate_naissance(new DateTime($dbUser['date_naissance']))
             ->setEmail($dbUser['email'])
             ->setPassword($dbUser['password'])
             ->setAdresse($dbUser['adresse'])
