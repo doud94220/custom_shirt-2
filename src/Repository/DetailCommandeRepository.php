@@ -6,6 +6,7 @@ use Entity\Custom;
 use Entity\DetailCommande;
 use Entity\Produit;
 use Entity\User;
+
 /**
  * Description of DetailCommandeRepository
  *
@@ -48,15 +49,16 @@ EOS;
         return $detail_commandes; 
     }
     
-    public function save(DetailCommande $detail_commande){
+    public function save(DetailCommande $detailCommande)
+    {
         $data = [
-            'commande_id' => $detail_commande->getCommande_id(),
-            'produit_id' => $detail_commande->getProduit_id(),
-            'custom_id' => $detail_commande->getCustom_id(),
-            'quantite' => $detail_commande->getQuantite(),
-            'prix' => $detail_commande->getPrix()
+            'commande_id' => $detailCommande->getCommande_id(),
+            'produit_id' => $detailCommande->getProduit_id(),
+            'custom_id' => $detailCommande->getCustom_id(),
+            'quantite' => $detailCommande->getQuantite(),
+            'prix' => $detailCommande->getPrix()
         ];
-          
+
         $this->persist($data);
     }
     

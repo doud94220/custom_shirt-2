@@ -8,9 +8,7 @@
         {% for j in 0..2 %}
             {% if produits[produitId] is defined %}
                 <div class="col-sm-4 chemise">
-
                     <a href="{{ path('show_product', {"id":  produits[produitId].id}) }}"><img src="{{ 'http://localhost/custom_shirt-2/web/img/' ~ produits[produitId].photo }}" alt="chemise"></a>
-
                     <hr>
                     <div class="desc">
                         <p class="title"><a href="{{ path('show_product', {"id":  produits[produitId].id}) }}">{{ produits[produitId].tissu.nom }}</a></p>
