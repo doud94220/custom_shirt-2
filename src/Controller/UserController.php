@@ -76,23 +76,12 @@ class UserController extends ControllerAbstract
         //echo '<pre>'; print_r($details_commandes); echo '</pre>';
         return $this->render(
         'user/profile.html.twig',
-<<<<<<< HEAD
-        [
-            'user' => $user,
-            'commandes' => $commandes
-        ]        
-=======
             [
                 'user' => $user,
                 'commandes' => $commandes,
                 'details_commandes' => $details_commandes
             ]        
->>>>>>> master
         );
-        
-//        if(empty($commandes)){
-//            $this->addFlashMessage("Vous n'avez pas de commande", 'warning');
-//        }
     }
         
    /* public function showDetails($id_commande){

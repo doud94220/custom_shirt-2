@@ -77,20 +77,6 @@
                             {% endif %}
                         </td>
                     </tr>
-<<<<<<< HEAD
-                   {# <caption>Détail commande n°{{ commande.id_commande }}</caption>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Quantité</th>
-                        <th>Prix</th>
-                    </tr>
-                    {% for detail_commande in detail_commandes %}  
-                        <tr>
-                        {% if {{ detail_commande.produit_id }} not null %}
-                            <td>{{ produit.titre }}</td>
-                        {% else %}
-                            <td>{{ custom.titre_custom }}</td>
-=======
                     <tr><th colspan="6">Détail commande n°{{ commande.id_commande }}</th></tr>
                     <tr>
                         <th colspan="4">Titre</th>
@@ -103,16 +89,11 @@
                             <td>{{ produit.titre }}</td>
                         {% else %}
                             <td>{{ detail_commande.titre_custom }}</td>
->>>>>>> master
                         {% endif %}
                             <td>{{ detail_commande.quantite }}</td>
                             <td>{{ detail_commande.prix }}</td>
                         </tr>
-<<<<<<< HEAD
-                    {% endfor %}#}
-=======
                     {% endfor %} #}
->>>>>>> master
                 {% endfor %}
             </table>
         </div>

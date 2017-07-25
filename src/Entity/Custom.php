@@ -5,10 +5,6 @@ namespace Entity;
 class Custom 
 {
 
-<<<<<<< HEAD
-    private $id_custom;
-    private $titre_custom;
-=======
     /**
      * @var int
      */
@@ -22,7 +18,6 @@ class Custom
     /**
      * @var int
      */
->>>>>>> master
     private $tissu_id;
     
     /**
@@ -53,10 +48,6 @@ class Custom
     
     /**********GETTERS****************/
     
-<<<<<<< HEAD
-    function getId_custom() {
-        return $this->id_custom;
-=======
     /**
      * @return int
      */
@@ -69,7 +60,6 @@ class Custom
      */
     public function getTitre_custom() {
         return $this->titre_custom;
->>>>>>> master
     }
 
     /**
@@ -112,18 +102,6 @@ class Custom
      */
     /*public function getQuantite() {
         return $this->quantite;
-<<<<<<< HEAD
-    }
-    
-    public function getTitre_custom() {
-        return $this->titre_custom;
-    }
-
-        /**********SETTERS****************/
-    
-    function setId_custom($id_custom) {
-        $this->id_custom = $id_custom;
-=======
     }*/
     
     
@@ -136,7 +114,6 @@ class Custom
     function setId_custom($id_custom) {
         $this->id_custom = $id_custom;
         return $this;
->>>>>>> master
     }
 
     /**
@@ -199,19 +176,10 @@ class Custom
      */
     /*public function setQuantite($quantite) {
         $this->quantite = $quantite;
-<<<<<<< HEAD
-    }
-
-    public function setTitre_custom($titre_custom) {
-        $this->titre_custom = 'Chemise sur mesure '.$this->coupe;
-        return $this;
-    }
-=======
         return $this;
     }*/
 
    
->>>>>>> master
 
 
 }
