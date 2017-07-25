@@ -34,6 +34,7 @@
         
         <form method="post" action={{ path('basket_pay') }} > {#'http://localhost/custom_shirt-2/web/index_dev.php/basket/pay'#}
 
+
             <table class='table'>  
                 <tr>
                     <th>Titre</th>
@@ -43,7 +44,7 @@
                     <th>Retirer le produit du panier</th>
                     <th>Prix par type de produit</th>
                  </tr>
-
+                 
                 <div class='container'>
 
                     {% for productOrConfig in basket %} {# On boucle sur le tableau 'basket' qui contient des produits et des configs #}
@@ -94,8 +95,9 @@
             <input class='montantPanierPourPost' type='hidden' name='montantTotalPanier'> {# Cette ligne sert pour passer le montant total du panier dans $_POST, la value du champ est géré par le javascript #}
             
             <button type ="submit" class=btn-primary">Passer au paiement</button> {# Lien vers le paiement #}
+            
         </form>
-        
+ 
     {% else %} {# Si panier vide #}
         
         <h2>Votre panier est vide !</h2><br><br>

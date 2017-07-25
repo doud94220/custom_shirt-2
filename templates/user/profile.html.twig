@@ -5,9 +5,11 @@
 {% block content %}
     {% block commandes %}
         <div class="container">
+
             <h1>Mon compte</h1>
             <h2>Mes informations</h2>
             <table class="table">
+
                 <tr>
                     <th>Nom</th>
                     <th>Prénom</th>
@@ -27,7 +29,7 @@
                 <tr>
                     <td>{{ user.nom }}</td>
                     <td>{{ user.prenom }}</td>
-                    <td>{#{{ user.date_naissance|date('d/m/Y') }}#}</td>
+                    <td>{{ user.date_naissance|date('d/m/Y') }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.tel }}</td>
                     <td>{{ user.adresse }}</td>
@@ -35,6 +37,7 @@
                     <td>{{ user.code_postal }}</td>
                     <td>{{ user.ville }}</td>
                     <td>{{ user.sexe }}</td>
+                    <td><a href="{{ path('profile_edit') }}"><span class="glyphicon glyphicon-pencil"></span> Modifier mes infos</a></td>
                     {% if user_manager.admin %}
                         <td>{{ user.statut }}</td>
                     {% endif %}
@@ -49,6 +52,7 @@
             <br>        
             <h2>Mes commandes</h2>
             <table class="table">
+                <caption>Commandes</caption>
                 <tr>
                     <th>Id</th>
                     <th>Prix livraison</th>
@@ -58,6 +62,7 @@
                     <th width="200px">Action</th>
                 </tr>
                 {% for commande in commandes %}
+                    <tr class="info"><th colspan="6">Commande n°{{ commande.id_commande }}</th></tr>
                     <tr>
                         <td>{{ commande.id_commande }}</td>
                         <td>{{ commande.prix_livraison }}</td>
@@ -75,9 +80,27 @@
                             {% endif %}
                         </td>
                     </tr>
+                    <tr><th colspan="6">Détail commande n°{{ commande.id_commande }}</th></tr>
+                    <tr>
+                        <th colspan="4">Titre</th>
+                        <th colspan="1">Quantité</th>
+                        <th colspan="1">Prix</th>
+                    </tr>
+                    {#{% for detail_commande in details_commandes %}  
+                        <tr>
+                        {#{% if detail_commande.produit_id is defined %}
+                            <td>{{ produit.titre }}</td>
+                        {% else %}
+                            <td>{{ detail_commande.titre_custom }}</td>
+                        {% endif %}
+                            <td>{{ detail_commande.quantite }}</td>
+                            <td>{{ detail_commande.prix }}</td>
+                        </tr>
+                    {% endfor %} #}
                 {% endfor %}
-                
             </table>
+                </div>
+            </div>
         </div>
     {% endblock %}
 {% endblock %}

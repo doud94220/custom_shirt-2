@@ -1,6 +1,7 @@
 body {
     background: #F9F9F7;
     font-family: 'Open Sans', sans-serif;
+    padding-bottom: 120px;
 }
 .chemise img {
     width: 100%;
@@ -19,7 +20,7 @@ body {
 .title {
     float: left;
     display:inline-block;
-    width: 70%;
+    width:  70%;
     margin: 0;
 }
 
@@ -36,7 +37,7 @@ body {
 
 .desc {
     overflow: hidden;
-    height: auto;
+    height: 40px;
 }
 
 .voir {
@@ -51,10 +52,12 @@ body {
     border-radius: 5px;
 }
 
-.description {
+.description-title {
+
     border: 1px solid #BDBDBD;
-    height: 100%;
     text-align: center;
+    width: 100%;
+    border-radius: 5px;
 }
 
 .img_template {
@@ -62,11 +65,8 @@ body {
     width: 100%;
 }
 
-.title {
-    width: 100%;
-}
 
-.desc p {
+.desc p, h4 {
     color: #9E9E9E;
 }
 
@@ -86,4 +86,42 @@ body {
 
 .button {
     text-align: center;
+}
+
+.current_image {
+    width: 150px;
+    height: 150px;
+}
+
+.image_list_produit {
+    width: 150px;
+    height: 150px;
+}
+
+.info {
+    color: #9E9E9E;
+    border-radius: 5px;
+}
+
+.info p {
+    padding: 10px 0;
+    margin-bottom: 0;
+}
+
+.nom {
+    border-bottom: 1px solid #BDBDBD;
+    border-radius: 5px;
+}
+
+.product_info_cool {
+    height: 100px;
+    border-bottom: 1px solid #BDBDBD;
+}
+
+.ajout_panier {
+    margin-top: 5px;
+}
+    
+.navbar-inverse{
+    margin-bottom : 0;
 }

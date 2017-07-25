@@ -2,3 +2,6 @@
 /nbproject/
 /.idea/
 /var/
+composer.lock
+/composer.lock/
+/img/

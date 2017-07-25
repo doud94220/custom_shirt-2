@@ -28,7 +28,7 @@ class BasketManager
     //Méthode readBasket() qui retourne le contenu du panier
     public function readBasket()
     {
-        if(!$this->session->has('basket')) //Si y'a pas de baseket en session
+        if(!$this->session->has('basket')) //Si y'a pas de basket en session
         {
             return null;
         }
@@ -37,7 +37,6 @@ class BasketManager
             return $this->session->get('basket');
         }
     }
-    
     
     //Méthode readBasketAmount() qui retourne le prix total du panier
     public function readBasketAmount()
@@ -51,7 +50,7 @@ class BasketManager
             return $this->session->get('basketTotalAmount');
         }
     }
-    
+
     
     //Méthode qui dit si l'objet en arg est un produit ou non => retourne un booleen
     public function isProduct($objetDansPanier)
@@ -229,6 +228,8 @@ class BasketManager
     {
          $this->session->set('basketTotalAmount', $basketTotalAmount);
     }
+    
+    
     
                             //////FONCTION COMMENTEE CAR FAITE EN JQUERY
                             //Méthode calculateAmountBasket() qui va calculer me montant total du panier

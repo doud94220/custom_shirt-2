@@ -5,14 +5,17 @@ use Repository\CommandeRepository;
 use Service\BasketManager;
 use Service\UserManager;
 use Entity\User;
-use Entity\Commande;
-use Entity\DetailCommande;
 use Entity\Produit;
 use Entity\Custom;
+use Entity\Commande;
+use Entity\DetailCommande;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
 
 /**
  * Description of CommandeController
- *
+ * controlleur de l'entité Commande côté front
  * @author Julien
  */
 class CommandeController extends ControllerAbstract
@@ -24,13 +27,7 @@ class CommandeController extends ControllerAbstract
     public function showAction(){
         $user = $this->app['user.manager']->getUser();
         $commandes = $this->app['commande.repository']->findAllByUser($user);
-        var_dump($commandes);
-        if(is_null($commandes)){
-            return $this->render('');
-        }
-        else{
-            
-        }
+        
         return $this->render(
             'user/profile.html.twig',
             ['commandes' => $commandes]
@@ -126,20 +123,30 @@ class CommandeController extends ControllerAbstract
         );
     }
     
-    /**
-     * Cette méthode sert à déclencher le paiement lorsque l'utilisateur valide son panier
-     * elle prend en paramètre l'id_commande de la commande à payer
-     */
-    public function pay($id_commande){
-        
-    }
+    
     
     /**
      * Cette méthode sert à envoyer un mail de confirmation lorsque la commande est validée 
      * @param int $id_commande
      */
     public function sendConfirmationMail($id_commande){
+        $user = $this->app['user.manager']->getUser();
+        $commande = $this->app['commande.repository']->find($id_commande);
         
+        $transport = (new Swift_SmtpTransport('smtp.example.org', 25))
+            ->setUsername('admin')
+            ->setPassword('admin')
+        ;
+        
+        $mailer = new Swift_Mailer($transport);
+        
+        $message = (new Swift_Message('Validation de commande'))
+            ->setFrom(['admin@custom-shirt.com' => 'Admin'])
+            ->setTo([$this->user->getEmail() => $this->user->getNom()." ".$this->user->getPrenom()])
+            ->setBody('Merci, votre commande n°'.$this->commande->getId_commande.' a été validée')
+        ;
+        
+        echo $message;
     }
     
     /**

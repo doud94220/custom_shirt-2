@@ -50,16 +50,38 @@ class Produit
      * @var int
      */
     private $prix;
-
     private $quantite;
+    private $produitOrCustom;
     
-    private $produitOrCustom; //booleen ///Rajoute par Edouard
-    
-    //Constructeur ///Rajoute par Edouard
+
     public function __construct()
     {
         $this->setProduitOrCustom('produit');
     }
+
+    /**
+     * @var int
+     */
+    private $stock;
+
+    /**
+     * @return int
+     */
+    public function getStock()
+    {
+        return $this->stock;
+    }
+
+    /**
+     * @param int $stock
+     * @return Produit
+     */
+    public function setStock($stock)
+    {
+        $this->stock = $stock;
+        return $this;
+    }
+
 
     /**
      * @return int
@@ -222,7 +244,7 @@ class Produit
 
         return $this;
     }
-    
+
     public function getQuantite() {
         return $this->quantite;
     }
@@ -231,8 +253,6 @@ class Produit
         $this->quantite = $quantite;
         return $this;
     }
-    
-    //Rajouté par Edouard
     
     public function getProduitOrCustom()
     {

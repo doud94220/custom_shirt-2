@@ -13,8 +13,12 @@
             <label>Mot de passe</label>
             <input type="password" name="password" class="form-control">
         </div>
-        <button type="submit" class="btn btn-primary">
+        
+        <button type="submit" class="btn btn-primary"> 
             Se connecter
         </button>
+        <a href=''>Mot de passe oublié ?</a>
     </form>
+    <br>
+    <a href='{{ path('register') }}'>Pas encore de compte ? Accédez au formulaire d'inscription en cliquant sur ce lien.</a>
  {% endblock %}
