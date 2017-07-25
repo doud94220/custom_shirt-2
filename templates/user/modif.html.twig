@@ -1,15 +1,16 @@
 {% extends "layout.html.twig" %}
 
-{% block title 'Inscription' %}
+{% block title "Modification de votre profil" %}
 
 
 {% block content %}
-    <h1>Inscription</h1>
+    <h1>Modification de votre profil</h1>
     <div class="container">
-    <row class="col-xl-12">
+    <div class="row">
+        <div class="col-xl-12 col-sm-12 col-xs-12">
     <form method="post">
         <div class="form-group">
-            <label for="prenom" class="form-control">Prénom</label>
+            <label for="prenom">Prénom</label>
             <input type="text" name="prenom" class="form-control" id="prenom" value={{ user.prenom }}>
         </div>
 
@@ -20,7 +21,7 @@
 
         <div class="form-group">
             <label for="date_naissance">Date de naissance</label>
-            <input type="date" name="date_naissance" class="form-control" id="date_naissance" value={{ user.date_naissance }}>
+            <input type="date" name="date_naissance" class="form-control" id="date_naissance" value={{ user.date_naissance|date('d/m/Y') }}>
         </div>
 
         <div class="form-group">
@@ -30,7 +31,7 @@
 
         <div class="form-group">
             <label for="password">Mot de passe</label>
-            <input type="password" name="password" class="form-control" id="password" value={{ user.password }}>
+            <input type="password" name="password" class="form-control" id="password" value="******">
         </div>
 
         <div class="form-group">
@@ -61,7 +62,7 @@
 
         <div class="form-group">
             <label for="">Sexe</label>
-            <select name="depart" id="depart">
+            <select name="sexe" id="sexe">
                                 <option value="masculin">Masculin</option>
                 <option value="feminin">Féminin</option>
                             </select>
@@ -71,6 +72,7 @@
             Enregistrer
         </button>
     </form>
-    </row>
+            </div>
+    </div>
     </div>
 {% endblock %}

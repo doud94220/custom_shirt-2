@@ -51,7 +51,29 @@ class Produit
      */
     private $prix;
 
-    private $quantite;
+    /**
+     * @var int
+     */
+    private $stock;
+
+    /**
+     * @return int
+     */
+    public function getStock()
+    {
+        return $this->stock;
+    }
+
+    /**
+     * @param int $stock
+     * @return Produit
+     */
+    public function setStock($stock)
+    {
+        $this->stock = $stock;
+        return $this;
+    }
+
 
     /**
      * @return int
@@ -214,7 +236,9 @@ class Produit
 
         return $this;
     }
-    
+
+    private $quantite;
+
     public function getQuantite() {
         return $this->quantite;
     }
@@ -222,6 +246,25 @@ class Produit
     public function setQuantite($quantite) {
         $this->quantite = $quantite;
         return $this;
+    }
+
+    private $produitOrCustom;
+
+    //Constructeur ///Rajoute par Edouard
+    public function __construct()
+    {
+        $this->setProduitOrCustom('produit');
+    }
+
+
+    public function getProduitOrCustom()
+    {
+        return $this->produitOrCustom;
+    }
+
+    public function setProduitOrCustom($produitOuCustom)
+    {
+        $this->produitOrCustom = $produitOuCustom;
     }
 
 }
