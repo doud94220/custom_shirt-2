@@ -123,9 +123,8 @@ class ProduitController extends ControllerAbstract
         $produit = $this->app['produit.repository']->findById($_POST['id']);
         $produit->setQuantite(1);
         $this->app['basket.manager']->putProductToBasket($produit);
-
+        
         return new Response('');
-
     }
 
 }

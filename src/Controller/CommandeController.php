@@ -1,11 +1,18 @@
 <?php
 namespace Controller;
 
+use Repository\CommandeRepository;
+use Service\BasketManager;
+use Service\UserManager;
+use Entity\User;
+use Entity\Produit;
+use Entity\Custom;
 use Entity\Commande;
 use Entity\DetailCommande;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
+
 /**
  * Description of CommandeController
  * controlleur de l'entité Commande côté front
@@ -28,74 +35,66 @@ class CommandeController extends ControllerAbstract
     }
     
     /**
-     * cette méthode sert à créer en base une commande et ses détails à partir des éléments contenus dans le panier en session
+     * cette méthode sert à créer une COMMANDE à partir des éléments contenus dans le panier en session
      */
-    public function registerAction(){
-        
-        // vérifications et création en base des détails de la commande
-        if(!empty($_SESSION['basket']['productsandconfigs'])){
-            foreach($productOrconfig as $productsandconfigs){
-                $detail_commandes = new DetailCommande;
-                
-                $detail_commandes
-                    ->setCommande_id($_SESSION['basket']['productsandconfigs']['commande_id'])
-                    ->setPrix($_SESSION['basket']['productsandconfigs']['prix'])
-                    ->setQuantite($_SESSION['basket']['productsandconfigs']['quantite'])
-                ;
-                if(!empty($_SESSION['basket']['productsandconfigs']['custom_id'])){
-                    $detail_commandes
-                        ->setCustom_id($_SESSION['basket']['productsandconfigs']['custom_id'])
-                        ->setTitre_custom($_SESSION['basket']['productsandconfigs']['titre_custom'])    
-                    ;
-           
-                }else{
-                    $detail_commandes
-                        ->setProduit_id($_SESSION['basket']['productsandconfigs']['produit_id'])
-                        ->setTitre($_SESSION['basket']['productsandconfigs']['titre'])
-                    ;
-                }
-                // insertion en base de chaque détail de la commande
-                $this->app['detail.commandes.repository']->save($detail_commandes);
-            }
+    public function createCommandAction()
+    {
+        if($this->app['user.manager']->getUser() == null) //Si le user n'est pas connecte
+        {
+            $this->addFlashMessage('Vous devez être loggué pour payer votre panier', 'error');
+            return $this->redirectRoute('basket_pay');
         }
-        
-        //vérifications et création en base de la commande
-        $commande = new Commande();
-        $errors = [];
-        
-        if(!empty($_SESSION['basket'])){
-            $commande
-                ->setUser_id($_SESSION['basket']['user_id'])
-                ->setPrix_livraison($_SESSION['basket']['prix_livraison'])
-                ->setTotal($_SESSION['basket']['total'])
-                ->setEtat('en préparation')
-                ->setDate_commande(NOW())
-            ;
-        }
-        
-        // message et redirection s'il n'y a pas d'utilisateur associé au panier
-        if(empty($_SESSION['basket']['user'])){
-            $errors['user'] = 'Veuillez vous connecter ou créer un compte';
-            return $this->redirectRoute('login');
-        }
-        
-        // message et redirection si le panier est vide
-        if(empty(['basket']['productsandconfigs'])){
-            $errors['productsandconfigs'] = 'Votre panier est vide !';
-            return $this->redirectRoute('homepage');
-        }
-        
-        // insertion en base de la commande
-        if(empty($errors)){
-            $this->app['commande.repository']->save($commande);
-            $this->addFlashMessage("Toute l'équipe de Custom-shirt vous remercie pour votre confiance ! Votre commande a été enregistrée avec succès. Vous pouvez suivre l'ensemble de vos commandes depuis votre page personnelle", 'success');
-            return $this->redirectRoute('profile');
-        }else{
-            $msg = '<strong>Requête impossible</strong>';
-            $msg .= '<br>'. implode('<br>', $errors);
 
-            $this->addFlashMessage($msg, 'error');
-        }
+        ////// Recup 'basket' et 'basketTotalAmount' à partir de la session
+        $productsAndConfigs = $this->app['basket.manager']->readBasket();
+        $basketAmount = $this->app['basket.manager']->readBasketAmount();
+        
+        ////// Insertion d'une partie de la commande dans la table commande (etape 1 sur 2)
+        $commande = new Commande();
+        $idUser = $this->app['user.manager']->getUser()->getId_user();
+        $commande->setUser_id($idUser);
+        $commande->setPrix_livraison(15); //PRIX LIVRAISON EN DUR
+        $commande->setTotal($basketAmount+15); //IDEM
+        $commande->setEtat('en préparation');
+        $this->app['commande.repository']->save($commande); //Insertion ds table commande
+        
+        ////// Insertion d'une partie de la commande dans la table detail_commande (etape 2 sur 2)
+         //Recup du dernier id dans la table commande
+        $lastIdTableCommand = $this->app['commande.repository']->getLastInsertId();
+        
+        //On boucle sur les produits du panier
+        foreach ($productsAndConfigs as $productOrConfig)
+        {
+            //Instanciation d'une DetailCommande
+            $detailCommande = new DetailCommande();
+
+            //Set de l'id
+            $detailCommande->setCommande_id($lastIdTableCommand);
+
+            //Set de l'id du produit ou de la config
+            if ($this->app['basket.manager']->isProduct($productOrConfig)) //Si c'est un produit
+            {
+                $idProduit = $productOrConfig->getId();
+                $detailCommande->setProduit_id($idProduit);
+            }
+            else //Si c'est une config
+            {
+                $idConfig = $productOrConfig->getId_config();
+                $detailCommande->setCustom_id($idConfig);
+            }
+
+            //Set de la quantite
+            $quantiteProduitOuConfig = $productOrConfig->getQuantite();
+            $detailCommande->setQuantite($quantiteProduitOuConfig);
+
+            //Set du prix
+            $prixProduitOuConfig = $productOrConfig->getPrix();
+            $detailCommande->setPrix($prixProduitOuConfig);        
+
+            ////Insertion ds table id_commande
+            $this->app['detail.commande.repository']->save($detailCommande);
+            
+        }//Fin du foreach
     }
     
     /**

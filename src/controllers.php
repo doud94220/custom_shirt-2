@@ -24,6 +24,9 @@ $app
 $app
     ->match('/basket/delete/{idProduitEnSession}', 'basket.controller:deleteAction')
     ->bind('basket_delete');
+$app
+    ->match('/basket/pay', 'basket.controller:payAction')
+    ->bind('basket_pay');
 
 $app
     ->match('/basket/paiement', 'basket.controller:payAction')
@@ -174,6 +177,11 @@ $app
 $app
     ->match('/profile/modifier', 'user.controller:modifAction')
     ->bind('profile_edit')
+;
+//Rajouté par Edouard
+$app
+    ->match('/profile/create_command', 'commande.controller:createCommandAction')
+    ->bind('create_command')
 ;
 
 

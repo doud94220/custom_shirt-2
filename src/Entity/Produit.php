@@ -50,6 +50,14 @@ class Produit
      * @var int
      */
     private $prix;
+    private $quantite;
+    private $produitOrCustom;
+    
+
+    public function __construct()
+    {
+        $this->setProduitOrCustom('produit');
+    }
 
     /**
      * @var int
@@ -237,8 +245,6 @@ class Produit
         return $this;
     }
 
-    private $quantite;
-
     public function getQuantite() {
         return $this->quantite;
     }
@@ -247,16 +253,7 @@ class Produit
         $this->quantite = $quantite;
         return $this;
     }
-
-    private $produitOrCustom;
-
-    //Constructeur ///Rajoute par Edouard
-    public function __construct()
-    {
-        $this->setProduitOrCustom('produit');
-    }
-
-
+    
     public function getProduitOrCustom()
     {
         return $this->produitOrCustom;
@@ -266,5 +263,4 @@ class Produit
     {
         $this->produitOrCustom = $produitOuCustom;
     }
-
 }
