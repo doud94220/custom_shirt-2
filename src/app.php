@@ -1,6 +1,8 @@
 <?php
 
+use Controller\Admin\ProduitController as AdminProduitController;
 use Controller\Admin\CommandeController as AdminCommandeController;
+use Controller\Admin\StockController as AdminStockController;
 use Controller\BasketController;
 use Controller\CommandeController;
 use Controller\CustomController;
@@ -16,7 +18,9 @@ use Repository\CustomRepository;
 use Repository\DetailCommandeRepository;
 use Repository\ProduitRepository;
 use Repository\TissuRepository;
+use Repository\TypeRepository;
 use Repository\UserRepository;
+use Repository\StockRepository;
 use Service\BasketManager;
 use Service\CustomManager;
 use Service\UserManager;
@@ -28,6 +32,7 @@ use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\SwiftmailerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
+
 
 
 $app = new Application();
@@ -145,6 +150,17 @@ $app['detail.commande.controller'] = function () use ($app){
 
 
 /* ADMIN */
+$app['admin.produit.controller'] = function () use ($app) {
+
+    return new AdminProduitController($app);
+};
+
+$app['admin.stock.controller'] = function () use ($app) {
+
+    return new AdminStockController($app);
+};
+
+
 $app['admin.commande.controller'] = function () use ($app)
 {
     return new CommandeController($app);
@@ -157,7 +173,9 @@ $app['custom.controller'] = function() use ($app)
 
             
 /* Déclaration des repositories en service */
-
+$app['type.repository'] = function () use ($app) {
+    return new TypeRepository($app['db']);
+};
 
 $app['custom.repository'] = function() use ($app) {
     return new CustomRepository($app);
@@ -195,8 +213,19 @@ $app['detail.commande.repository'] = function () use ($app)
     return new DetailCommandeRepository($app['db']);
 };
 
+$app['detail.commande.repository'] = function () use ($app)
+{
+    return new DetailCommandeRepository($app['db']);
+};
+
+
 $app['user.repository'] = function () use ($app){
     return new UserRepository($app['db']);
+};
+
+$app['stock.repository'] = function () use ($app) {
+
+    return new StockRepository($app['db']);
 };
 
 return $app;

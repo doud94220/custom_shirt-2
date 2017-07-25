@@ -53,8 +53,9 @@ body {
 
 .description {
     border: 1px solid #BDBDBD;
-    height: 100%;
+    /*height: 100%;*/
     text-align: center;
+    color: red;
 }
 
 .img_template {
@@ -86,4 +87,25 @@ body {
 
 .button {
     text-align: center;
+}
+
+.current_image {
+    width: 150px;
+    height: 150px;
+}
+
+.image_list_produit {
+    width: 150px;
+    height: 150px;
+}
+
+
+.info {
+
+    color: red;
+}
+
+.product_info_title {
+
+    
 }

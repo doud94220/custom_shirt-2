@@ -37,5 +37,4 @@ EOS;
         
         return $detail_commandes; 
     }
-
 }

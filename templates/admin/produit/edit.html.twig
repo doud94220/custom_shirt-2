@@ -1,0 +1,85 @@
+{% extends "layout.html.twig" %}
+
+{% block title 'Admin produit' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <h1>
+                {% if produit.id is empty %}
+                    Ajouter un nouveau
+                {% else %}
+                    Modifier un
+                {% endif %}
+                produit
+            </h1>
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Type</label>
+                    <select name="type" class="form-control">
+                        <option value="">Coisissez un type</option>
+                        {#pour ne pas afficher des doublons on boucle que 3 fois(pour les doublons voir la BD table 'type')#}
+                        {% for i in 0..2 %}
+                            <option value="{{ types[i].id }}"
+                                    {% if types[i].id == produit.type.id %}selected{% endif %}>
+                                {{ types[i].type }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Tissu</label>
+                    <select name="tissu" class="form-control">
+                        <option value="">Choisissez un tissu</option>
+                        {% for tissu in tissus %}
+                            <option value="{{ tissu.id }}"
+                                    {% if tissu.id == produit.tissu.id %}selected{% endif %}>
+                                {{ tissu.nom }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Titre</label>
+                    <input name="titre" type="text" class="form-control" value="{{ produit.titre }}"></input>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" type="text" class="form-control" rows="6">{{ produit.description }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Photo</label>
+                    <input type="file" id="photo" name="photo">
+                    <i>Vous pouvez uploader une photo</i>
+                    {#si id de produit est définie ça veut dire qu'on modifie le produit est on affiche son image (qui
+                    est da la BD), sinon (création d'un nouveaux produit) on affiche pas l'image(car le produit existe pas
+                    da la BD)#}
+                    {% if produit.id is not empty %}
+                        <img class="current_image" src="http://localhost/custom_shirt-2/web/img/{{ produit.photo }}">
+                        <input type="hidden" name="photo_actuelle" value="{{ produit.photo }}">
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label>Sexe</label>
+                    <select name="sexe" class="form-control">
+                        <option value="">Sexe</option>
+                        <option value="m" {% if produit.sexe == "m" %}selected{% endif %}>Homme</option>
+                        <option value="f" {% if produit.sexe == "f" %}selected{% endif %}>Femme</option>
+                        <option value="mixte" {% if produit.sexe == "mixte" %}selected{% endif %}>Mixte</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Prix</label>
+                    <input name="prix" type="text" class="form-control" value="{{ produit.prix }}"></input>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Enregistrer
+                </button>
+                <a href="{{ path('admin_produits') }}" class="btn btn-default">
+                    Annuler
+                </a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

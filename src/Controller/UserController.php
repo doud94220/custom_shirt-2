@@ -133,6 +133,7 @@ class UserController extends ControllerAbstract
     public function modifAction()
     {
         $user = $this->app['user.manager']->getUser();
+        echo'<pre>';print_r($user);echo '</pre>';
 
         if (!empty($_POST)) {
             $user
@@ -187,9 +188,9 @@ class UserController extends ControllerAbstract
             if (empty($errors)) {
                 $user->setPassword($this->app['user.manager']->encodePassword($_POST['password']));
                 $this->app['user.repository']->save($user);
-                $this->app['user.manager']->login($user);
 
-                return $this->redirectRoute('homepage');
+
+                return $this->redirectRoute('profile');
             } else {
                 $msg = '<strong>Le formulaire contient des erreurs</strong>';
                 $msg .= '<br>' . implode('<br>', $errors);
@@ -197,6 +198,7 @@ class UserController extends ControllerAbstract
                 $this->addFlashMessage($msg, 'error');
             }
         }
+
 
         return $this->render(
             'user/modif.html.twig',
@@ -208,6 +210,7 @@ class UserController extends ControllerAbstract
 
     public function showProfile(){
         $user = $this->app['user.manager']->getUser();
+        echo '<pre>';print_r($user);echo '</pre>';
         $commandes = $this->app['commande.repository']->findAllByUser($user);
         
         return $this->render(

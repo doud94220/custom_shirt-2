@@ -12,7 +12,6 @@ namespace Entity;
 class Tissu
 {
     private $id;
-
     private $nom;
     private $desc;
     private $photo;
@@ -21,6 +20,25 @@ class Tissu
     private $grammage;
     private $tirage;
     private $stock;
+    private $fil;
+
+    /**
+     * @return mixed
+     */
+    public function getFil()
+    {
+        return $this->fil;
+    }
+
+    /**
+     * @param mixed $fil
+     * @return Tissu
+     */
+    public function setFil($fil)
+    {
+        $this->fil = $fil;
+        return $this;
+    }
 
     /**
      * @return mixed
@@ -182,6 +200,11 @@ class Tissu
     {
         $this->stock = $stock;
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nom;
     }
 
 

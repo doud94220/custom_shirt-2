@@ -130,26 +130,6 @@ EOS;
     }
 
 
-   /* public function removeUser($id_user){
-       $dbuser = $this ->db->fetchAssoc(
-           'DELETE id_user FROM user where id_user= :id_user',
-           [':id_user' => $id_user]
-       );
-
-        if (!empty($dbUser)) {
-            return $this->buildFromArray($dbUser);
-        }
-
-        return null;
-    }*/
-
-
-       /* public function removeUser($id)
-        {
-
-            ("DELETE FROM user WHERE id_user = :id_user");
-
-        }*/
 
 
 
@@ -157,8 +137,6 @@ EOS;
     {
         $this->db->delete('user', ['id_user' => $user->getId_user()]);
     }
-
-
 
 
 

@@ -4,6 +4,8 @@ namespace Service;
 
 use Symfony\Component\HttpFoundation\Session\Session;
 use Entity\Basket;
+use Entity\Produit;
+use Entity\Custom;
 
 /*
 Vue de la session avec le basket dedans :
@@ -16,75 +18,16 @@ class BasketManager
 {
     private $session;
 
-    //Constructeur qui initialise la session
+    //Constructeur qui initialise (initialiser ? Vraiment ?) la session
     public function __construct(Session $session)
     {
         $this->session = $session;
     }
-    
-  
-    //Méthode putProductToBasket($produit) qui met en session les infos du PRODUIT choisi
-    public function putProductToBasket($produit)
-    {
-        //Initialisation variable basket
-        if(!$this->session->get('basket')) //Si y'a pas de panier
-        {
-           //Créer un objet Basket
-           $basket = new Basket();
-           
-           //Y placer un tableau de produit(s) et config(s)
-
-
-           $productsAndConfigs = [];
-           $basket = $productsAndConfigs;
-        }
-        else //Si y'a un panier
-        {
-           $productsAndConfigs[] = $this->session->get('basket'); //Je recup la value correspondant à la key 'basket'
-        }
-        
-        //Ajouter le produit (en arg de la focntion) dans le $productsAndConfigs[] du panier
-        $productsAndConfigs[] = $produit;
-        
-        //Maj panier en session
-        $this->session->set('basket', $productsAndConfigs[]);
-        
-    }//Fin putProductToBasket()
-  
-  
-    //Méthode putConfigToBasket($config) qui met en session les infos de la CONFIG choisi
-    public function putConfigToBasket($config)
-    {
-        //Initialisation variable basket
-        if(!$this->session->get('basket')) //Si y'a pas de panier
-        {
-          //Créer un objet Basket
-          $basket = new Basket();
-           
-           //Y placer un tableau de produit(s) et config(s)
-
-          $productsAndConfigs = array();
-
-          $basket = $productsAndConfigs;
-        }
-        else //Si y'a un panier
-        {
-           $productsAndConfigs[] = $this->session->get('basket'); //Je recup la value correspondant à la key 'basket'
-        }
-        
-        //Ajouter la config (en arg de la focntion) dans le $productsAndConfigs[] du panier
-        $productsAndConfigs[] = $config;
-        
-        //Maj panier en session
-        $this->session->set('basket', $productsAndConfigs[]);
-        
-    }//Fin putConfigToBasket()
-    
+          
 
     //Méthode readBasket() qui retourne le contenu du panier
     public function readBasket()
     {
-
         if(!$this->session->has('basket')) //Si y'a pas de panier
         {
             return null;
@@ -94,5 +37,184 @@ class BasketManager
             return $this->session->get('basket');
         }
     }
+    
+    
+    //Méthode qui dit si l'objet en arg est un produit ou non => retourne un booleen
+    public function isProduct($objetDansPanier)
+    {
+        if($objetDansPanier->getProduitOrCustom() == 'produit')
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    
+    //Méthode qui retourne la position d'un produit dans le panier de la session (si il existe), si il n'existe pas il retourne -1
+    public function findProductInBasket(Produit $produit)
+    {
+        $productsAndConfigs = $this->readBasket(); //Récupérer le panier en session
+        
+        if ($productsAndConfigs == null) //Si le panier est vide
+        {
+            return -1; //on n'a pas trouvé le produit donc on retourne -1
+        }
+        else //Si le panier n'est pas vide
+        {
+            //Init position dans panier
+            $positionDansPanier = 0;
+            
+            //On boucle sur le tableau d'objets (product ou config) dans le panier
+            foreach ($productsAndConfigs as $productOrConfig)
+            {
+                //echo 'position dans panier : ' . $positionDansPanier . '<br>';
+                //echo $this->isProduct($productOrConfig) . '<br>';
+                
+                if ($this->isProduct($productOrConfig)) //si l'objet est un produit
+                {
+                    //echo 'on vient de passer isProduct<br>';
+                    //echo '<pre>'; print_r($productOrConfig); echo '</pre><br><br>';	
+                    //echo 'id du produit : ' . $productOrConfig->getId() . '<br><br>';
+                    
+                    //On regarde si c'est le même produit que celui passé en arg de la fonction
+                    if($productOrConfig->getId() == $produit->getId())
+                    {
+                        return $positionDansPanier;
+                    }
+                }
+                
+                $positionDansPanier++;
+            }
+            
+            //Si on n'a rien trouvé
+            return -1;
+        }
+    }// fin de findProductInBasket()
+    
+    
+    //Méthode qui dit si l'objet en arg est un custom ou non => retourne un booleen
+    public function isCustom($objetDansPanier)
+    {
+        if($objetDansPanier->getProduitOrCustom() == 'custom')
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    //Méthode qui retourne la position d'une config dans le panier de la session (si elle existe), si elle n'existe pas on retourne -1
+    public function findConfigInBasket(Custom $config)
+    {
+        $productsAndConfigs = $this->readBasket(); //Récupérer le panier en session
+        
+        if ($productsAndConfigs == null) //Si le panier est vide
+        {
+            return -1; //on n'a pas trouvé la config donc on retourne -1
+        }
+        else //Si le panier n'est pas vide
+        {
+            //Init position dans panier
+            $positionDansPanier = 0;
+            
+            //On boucle sur le tableau d'objets (product ou config) dans le panier
+            foreach ($productsAndConfigs as $productOrConfig)
+            {
+                if ($this->isCustom($productOrConfig)) //si l'objet est une config ou custom (pareil)
+                {
+                    //On regarde si c'est le même produit que celui passé en arg de la fonction
+                    if($productOrConfig->getId_config() == $config->getId_config())
+                    {
+                        return $positionDansPanier;
+                    }
+                }
+                
+                $positionDansPanier++;
+            }
+            
+            //Si on n'a rien trouvé
+            return -1;
+        }
+    }//Fin de findConfigInBasket()
+    
+    
+    //Méthode putProductToBasket($produit) qui met en session les infos du produit choisi
+    public function putProductToBasket($produit)
+    {
+        //echo '<pre>'; print_r($produit); echo '</pre><br><br>';	
+
+        ///// Initialisation variable basket
+        if(!$this->session->get('basket')) //Si y'a pas de panier
+        {
+           //Initialisation du tableau contenu dans basket dans la session
+           $productsAndConfigs = [];
+        }
+        else //Si y'a un panier
+        {
+           $productsAndConfigs = $this->session->get('basket'); //Je recup le panier
+        }
+
+        ///// Ajout du produit dans le panier (soit incrémenter quantité ou mettre un nouveau produit en quantité = 1)
+        if($this->findProductInBasket($produit) != -1) //Si le produit est deja présent dans le panier
+        {
+            //Alors aller incrémenter la quantité de ce produit
+            $positionDansPanier = $this->findProductInBasket($produit);
+            $produitDontQuantiteFautIncrementer = $productsAndConfigs[$positionDansPanier];
+            $quantiteAvantIncrementation = $produitDontQuantiteFautIncrementer->getQuantite();
+            $produitDontQuantiteFautIncrementer->setQuantite($quantiteAvantIncrementation + 1);
+            $productsAndConfigs[$positionDansPanier] = $produitDontQuantiteFautIncrementer;
+        }
+        else //Le produit n'etait pas encore dans le panier
+        {
+            //Ajouter le produit (en arg de la fonction) dans le $productsAndConfigs[] du panier à la fin
+            array_push($productsAndConfigs, $produit);
+        }
+
+        ///// Maj panier en session
+        $this->session->set('basket', $productsAndConfigs);
+        
+    }//Fin putProductToBasket()
+    
+    
+    //Méthode putConfigToBasket($config) qui met en session les infos de la CONFIG choisie
+    public function putConfigToBasket($config)
+    {
+        ///// Initialisation variable basket
+        if(!$this->session->get('basket')) //Si y'a pas de panier
+        {
+           //Initialisation du tableau contenu dans basket dans la session
+           $productsAndConfigs = [];
+        }
+        else //Si y'a un panier
+        {
+           $productsAndConfigs = $this->session->get('basket'); //Je recup le panier
+        }
+
+        ///// Ajout de la config dans le panier (soit incrémenter quantité ou mettre une nouvelle config en quantité = 1)
+        if($this->findConfigInBasket($config) != -1) //Si la config est deja présent dans le panier
+        {
+            //Alors aller incrémenter la quantité de cette config
+            $positionDansPanier = $this->findConfigInBasket($config);
+            $configDontQuantiteFautIncrementer = $productsAndConfigs[$positionDansPanier];
+            $quantiteAvantIncrementation = $configDontQuantiteFautIncrementer->getQuantite();
+            $configDontQuantiteFautIncrementer->setQuantite($quantiteAvantIncrementation + 1);
+            $productsAndConfigs[$positionDansPanier] = $configDontQuantiteFautIncrementer;
+        }
+        else //La config n'etait pas encore dans le panier
+        {
+            //Ajouter la config (en arg de la fonction) dans le $productsAndConfigs[] du panier à la fin
+            array_push($productsAndConfigs, $config);
+        }
+
+        ///// Maj panier en session
+        $this->session->set('basket', $productsAndConfigs);
+        
+    }//Fin putConfigToBasket()
+
 
 }//Fin BasketManager
