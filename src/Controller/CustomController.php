@@ -3,7 +3,7 @@
 namespace Controller;
 
 use Entity\User;
-use Service\CustomManager;
+use Repository\UserRepository;
 
 class CustomController extends ControllerAbstract {
 
@@ -19,7 +19,7 @@ class CustomController extends ControllerAbstract {
                 $this->addFlashMessage("Merci de choisir un tissu", 'error');
               
             } else {
-                var_dump($_POST['custom_product']);
+                //var_dump($_POST['custom_product']);
 
                 $this->app['custom.manager']->setTissu($_POST['custom_product']);
                 
@@ -99,7 +99,7 @@ class CustomController extends ControllerAbstract {
                 //redirection vers la page suivante
             } else {
                 $this->app['custom.manager']->setCoupe($_POST['custom_product']);
-                return $this->redirectRoute('custom_recap');
+                return $this->redirectRoute('etape_5_poidstaille');
                 //$_SESSION['id_tissu'] = $_POST['id'];
                 // Créer un tableau associatif pour mieux définir les données récupérées
             }
@@ -113,10 +113,9 @@ class CustomController extends ControllerAbstract {
     }
 
     public function fillTaillePoids() {
-        //$user = $this->session->get('user');
-        //$user = $this->app['user.repository']->save();
+
         $user = new User();
-        $errors = [];
+        
 
         if (!empty($_POST)) {
             $user
@@ -125,30 +124,33 @@ class CustomController extends ControllerAbstract {
             ;
 
             if (empty($_POST['poids'])) {
-                $errors['poids'] = 'Merci de renseigner votre poids';
+                $this->addFlashMessage("Merci de renseigner un poids", 'error');
             }
 
-            if (empty($_POST['taille'])) {
+            elseif (empty($_POST['taille'])) {
                 $errors['taille'] = 'Merci de renseigner votre taille';
             }
 
-            if (!is_numeric($_POST['poids'])) {
+            elseif (!is_numeric($_POST['poids'])) {
                 $errors['poids'] = 'Merci de renseigner un chiffre';
             }
-            if (!is_numeric($_POST['taille'])) {
+            elseif (!is_numeric($_POST['taille'])) {
                 $errors['taille'] = 'Merci de renseigner un chiffre';
             }
 
-            if (empty($errors)) {
-                $this->app['user.repository']->saveTaillePoids($user);
+            else 
+            {
+                $this->app['custom.manager']->setPoidsTaille($_POST['poids'], $_POST['taille']);
                 return $this->redirectRoute('etape_5_tronc');
+                
             }
         }
 
         return $this->render
                         (
-                        'custom/mesure_etape1.html.twig', [
-                    'user' => $user
+                        'custom/mesure_etape1.html.twig', 
+                        [
+                            'user' => $user
                         ]
         );
     }
@@ -159,7 +161,7 @@ class CustomController extends ControllerAbstract {
         $errors = [];
 
         if (!empty($_POST)) {
-            $custom
+            $user
                     ->setTour_cou($_POST['tour_cou'])
                     ->setTour_poitrine($_POST['tour_poitrine'])
                     ->setTour_taille($_POST['tour_taille'])
@@ -195,7 +197,7 @@ class CustomController extends ControllerAbstract {
                 $errors['tour_bassin'] = 'Merci de renseigner un chiffre';
             }
             if (empty($errors)) {
-                $custom->app['user.repository']->save($custom);
+                $this->app['custom.manager']->setTronc($_POST['tour_cou'], $_POST['tour_poitrine'], $_POST['tour_taille'], $_POST['tour_bassin']);
                 return $this->redirectRoute('etape_5_bras');
             }
         }
@@ -213,10 +215,10 @@ class CustomController extends ControllerAbstract {
         $errors = [];
 
         if (!empty($_POST)) {
-            $custom
+            $user
                     ->setManche_droite($_POST['manche_droite'])
                     ->setManche_gauche($_POST['manche_gauche'])
-                    ->setPoignet_droit($_POST['poitgnet_droit'])
+                    ->setPoignet_droit($_POST['poignet_droit'])
                     ->setPoignet_gauche($_POST['poignet_gauche'])
             ;
 
@@ -249,8 +251,8 @@ class CustomController extends ControllerAbstract {
                 $errors['poignet_gauche'] = 'Merci de renseigner un chiffre';
             }
             if (empty($errors)) {
-                $custom->app['user.repository']->save($custom);
-                return $this->redirectRoute('etape_5_bras');
+                $this->app['custom.manager']->setBras($_POST['manche_droite'], $_POST['manche_gauche'], $_POST['poignet_droit'], $_POST['poignet_gauche']);
+                return $this->redirectRoute('etape_5_carrure');
             }
         }
         return $this->render
@@ -267,11 +269,12 @@ class CustomController extends ControllerAbstract {
         $errors = [];
 
         if (!empty($_POST)) {
-            $custom
+            //var_dump($_POST);
+            $user
                     ->setCarrure($_POST['carrure'])
                     ->setEpaule_droite($_POST['epaule_droite'])
                     ->setEpaule_gauche($_POST['epaule_gauche'])
-                    ->setLongueur_dos($_POST['dos'])
+                    ->setDos($_POST['dos'])
             ;
 
             if (empty($_POST['carrure'])) {
@@ -287,7 +290,7 @@ class CustomController extends ControllerAbstract {
             }
 
             if (empty($_POST['dos'])) {
-                $errors['longueur_dos'] = 'Merci de renseigner la mesure : Longueur dos en cm';
+                $errors['dos'] = 'Merci de renseigner la mesure : Longueur dos en cm';
             }
 
             if (!is_numeric($_POST['carrure'])) {
@@ -300,11 +303,11 @@ class CustomController extends ControllerAbstract {
                 $errors['epaule_droite'] = 'Merci de renseigner un chiffre';
             }
             if (!is_numeric($_POST['dos'])) {
-                $errors['longueur_dos'] = 'Merci de renseigner un chiffre';
+                $errors['dos'] = 'Merci de renseigner un chiffre';
             }
             if (empty($errors)) {
-                $custom->app['user.repository']->save($custom);
-                return $this->redirectRoute('etape_5_carrure');
+                $this->app['custom.manager']->setCarrure($_POST['carrure'], $_POST['epaule_gauche'], $_POST['epaule_droite'], $_POST['dos']);
+                return $this->redirectRoute('custom_recap');
             }
         }
         return $this->render
@@ -316,7 +319,7 @@ class CustomController extends ControllerAbstract {
     }
 
     //Fonction pour voir tout le panier
-    public function consultSessionCustom() 
+    public function consultSession() 
     {
         if (!$this->session->has('custom')) 
         { //S'il n'y a pas de session existante
@@ -327,21 +330,149 @@ class CustomController extends ControllerAbstract {
         {
             $custom = $this->session->get('custom');
             //$custom = $this->app['custom.manager']->readCustom()->getTissu(); //S'il y a une session affichage des informations
-            //print_r($custom['tissu']);
+            //print_r($custom);die;
         }
+        
         $elements = [];
-        $tissu = $this->app['customrecap.repository']->findTissuById($custom['tissu']);
+        $tissu = $this->app['tissu.repository']->findTissuById($custom['tissu']);
+        $bouton = $this->app['bouton.repository']->findBoutonById($custom['bouton']);
+        $col = $this->app['col.repository']->findColById($custom['col']);
+        $coupe = $this->app['coupe.repository']->findCoupeById($custom['coupe']);
+        $poids = $custom ['user_poids'];
+        $taille = $custom ['user_taille'];
+        $tour_cou = $custom ['user_tour_cou'];
+        $tour_poitrine = $custom ['user_tour_poitrine'];
+        $tour_taille = $custom['user_tour_taille'];
+        $tour_bassin = $custom['user_tour_bassin'];
+        $manche_droite = $custom['user_manche_droite'];
+        $manche_gauche = $custom['user_manche_gauche'];
+        $poignet_droit = $custom['user_poignet_droit'];
+        $poignet_gauche = $custom['user_poignet_gauche'];
+        $carrure = $custom['user_carrure'];
+        $epaule_droite = $custom['user_epaule_droite'];
+        $epaule_gauche = $custom['user_epaule_gauche'];
+        $dos = $custom['user_dos'];
+        $elements[] = $bouton;
         $elements[] = $tissu;
-        
+        $elements[] = $col;
+        $elements[] = $coupe;
+        $elements[] = $poids;
+        $elements[] = $tour_cou;
+        $elements[] = $tour_poitrine;
+        $elements[] = $tour_taille;
+        $elements[] = $tour_bassin;
+        $elements[] = $manche_droite;
+        $elements[] = $manche_gauche;
+        $elements[] = $poignet_droit;
+        $elements[] = $poignet_gauche;
+        $elements[] = $carrure;
+        $elements[] = $epaule_droite;
+        $elements[] = $epaule_gauche;
+        $elements[] = $dos;
         //print_r($elements);die;
-        
         return $this->render
                         (
-                    'custom/customrecap.html.twig', [
-                    'custom' => $tissu
-                        ]
+                    'custom/customrecap.html.twig', 
+                    [
+                    'tissu' => $tissu,
+                    'bouton' => $bouton,
+                    'col' => $col,
+                    'coupe' => $coupe,
+                    'poids' => $poids,
+                    'taille' => $taille,
+                    'tour_cou' => $tour_cou,
+                    'tour_poitrine' => $tour_poitrine,
+                    'tour_taille' => $tour_taille,
+                    'tour_bassin' => $tour_bassin,
+                    'manche_droite' => $manche_droite,
+                    'manche_gauche' => $manche_gauche,
+                    'poignet_droit' => $poignet_droit,
+                    'poignet_gauche' => $poignet_gauche,
+                    'carrure' => $carrure,
+                    'epaule_droite' => $epaule_droite,
+                    'epaule_gauche' => $epaule_gauche,
+                    'dos' => $dos
+                    ]
         );
     }
+    
+    public function customValidateAction()
+    {
+        $user = new User();
+         
+        $sessioncustom = $this->app['custom.manager']->readCustom();
+        print_r($sessioncustom);
+        $poids = $sessioncustom['user_poids'];
+        $taille = $sessioncustom ['user_taille'];
+        $tour_cou = $sessioncustom ['user_tour_cou'];
+        $tour_poitrine = $sessioncustom ['user_tour_poitrine'];
+        $tour_taille = $sessioncustom['user_tour_taille'];
+        $tour_bassin = $sessioncustom['user_tour_bassin'];
+        $manche_droite = $sessioncustom['user_manche_droite'];
+        $manche_gauche = $sessioncustom['user_manche_gauche'];
+        $poignet_droit = $sessioncustom['user_poignet_droit'];
+        $poignet_gauche = $sessioncustom['user_poignet_gauche'];
+        $carrure = $sessioncustom['user_carrure'];
+        $epaule_droite = $sessioncustom['user_epaule_droite'];
+        $epaule_gauche = $sessioncustom['user_epaule_gauche'];
+        $dos = $sessioncustom['user_dos'];
+
+        $user
+            ->setPoids($poids)
+            ->setTaille($taille)
+            ->setTour_cou($tour_cou)
+            ->setTour_cou($tour_cou)
+            ->setTour_poitrine($tour_poitrine)
+            ->setTour_taille($tour_taille)
+            ->setTour_bassin($tour_bassin)
+            ->setManche_droite($manche_droite)
+            ->setManche_gauche($manche_gauche)
+            ->setPoignet_gauche($poignet_gauche)
+            ->setPoignet_droit($poignet_droit)
+            ->setCarrure($carrure)
+            ->setEpaule_droite($epaule_droite)
+            ->setEpaule_gauche($epaule_gauche)
+            ->setDos($dos)
+            ;
+        
+        $this->app['user.repository']->saveUserMeasure($user); 
+        
+                return $this->render
+                        (
+                        'custom/customvalidate.html.twig', 
+                        [
+//                    'user' => $user
+                       ]
+       );
+
+    }
+    
+//    public function consultSessionCustomBouton() 
+//    {
+//        if (!$this->session->has('custom')) 
+//        { //S'il n'y a pas de session existante
+//            return $this->redirectRoute('etape_1_tissu');
+//        } 
+//        
+//        else 
+//        {
+//            $custom = $this->session->get('custom');
+//            //$custom = $this->app['custom.manager']->readCustom()->getTissu(); //S'il y a une session affichage des informations
+//            //print_r($custom['tissu']);
+//        }
+//        $elements = [];
+//        $bouton = $this->app['customrecapbouton.repository']->findBoutonById($custom['bouton']);
+//        $elements[] = $bouton;
+//        
+//        //print_r($elements);die;
+//        
+//        return $this->render
+//                        (
+//                    'custom/customrecap.html.twig', [
+//                    'custom' => $bouton
+//                        ]
+//        );
+//    }
     
 //        //Fonction pour supprimer un produit du panier
 //    public function deleteAction($idProduitEnSession)
@@ -364,4 +495,8 @@ class CustomController extends ControllerAbstract {
 //
 //    }//Fin deleteAction()
 
+    
+    
+    
 }
+

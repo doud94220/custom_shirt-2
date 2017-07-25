@@ -8,7 +8,6 @@ use Controller\IndexController;
 use Controller\ProduitController;
 use Controller\UserController;
 use Repository\BoutonRepository;
-use Repository\CustomRecapRepository;
 use Repository\ColRepository;
 use Repository\CoupeRepository;
 use Repository\CustomRepository;
@@ -165,10 +164,6 @@ $app['bouton.repository'] = function () use ($app)
     return new BoutonRepository($app['db']);
 };
 
-$app['customrecap.repository'] = function()use($app)
-{
-    return new CustomRecapRepository($app['db']);
-};
 
 $app['commande.repository'] = function () use ($app)
 {

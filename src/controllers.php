@@ -86,10 +86,14 @@ $app
 ;
 
 $app
-        ->match('/custom_recap', 'custom.controller:consultSessionCustom')
+        ->match('/custom_recap', 'custom.controller:consultSession')
         ->bind('custom_recap')
 ;
 
+$app
+        ->match('/custom_validate' , 'custom.controller:customValidateAction')
+        ->bind('custom_validate')
+;
 
 /* UTILISATEUR */
 

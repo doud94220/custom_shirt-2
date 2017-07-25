@@ -424,11 +424,6 @@ class User {
         return $this;
     }
 
-    public function setDos($dos) {
-        $this->dos = $dos;
-        return $this;
-    }
-
     public function setEpaule_gauche($epaule_gauche) {
         $this->epaule_gauche = $epaule_gauche;
         return $this;
@@ -436,6 +431,11 @@ class User {
 
     public function setEpaule_droite($epaule_droite) {
         $this->epaule_droite = $epaule_droite;
+        return $this;
+    }
+    
+    public function setDos($dos) {
+        $this->dos = $dos;
         return $this;
     }
 

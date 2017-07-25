@@ -7,23 +7,24 @@ class Coupe
 {
     private $id_coupe;
     
-    private $description;
-    private $photo;
-    private $titre;
+    private $description_coupe;
+    private $photo_coupe;
+    private $titre_coupe;
+    
     public function getId_coupe() {
         return $this->id_coupe;
     }
 
-    public function getDescription() {
-        return $this->description;
+    public function getDescription_coupe() {
+        return $this->description_coupe;
     }
 
-    public function getPhoto() {
-        return $this->photo;
+    public function getPhoto_coupe() {
+        return $this->photo_coupe;
     }
 
-    public function getTitre() {
-        return $this->titre;
+    public function getTitre_coupe() {
+        return $this->titre_coupe;
     }
 
     public function setId_coupe($id_coupe) {
@@ -31,20 +32,21 @@ class Coupe
         return $this;
     }
 
-    public function setDescription($description) {
-        $this->description = $description;
+    public function setDescription_coupe($description_coupe) {
+        $this->description_coupe = $description_coupe;
         return $this;
     }
 
-    public function setPhoto($photo) {
-        $this->photo = $photo;
+    public function setPhoto_coupe($photo_coupe) {
+        $this->photo_coupe = $photo_coupe;
         return $this;
     }
 
-    public function setTitre($titre) {
-        $this->titre = $titre;
+    public function setTitre_coupe($titre_coupe) {
+        $this->titre_coupe = $titre_coupe;
         return $this;
     }
+
 
 
 

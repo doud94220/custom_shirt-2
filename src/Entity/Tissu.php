@@ -14,7 +14,7 @@ class Tissu
     private $id;
 
     private $nom;
-    private $desc;
+    private $descr;
     private $photo;
     private $prix;
     private $composition;
@@ -61,18 +61,18 @@ class Tissu
     /**
      * @return mixed
      */
-    public function getDesc()
+    public function getDescr()
     {
-        return $this->desc;
+        return $this->descr;
     }
 
     /**
      * @param mixed $desc
      * @return Tissu
      */
-    public function setDesc($desc)
+    public function setDescr($descr)
     {
-        $this->desc = $desc;
+        $this->descr = $descr;
         return $this;
     }
 

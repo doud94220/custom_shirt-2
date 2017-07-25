@@ -41,11 +41,34 @@ EOS;
             ->setId($dbTissu['id'])
             ->setNom($dbTissu['nom'])
             ->setStock($dbTissu['stock'])
-            ->setDesc($dbTissu['desc'])
+            ->setDescr($dbTissu['descr'])
             ->setPhoto($dbTissu['photo'])
             ->setPrix($dbTissu['prix'])
         ;
         return $tissus;
     }
+    
+        public function findTissuById($id)
+    {
+        $query = <<<EOS
+SELECT id, nom, photo, prix
+FROM tissu
+WHERE id = :id
+EOS;
+        $dbTabTissus = $this->db->fetchAssoc(
+                $query,
+                ['id' => $id]
+                );
+        //$objetTabTissus= [];
+        //echo '<pre>';var_dump($dbTabTissus);echo '</pre>';die;
+        //foreach($dbTabTissus as $dbTabTissu)
+//        {
+//            $tissus = $this->buildFromArray($dbTabTissu);
+//            $objetTabTissus[] = $tissus;
+//            
+//        }
+        return $dbTabTissus;
+    }
+    
 
 }

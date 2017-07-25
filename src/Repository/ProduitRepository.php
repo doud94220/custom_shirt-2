@@ -29,7 +29,7 @@ class ProduitRepository extends RepositoryAbstract
     public function findAll()
     {
         $query = <<<EOS
-SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, t.categorie_id, cat.categorie 
+SELECT p.*, t.type, ti.nom, ti.descr, ti.composition, ti.grammage, ti.tirage, t.categorie_id, cat.categorie 
 FROM produit p
 JOIN type t ON p.type_id=t.id
 JOIN categorie cat ON cat.id=t.categorie_id
@@ -53,7 +53,7 @@ EOS;
     public function findById($id)
     {
         $query = <<<EOS
-SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, t.categorie_id, cat.categorie 
+SELECT p.*, t.type, ti.nom, ti.descr, ti.composition, ti.grammage, ti.tirage, t.categorie_id, cat.categorie 
 FROM produit p
 JOIN type t ON p.type_id=t.id
 JOIN categorie cat ON cat.id=t.categorie_id
@@ -112,7 +112,7 @@ EOS;
             ->setNom($dbProduit['nom'])
             ->setComposition($dbProduit['composition'])
             ->setGrammage($dbProduit['grammage'])
-            ->setDesc($dbProduit['desc'])
+            ->setDescr($dbProduit['descr'])
             ->setTirage($dbProduit['tirage'])
         ;
 

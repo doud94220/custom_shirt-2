@@ -25,6 +25,7 @@ class UserRepository extends RepositoryAbstract {
             'tel' => $user->getTel(),
             'sexe' => $user->getSexe(),
             'statut' => $user->getStatut(),
+
         ];
 
         $where = !empty($user->getId_user()) ? ['id' => $user->getId_user()] : null
@@ -32,42 +33,27 @@ class UserRepository extends RepositoryAbstract {
         $this->persist($data, $where);
     }
 
-// Faire  une méthode avec UPDATE sur les champs tailles en
-//en récupérant les informations en session
-//https://openclassrooms.com/courses/programmez-en-oriente-objet-en-php/manipulation-de-donnees-stockees
-//    //    public function updateUser(User $user)
-//    {
-//        $data =
-//        [
-//            'taille' => $user->getTaille(),
-//            'poids' => $user->getPoids(),
-//        ];
-//
-//        $where = !empty($user->getId_user())
-//            ? ['id' => $user->getId_user()]
-//            : null
-//        ;
-//         $this->persist($data, $where);
-//
-//    }
-    //                'id_user' => $user->getUser(),
-//                'taille' => $user->getTaille(),
-//                'poids' => $user->getPoids(),
-//                'tour_cou' => $user->getTour_cou(),
-//                'tour_poitrine' => $user->getTour_poitrine(),
-//                'tour_taille' => $user->getTour_taille(),
-//                'tour_bassin' => $user->getTour_bassin(),
-//                'manche_droite' => $user->getManche_droite(),
-//                'manche_gauche' => $user->getManche_gauche(),
-//                'poignet_droit' => $user->getPoignet_droit(),
-//                'poignet_gauche' => $user->getPoignet_gauche(),
-//                'carrure' => $user->getCarrure(),
-//                'dos' => $user->getDos()
+        
+    public function saveUserMeasure(User $user) {
+        $data = [
+                'taille' => $user->getTaille(),
+                'poids' => $user->getPoids(),
+                'tour_cou' => $user->getTour_cou(),
+                'tour_poitrine' => $user->getTour_poitrine(),
+                'tour_taille' => $user->getTour_taille(),
+                'tour_bassin' => $user->getTour_bassin(),
+                'manche_droite' => $user->getManche_droite(),
+                'manche_gauche' => $user->getManche_gauche(),
+                'poignet_droit' => $user->getPoignet_droit(),
+                'poignet_gauche' => $user->getPoignet_gauche(),
+                'carrure' => $user->getCarrure(),
+                'dos' => $user->getDos()
+        ];
 
-
-
-
-
+        $where = !empty($user->getId_user()) ? ['id' => $user->getId_user()] : null
+        ;
+        $this->persist($data, $where);
+    }    
 
     public function findByEmail($email) {
         $dbUser = $this->db->fetchAssoc(

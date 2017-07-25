@@ -22,10 +22,10 @@
                                 </tr>
                                 {% for bouton in boutons %}
                                     <tr>
-                                        <td>{{ bouton.titre }} </td>
-                                        <td>{{ bouton.description }} </td>
-                                        <td><img src="{{ bouton.photo }}" alt="" width="200" class="select_img" data-id="{{ bouton.id_bouton }}"/> </td>
-                                        <td>{{ bouton.prix }} € </td>
+                                        <td>{{ bouton.titre_bouton }} </td>
+                                        <td>{{ bouton.description_bouton }} </td>
+                                        <td><img src="{{ bouton.photo_bouton }}" alt="" width="200" class="select_img" data-id="{{ bouton.id_bouton }}"/> </td>
+                                        <td>{{ bouton.prix_bouton }} € </td>
                                     </tr>
                                 {% endfor %}
                             </table>

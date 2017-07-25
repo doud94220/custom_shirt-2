@@ -22,10 +22,10 @@
                                 </tr>
                                 {% for col in cols %}
                                     <tr>
-                                        <td>{{ col.titre }} </td>
-                                        <td>{{ col.description }} </td>
-                                        <td><img src="{{ col.photo }}" alt="" width="200" class="select_img" data-id="{{ col.id_col }}"/> </td>
-                                        <td>{{ col.prix }} € </td>
+                                        <td>{{ col.titre_col }} </td>
+                                        <td>{{ col.description_col }} </td>
+                                        <td><img src="{{ col.photo_col }}" alt="" width="200" class="select_img" data-id="{{ col.id_col }}"/> </td>
+                                        <td>{{ col.prix_col }} € </td>
                                     </tr>
                                 {% endfor %}
                             </table>
