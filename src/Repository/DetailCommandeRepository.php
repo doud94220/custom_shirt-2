@@ -24,7 +24,11 @@ class DetailCommandeRepository extends RepositoryAbstract
      */
     public function findAllByCommande($id_commande){
         $query = <<<EOS
+<<<<<<< HEAD
 SELECT d.*, c.id_commande, cs.titre_custom, p.titre
+=======
+SELECT d.*, c.id_commande, cs.titre_custom, cs.prix, p.titre, p.prix
+>>>>>>> master
 FROM detail_commande d
 JOIN commande c ON d.commande_id = c.id_commande
 LEFT JOIN produit p ON d.produit_id = p.id
@@ -80,13 +84,22 @@ EOS;
         $produit
             ->setId($dbDetailCommande['produit_id'])
             ->setTitre($dbDetailCommande['titre'])
+<<<<<<< HEAD
+=======
+            ->setPrix($dbDetailCommande['prix'])
+>>>>>>> master
         ;
 
         $custom = new Custom();
         
         $custom
             ->setId_custom($dbDetailCommande['custom_id'])
+<<<<<<< HEAD
             //->setTitre_custom($dbDetailCommande['titre_custom'])
+=======
+            ->setTitre_custom($dbDetailCommande['titre_custom'])
+            ->setPrix($dbDetailCommande['prix'])
+>>>>>>> master
         ;
         
         $detail_commande
@@ -94,6 +107,11 @@ EOS;
             ->setCommande_id($dbDetailCommande['commande_id'])
             ->setProduit_id($dbDetailCommande['produit_id'])
             ->setCustom_id($dbDetailCommande['custom_id'])
+<<<<<<< HEAD
+=======
+            ->setCustom($custom)
+            ->setProduit($produit)
+>>>>>>> master
             ->setQuantite($dbDetailCommande['quantite'])
             ->setPrix($dbDetailCommande['prix'])
         ;

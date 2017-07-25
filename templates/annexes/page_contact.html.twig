@@ -1,0 +1,58 @@
+{% extends "layout.html.twig" %}
+
+{% block title 'Contact' %}
+
+{% block content %}
+    <h1>Contactez-nous !</h1>
+    <form>
+        <h2>Pour nous écrire :</h2>
+        <div class="form-group">
+            <label>Sujet</label>
+            <select name='sujet' id='sujet' class='form-control'>
+                <option value=''>Choisir un sujet</option>
+                <option value='sav'>Service après-vente</option>
+                <option value='livraison'>Livraison</option>
+                <option value='autres'>Autres</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Message</label>
+            <textarea name='message' id='message' class='form-control' rows='10'>Votre message...
+            </textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            Envoyer
+        </button>
+    </form>
+    
+    <h2>Nous trouver : <h2>
+    <h3>Nos coordonnées :</h3>
+    <adress>
+        <ul class="list-group">
+            <li class='list-group-item'>
+                Custom-shirt
+            </li>
+            <li class='list-group-item'>
+                Les Grands Voisins
+            </li>
+            <li class='list-group-item'>
+                82 Avenue Denfert-Rochereau
+            </li>
+            <li class='list-group-item'>
+                75014 Paris
+            </li>
+            <li class='list-group-item'>
+                France
+            </li>
+            <li class='list-group-item'>
+                Téléphone : 06 12 12 12 12
+            </li>
+            <li class='list-group-item'>
+                Email : <a href='mailto:contact@custom-shirt.com'>contact@custom-shirt.com</a>
+            </li>
+        </ul>
+    </adress>
+    <div class='container'>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2626.1276819303503!2d2.3321566156735867!3d48.836703179285415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671c7785c4fdb%3A0xb118bc844f2f417a!2sLes+Grands+Voisins!5e0!3m2!1sfr!2sfr!4v1500905799553" width="100%" height="" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+{% endblock %}

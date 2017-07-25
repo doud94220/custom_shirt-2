@@ -55,7 +55,7 @@ $app->register
                 'host'      => 'localhost',
                 'dbname'    => 'custom_shirt',
                 'user'      => 'root',
-                'password'  => '',
+                'password'  => 'root',
                 'charset'   => 'utf8'
 
             ]
@@ -166,7 +166,7 @@ $app['custom.controller'] = function() use ($app)
 
 
 $app['custom.repository'] = function() use ($app) {
-    return new CustomRepository($app);
+    return new CustomRepository($app['db']);
 };
 
 $app['tissu.repository'] = function() use ($app)

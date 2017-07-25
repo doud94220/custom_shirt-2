@@ -59,6 +59,7 @@ class CommandeController extends ControllerAbstract
      */
     public function editAction($id){
         $commande = $this->app['commande.repository']->find($id);
+        echo "<pre>";print_r($commande);echo"</pre>";
         $commande->app['commande.repository']->edit($commande);
         
         $this->addFlashMessage("L'état de la commande a été mis à jour");

@@ -28,7 +28,7 @@
         {% block stylesheets %}
             <!-- Latest compiled and minified CSS -->
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-            
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
             <!-- Css créé nous mêmes -->
             <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" />
         {% endblock %}
@@ -64,6 +64,20 @@
                     <a class="navbar-brand" href="{{path('homepage')}}">Custom Shirt</a>
                     {# affiche le rendu de la route category_menu 
                     {{ render(url('category_menu')) }}#}
+                    <ul class="nav navbar-nav navbar-left">
+                        {#<li>
+                            <a href="{{ path('presentation') }}">Qui sommes-nous ?</a>
+                        </li>#}
+                        <li>
+                            <a href="{{ path('etape_1_tissu') }}"><span class="glyphicon glyphicon-scissors"></span> Chemise à customiser</a>
+                        </li>
+                        <li>
+                            <a href="{#{{ path('etape_1_tissu') }}#}"><span class="glyphicon glyphicon-sunglasses"></span> Chemise prêt à porter</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('contact') }}">Contactez-nous</a>
+                        </li>
+                    </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {# voir l'ajout de la globale user_manager dans twig dans src/app.php #}
                         {% if user_manager.user %}
@@ -102,14 +116,47 @@
             {% block content %}{% endblock %}
         </div>
         
-
-             {# Import js boostrap et jQuery #}
-            {% block javascripts %}
-             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-            <!-- Latest compiled and minified JavaScript -->
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-            <script src="{{ asset('script/script.js') }}"></script>
+        <footer class="footer">
+            <nav class="navbar navbar-default navbar-fixed-bottom">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4 col-lg-4">
+                            <ul class="nav navbar-nav navbar-left">
+                                <li><a href="{{path('homepage')}}">Accueil</a></li>
+                                <li><a href="{{ path('etape_1_tissu') }}">Chemises sur mesure</a></li>
+                                    {#<li><a href="{{ path('produit') }}">Pret à porter</a></li>#}
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-md-4 col-lg-4">
+                            <ul class='nav navbar-nav'>
+                                {#<li><a href="{{ path('a_propos') }}">A Propos</a></li>
+                                <li><a href="{{ path('cgv') }}">Conditions générales de vente</a></li>
+                                #}<li><a href="{{ path('contact') }}">Contactez-nous</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-md-4 col-lg-4">
+                            <ul class='nav navbar-nav'>
+                                <li><a href="https://www.facebook.com/" target="_blank" title='Facebook'><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a></li>
+                                <li><a href="https://twitter.com/" target="_blank" title='twitter'><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.instagram.com/" target="_blank" title='Instagram'><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>
+                                <li><a href="https://fr.pinterest.com/" target="_blank" title='Pinterest'><i class="fa fa-pinterest fa-2x" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <p style='text-align:center'>Tous droits réservés &#169 CUSTOM-SHIRT SAS</p>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </footer>
+        
+        {# Import js boostrap et jQuery #}
+        {% block javascripts %}
+         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="{{ asset('script/script.js') }}"></script>
             
         {% endblock %}
 

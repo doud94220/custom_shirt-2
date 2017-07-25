@@ -1,0 +1,17 @@
+{% extends "layout.html.twig" %}
+
+{% block title 'Paiement' %}
+    
+{% block content %}
+    <h1>Paiement accepté !</h1>
+    
+    <div class='container'>
+        Félicitations ! Vous recevrez votre commande sous 3 semaines.<br>
+        Toute l'équipe de Custom-shirt.com vous remercie pour votre confiance.<br><hr><br>
+        
+        Vous pouvez suivre vos commandes depuis votre <a href='{{ path('profile') }}' >page profil</a>.<br>
+        Pour toute question, n'hésitez pas à <a href='{{ path('contact') }}'>nous contacter !</a> 
+        
+    </div>
+    
+{% endblock %}
