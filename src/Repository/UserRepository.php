@@ -28,7 +28,7 @@ class UserRepository extends RepositoryAbstract {
             'statut' => $user->getStatut(),
 
         ];
-
+        //var_dump($data);
         $where = !empty($user->getId_user())
             ? ['id_user' => $user->getId_user()]
             : null
@@ -40,7 +40,6 @@ class UserRepository extends RepositoryAbstract {
         }
     }
 
-        
     public function saveUserMeasure(User $user) {
         $data = [
                 'taille' => $user->getTaille(),
@@ -53,14 +52,18 @@ class UserRepository extends RepositoryAbstract {
                 'manche_gauche' => $user->getManche_gauche(),
                 'poignet_droit' => $user->getPoignet_droit(),
                 'poignet_gauche' => $user->getPoignet_gauche(),
+                'epaule_gauche' => $user->getEpaule_gauche(),
+                'epaule_droite' => $user->getEpaule_droite(),
                 'carrure' => $user->getCarrure(),
                 'dos' => $user->getDos()
         ];
-
-        $where = !empty($user->getId_user()) ? ['id' => $user->getId_user()] : null
+        
+        $where = !empty($user->getId_user()) ? ['id_user' => $user->getId_user()] : null
         ;
         $this->persist($data, $where);
-    }    
+    }
+
+    
 
     public function findByEmail($email) {
         $dbUser = $this->db->fetchAssoc(
