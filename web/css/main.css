@@ -133,9 +133,13 @@ li{
 
 }
 
-.col-xs-12 img{
-    height: 10rem;
-    width: 10rem;
+    row div img{
+    height: 28rem;
+    width: 28rem;
+    margin-top: 10rem;
+    margin-right: 5rem;
+        border: 0.05rem solid #D2D7D3;
+
 }
 
 
