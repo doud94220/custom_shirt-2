@@ -16,7 +16,7 @@ class UserRepository extends RepositoryAbstract {
         $data = [
             'prenom' => $user->getPrenom(),
             'nom' => $user->getNom(),
-            'date_naissance'=> $user->getDate_naissance()->format('Y-m-d'),
+            //'date_naissance'=> $user->getDate_naissance()->format('Y-m-d'),
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'adresse' => $user->getAdresse(),
