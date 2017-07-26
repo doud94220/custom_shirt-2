@@ -34,6 +34,7 @@ class BasketManager
         }
         else
         {
+ 
             return $this->session->get('basket');
         }
     }

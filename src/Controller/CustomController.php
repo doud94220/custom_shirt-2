@@ -533,20 +533,21 @@ class CustomController extends ControllerAbstract {
 
         //Creation d'un objet Custom à partir des données du custom en session
        $customShirtObject = $this->app['custom.manager']->getCustomSessionAndMoreAndCreateCustomObjectForSessionBasket();
-       
+       echo'<pre>';var_dump($customShirtObject);echo'</pre>';
        //Mise dans panier du Custom
        $this->app['basket.manager']->putConfigToBasket($customShirtObject);
        $this->app['custom.manager']->flushCustomSession();  
         
-        return $this->render
-                (
-                'custom/customvalidate.html.twig', 
-                [
-                    'user' => $user,
-                    'custom' => $sessioncustom,
-                    //'titre_custom' => $titre_custom
-               ]
-       );
+       return $this->redirectRoute('basket_consult');
+//        return $this->render
+//                (
+//                'basket/index.html.twig', 
+//                [
+//                    'user' => $user,
+//                    'custom' => $sessioncustom,
+//                    //'titre_custom' => $titre_custom
+//               ]
+//       );
 
     }
 

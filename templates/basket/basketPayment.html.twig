@@ -7,17 +7,16 @@
         <script
             src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
-            data-amount="999"
+            data-amount="{{ basketTotalAmount * 100 }}"
             data-name="Custom-shirt.com"
             data-description="Chemise sur-mesure"
             data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
             data-locale="auto"
             data-currency='EUR'
-            data-label='Paiement sécurisé '
+            data-label='Payer {{ basketTotalAmount }} € '
             data-zip-code="true">
         </script>
-        <p>Payer {{ basketTotalAmount }}</p>
     </form>
 {% endblock %}
-    <p>Payer {{ basketTotalAmount }}</p>
+
 

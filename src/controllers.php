@@ -48,11 +48,11 @@ $app
     ->match('/basket/pay', 'basket.controller:payAction')
     ->bind('basket_pay');
 
-//Celle de Julien (à virer)
-$app
-    ->match('/basket/paiement', 'basket.controller:payAction')
-    ->bind('basket_pay')
-;
+////Celle de Julien (à virer)
+//$app
+//    ->match('/basket/paiement', 'basket.controller:payAction')
+//    ->bind('basket_pay')
+//;
 
 $app
     ->post('/basket/charge', 'basket.controller:payChargeAction')
