@@ -16,7 +16,7 @@ class UserRepository extends RepositoryAbstract {
         $data = [
             'prenom' => $user->getPrenom(),
             'nom' => $user->getNom(),
-            //'date_naissance'=> $user->getDate_naissance()->format('Y-m-d'),
+            'date_naissance'=> $user->getDate_naissance()->format('Y-m-d'),
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'adresse' => $user->getAdresse(),
@@ -34,6 +34,10 @@ class UserRepository extends RepositoryAbstract {
             : null
         ;
         $this->persist($data, $where);
+
+        if (empty($user->getId_user())) {
+            $user->setId_user($this->db->lastInsertId());
+        }
     }
 
         
@@ -81,7 +85,7 @@ class UserRepository extends RepositoryAbstract {
             ->setId_user($dbUser['id_user'])
             ->setNom($dbUser['nom'])
             ->setPrenom($dbUser['prenom'])
-            //->setDate_naissance(new DateTime($dbUser['date_naissance']))
+            ->setDate_naissance(new DateTime($dbUser['date_naissance']))
             ->setEmail($dbUser['email'])
             ->setPassword($dbUser['password'])
             ->setAdresse($dbUser['adresse'])

@@ -25,7 +25,7 @@ class User {
     /**
      * @var DateTime
      */
-    //private $date_naissance;
+    private $date_naissance;
 
     /**
      * @var string
@@ -155,9 +155,9 @@ class User {
      * @return DateTime
      */
 //à verifier
-//    public function getDate_naissance() {
-//        return $this->date_naissance;
-//    }
+   public function getDate_naissance() {
+        return $this->date_naissance;
+    }
 
     public function getEmail() {
         return $this->email;
@@ -281,10 +281,11 @@ class User {
      * @return User
      */
 //à vérifier
-//    public function setDate_naissance(\DateTime $date_naissance) {
-//        $this->date_naissance = $date_naissance;
-//        return $this;
-//    }
+        /*public function setDate_naissance(\DateTime::createFromFormat('d/m/Y', ['date_naissance']| $date_naissance))*/
+        public function setDate_naissance(\DateTime $dateNaissance) {
+        $this->date_naissance = $dateNaissance;
+       return $this;
+    }
 
     /**
      * @param string $email

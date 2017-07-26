@@ -14,10 +14,10 @@
                 <label>Prénom</label>
                 <input type="text" name="prenom" value="{{ user.prenom }}" class="form-control">
             </div>
-            {#<div class="form-group">
+            <div class="form-group">
                 <label>Date de naissance</label>
                 <input type="date" name="date_naissance" value="{% if user.date_naissance is not null %}{{ user.date_naissance|date('d/m/Y') }}{% endif %}" class="form-control">
-            </div>#}
+            </div>
             <div class="form-group">
                 <label>Email</label>
                 <input type="text" name="email" value="{{ user.email }}" class="form-control">
