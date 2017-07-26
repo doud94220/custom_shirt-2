@@ -26,14 +26,45 @@ class ProduitRepository extends RepositoryAbstract
     /**
      * @return array
      */
-    public function findAll()
+    //affichage des produits coté admin
+    public function findAllforAdmin()
     {
         $query = <<<EOS
-SELECT p.*, t.type, ti.nom, ti.descr, ti.composition, ti.grammage, ti.tirage, t.categorie_id, cat.categorie 
+
+SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie
 FROM produit p
 JOIN type t ON p.type_id=t.id
 JOIN categorie cat ON cat.id=t.categorie_id
 JOIN tissu ti ON p.tissu_id=ti.id
+GROUP BY p.id;
+EOS;
+
+        $dbProduits = $this->db->fetchAll($query);
+        $produits = []; // le tableau dans lequel vont être stockées les entités Article
+
+        foreach ($dbProduits as $dbProduit) {
+            $produit = $this->buildFromArray($dbProduit);
+
+            $produits[] = $produit;
+        }
+
+        return $produits;
+
+    }
+
+
+    //affichage des produits coté user
+    public function findAll()
+    {
+        $query = <<<EOS
+
+SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie
+FROM produit p
+JOIN type t ON p.type_id=t.id
+JOIN categorie cat ON cat.id=t.categorie_id
+JOIN tissu ti ON p.tissu_id=ti.id
+JOIN produit_taille p_t ON p.id=p_t.produit_id
+GROUP BY p.id;
 EOS;
 
         $dbProduits = $this->db->fetchAll($query);
@@ -53,7 +84,8 @@ EOS;
     public function findById($id)
     {
         $query = <<<EOS
-SELECT p.*, t.type, ti.nom, ti.descr, ti.composition, ti.grammage, ti.tirage, t.categorie_id, cat.categorie 
+
+SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie 
 FROM produit p
 JOIN type t ON p.type_id=t.id
 JOIN categorie cat ON cat.id=t.categorie_id
@@ -75,6 +107,31 @@ EOS;
 
     }
 
+    public function save(Produit $produit)
+    {
+        $data = [
+            'type_id' => $produit->getType()->getId(),
+            'tissu_id' => $produit->getTissu()->getId(),
+            'titre' => $produit->getTitre(),
+            'description' => $produit->getDescription(),
+            'photo' => $produit->getPhoto(),
+            'sexe' => $produit->getSexe(),
+            'prix' => $produit->getPrix(),
+        ];
+
+        $where = !empty($produit->getId())
+            ? ['id' => $produit->getId()] // modification
+            : null // création
+        ;
+
+        $this->persist($data, $where);
+    }
+
+    public function delete(Produit $produit)
+    {
+        $this->db->delete('produit', ['id' => $produit->getId()]);
+    }
+
     /**
      * @param array $dbArticle
      * @return Article
@@ -83,23 +140,13 @@ EOS;
     {
         $produit = new Produit();
 
-        $type = new Type;
+        $type = new Type();
 
 
-        $tissu = new Tissu;
+        $tissu = new Tissu();
 
 
-        $category = new Categorie;
-
-        $type
-            ->setId($dbProduit['type_id'])
-            ->setCategorie($category)
-            ->setType($dbProduit['type'])
-        ;
-
-
-        $category = new Categorie;
-
+        $category = new Categorie();
 
         $type
             ->setId($dbProduit['type_id'])
@@ -114,6 +161,8 @@ EOS;
             ->setGrammage($dbProduit['grammage'])
             ->setDescr($dbProduit['descr'])
             ->setTirage($dbProduit['tirage'])
+
+//            ->setFil($dbProduit['fil'])
         ;
 
         $category
@@ -123,13 +172,10 @@ EOS;
 
         $produit
             ->setId($dbProduit['id'])
-
             ->setTitre($dbProduit['titre'])
             ->setType($type)
             ->setTissu($tissu)
-
             ->setDescription($dbProduit['description'])
-            ->setReference($dbProduit['reference'])
             ->setPhoto($dbProduit['photo'])
             ->setSexe($dbProduit['sexe'])
             ->setPrix($dbProduit['prix'])

@@ -28,7 +28,7 @@ class BasketManager
     //Méthode readBasket() qui retourne le contenu du panier
     public function readBasket()
     {
-        if(!$this->session->has('basket')) //Si y'a pas de panier
+        if(!$this->session->has('basket')) //Si y'a pas de basket en session
         {
             return null;
         }
@@ -37,7 +37,21 @@ class BasketManager
             return $this->session->get('basket');
         }
     }
+
     
+    //Méthode readBasketAmount() qui retourne le prix total du panier
+    public function readBasketAmount()
+    {
+        if(!$this->session->has('basketTotalAmount')) //Si y'a pas de basketTotalAmount en session
+        {
+            return null;
+        }
+        else
+        {
+            return $this->session->get('basketTotalAmount');
+        }
+    }
+
     
     //Méthode qui dit si l'objet en arg est un produit ou non => retourne un booleen
     public function isProduct($objetDansPanier)
@@ -51,8 +65,7 @@ class BasketManager
             return false;
         }
     }
-    
-    
+
     //Méthode qui retourne la position d'un produit dans le panier de la session (si il existe), si il n'existe pas il retourne -1
     public function findProductInBasket(Produit $produit)
     {
@@ -70,15 +83,8 @@ class BasketManager
             //On boucle sur le tableau d'objets (product ou config) dans le panier
             foreach ($productsAndConfigs as $productOrConfig)
             {
-                //echo 'position dans panier : ' . $positionDansPanier . '<br>';
-                //echo $this->isProduct($productOrConfig) . '<br>';
-                
                 if ($this->isProduct($productOrConfig)) //si l'objet est un produit
                 {
-                    //echo 'on vient de passer isProduct<br>';
-                    //echo '<pre>'; print_r($productOrConfig); echo '</pre><br><br>';	
-                    //echo 'id du produit : ' . $productOrConfig->getId() . '<br><br>';
-                    
                     //On regarde si c'est le même produit que celui passé en arg de la fonction
                     if($productOrConfig->getId() == $produit->getId())
                     {
@@ -215,6 +221,37 @@ class BasketManager
         $this->session->set('basket', $productsAndConfigs);
         
     }//Fin putConfigToBasket()
+   
+    
+    //Fonction qui met le montant total du panier en session dans la key basketTotalAmount
+    public function putTotalAmountToBasket($basketTotalAmount)
+    {
+         $this->session->set('basketTotalAmount', $basketTotalAmount);
+    }
+    
+    
+    
+                            //////FONCTION COMMENTEE CAR FAITE EN JQUERY
+                            //Méthode calculateAmountBasket() qui va calculer me montant total du panier
+                            //
+                            //    public function calculateAmountBasket()
+                            //    {
+                            //        $amountBasket = 0; //Init valeur retour
+                            //        
+                            //        if($this->session->get('basket')) //Si y'a un panier
+                            //        {
+                            //           $productsAndConfigs = $this->session->get('basket'); //Je recup le panier
+                            //
+                            //           //On boucle sur le tableau d'objets (product ou config) dans le panier
+                            //            foreach ($productsAndConfigs as $productOrConfig)
+                            //            {
+                            //                 $prixCurrentProduitOuConfig = $productOrConfig->getQuantite() * $productOrConfig->getPrix();
+                            //                 $amountBasket += $prixCurrentProduitOuConfig;
+                            //            }
+                            //        }
+                            //
+                            //        return $amountBasket;
+                            //    }
 
 
 }//Fin BasketManager

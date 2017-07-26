@@ -82,20 +82,32 @@ EOS;
         }
     }
     
-    public function save(Commande $commande){
+    public function save(Commande $commande)
+    {
+        //Creation d'une date qui vaut la date du jour au bon format
+        $date = new DateTime();
+        $dateFormatee = $date->format('Y-m-d');
+        
         $data = [
             'user_id' => $commande->getUser_id(),
             'prix_livraison' => $commande->getPrix_livraison(),
             'total' => $commande->getTotal(),
-            'date_commande' => $commande->getDate_commande(),
+            'date_commande' => $dateFormatee,
             'etat' => $commande->getEtat()
         ];
         
         $this->persist($data);
     }
     
+    
+    public function getLastInsertId()
+    {
+       return $this->db->lastInsertId();
+    }
+    
+    
     public function edit(Commande $commande){
-        $data = [
+        /*$data = [
             'etat' => $commande->getEtat()
         ];
         
@@ -106,7 +118,10 @@ EOS;
             : null // création
         ;
         
-        $this->persist($data, $where);
+        $this->persist($data, $where);*/
+        
+        $this->app['db']->insert('commande', array(                                                                                                                                                                                                                                                         
+            'etat' => $_POST['etat']));
     }
     
     public function delete(Commande $commande){

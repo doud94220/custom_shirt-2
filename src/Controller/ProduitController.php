@@ -8,6 +8,9 @@
 
 namespace Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+use Service\BasketManager;
+use Entity\Produit;
 
 /**
  * Class IndexController
@@ -88,15 +91,40 @@ class ProduitController extends ControllerAbstract
         echo ceil(count($produits)/3);
         echo($req);
 
-        return $this->render('produit/produit_list.html.twig', ['produits' => $produits]);
+        return $this->render('produit/list.html.twig', ['produits' => $produits]);
         //return $this->app->json($results);
+
+    }
+
+        public function ajaxApiAdmin()
+    {
+
+        $req = "SELECT p_t.stock
+                FROM produit_taille p_t
+                JOIN taille t ON p_t.taille_id=t.id
+                JOIN produit p ON p_t.produit_id=p.id
+                WHERE p_t.produit_id=:id
+                AND t.taille=:taille";
+
+        $results = $this->app['db']->fetchAssoc(
+            $req,
+            [':id' => $_GET['id'],
+            ':taille' => $_GET['taille']]
+            );
+
+        return $this->app->json($results);
+
 
     }
 
     public function ajaxApiPanier()
     {
+
         $produit = $this->app['produit.repository']->findById($_POST['id']);
+        $produit->setQuantite(1);
         $this->app['basket.manager']->putProductToBasket($produit);
+        
+        return new Response('');
     }
 
 }

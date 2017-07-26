@@ -1,0 +1,66 @@
+{% extends "layout.html.twig" %}
+
+{% block title 'Admin produits' %}
+
+{% block content %}
+
+<div class="row">
+		<div class="col-sm-12">
+
+			<h1>Gestion Produits</h1>
+
+		    <p><a href="{{ path('admin_produit_edit') }}">Ajouter un produit</a></p>
+
+		    <table class="table">
+		        <tr>
+		            <th>Id</th>
+		            <th>Type</th>
+		            <th>Tissu</th>
+		            <th>Titre</th>
+		            <th>Description</th>
+		            <th>Photo</th>
+		            <th>Sexe</th>
+		            <th>Prix</th>
+		            <th width="200px"></th>
+		        </tr>
+				{% for produit in produits %}
+		            <tr>
+		                <td>{{ produit.id }}</td>
+		                <td>{{ produit.type }}</td>
+		                <td>{{ produit.tissu }}</td>
+		                <td>{{ produit.titre }}</td>
+		                <td>{{ produit.description }}</td>
+
+		                <td><img class="image_list_produit" src="http://localhost/custom_shirt-2/web/img/{{ produit.photo }}"></td>
+
+		                <td>{{ produit.sexe }}</td>
+		                <td>{{ produit.prix }}</td>
+		                <td>
+		                    <a
+		                        href="{{ path('admin_produit_edit', {id: produit.id}) }}"
+		                        class="btn btn-primary">
+		                        Modifier
+		                    </a>
+		                    <a
+		                        href="{{ path('admin_produit_delete', {id: produit.id}) }}"
+		                        class="btn btn-danger">
+		                        Supprimer
+		                    </a>
+		                    <a
+		                        href="{{ path('admin_stock', {id: produit.id}) }}"
+		                        class="btn btn-default">
+		                        Voir stock
+		                    </a>
+		                </td>
+		            </tr>
+		        {% endfor %}
+		    </table>
+		{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var ajaxApiUrlAdmin = "{{ path('ajax_api_produit_admin') }}";
+    </script>
+    <script src="{{ asset('script/script.js') }}"></script>
+{% endblock %}

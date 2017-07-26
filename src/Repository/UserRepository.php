@@ -11,11 +11,12 @@ class UserRepository extends RepositoryAbstract {
         return 'user';
     }
 
-    public function save(User $user) {
+    public function save(User $user){
+
         $data = [
             'prenom' => $user->getPrenom(),
             'nom' => $user->getNom(),
-            'date_naissance' => $user->getDate_naissance()->format('d-m-Y'),
+            'date_naissance'=> $user->getDate_naissance()->format('Y-m-d'),
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'adresse' => $user->getAdresse(),
@@ -28,7 +29,9 @@ class UserRepository extends RepositoryAbstract {
 
         ];
 
-        $where = !empty($user->getId_user()) ? ['id' => $user->getId_user()] : null
+        $where = !empty($user->getId_user())
+            ? ['id_user' => $user->getId_user()]
+            : null
         ;
         $this->persist($data, $where);
     }
@@ -75,22 +78,80 @@ class UserRepository extends RepositoryAbstract {
         $user = new User();
 
         $user
-                ->setId_user($dbUser['id_user'])
-                ->setNom($dbUser['nom'])
-                ->setPrenom($dbUser['prenom'])
-                ->setDate_naissance(new DateTime($dbUser['date_naissance']))
-                ->setEmail($dbUser['email'])
-                ->setPassword($dbUser['password'])
-                ->setAdresse($dbUser['adresse'])
-                ->setComplement_adresse($dbUser['complement_adresse'])
-                ->setCode_postal($dbUser['code_postal'])
-                ->setVille($dbUser['ville'])
-                ->setTel($dbUser['tel'])
-                ->setSexe($dbUser['sexe'])
-                ->setStatut($dbUser['statut'])
+            ->setId_user($dbUser['id_user'])
+            ->setNom($dbUser['nom'])
+            ->setPrenom($dbUser['prenom'])
+            //->setDate_naissance(new DateTime($dbUser['date_naissance']))
+            ->setEmail($dbUser['email'])
+            ->setPassword($dbUser['password'])
+            ->setAdresse($dbUser['adresse'])
+            ->setComplement_adresse($dbUser['complement_adresse'])
+            ->setCode_postal($dbUser['code_postal'])
+            ->setVille($dbUser['ville'])
+            ->setTel($dbUser['tel'])
+            ->setSexe($dbUser['sexe'])
+            ->setStatut($dbUser['statut'])
         ;
 
         return $user;
+    }
+
+    public function findAllByUsers(){
+        $query = <<<EOS
+SELECT *
+FROM user
+ORDER BY id_user ASC 
+EOS;
+
+        $dbAllUsers = $this->db->fetchAll($query);
+        $users = [];
+
+        foreach($dbAllUsers as $key){
+            $user = $this->buildFromArray($key);
+
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
+    public function find($id_user){
+        $dbUser = $this->db->fetchAssoc(
+            'SELECT * FROM user WHERE id_user = :id_user',
+            [':id_user' => $id_user]
+        );
+
+        if (!empty($dbUser)) {
+            return $this->buildFromArray($dbUser);
+        }
+
+        return null;
+    }
+
+   /* public function removeUser($id_user){
+       $dbuser = $this ->db->fetchAssoc(
+           'DELETE id_user FROM user where id_user= :id_user',
+           [':id_user' => $id_user]
+       );
+
+        if (!empty($dbUser)) {
+            return $this->buildFromArray($dbUser);
+        }
+
+        return null;
+    }*/
+
+
+       /* public function removeUser($id)
+        {
+
+            ("DELETE FROM user WHERE id_user = :id_user");
+
+        }*/
+
+    public function removeUser(User $user)
+    {
+        $this->db->delete('user', ['id_user' => $user->getId_user()]);
     }
 
 }

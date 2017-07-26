@@ -7,71 +7,205 @@ class Custom
 
     private $id_custom;
     
+    /**
+     * @var string
+     */
+    private $titre_custom;
+    
+    /**
+     * @var int
+     */
     private $tissu_id;
-    private $button_id;
-    private $col;
-    private $coupe;
+    
+    /**
+     * @var int
+     */
+    private $bouton_id;
+    
+    /**
+     * @var int
+     */
+    private $col_id;
+    
+    /**
+     * @var int
+     */
+    private $coupe_id;
+    
+    /**
+     * @var int
+     */
     private $prix;
+    
+    /**
+     * @var int
+     */
+    
     private $quantite;
+    private $produitOrCustom; //booleen ///Rajoute par Edouard
+    private $titre;
+    
+    //Constructeur ///Rajoute par Edouard
+    public function __construct()
+    {
+        $this->setProduitOrCustom('custom');
+    }
+    
     
     /**********GETTERS****************/
     
-    function getId_config() {
-        return $this->id_config;
+    /**
+     * @return int
+     */
+    function getId_custom() {
+        return $this->id_custom;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getTitre_custom() {
+        return $this->titre_custom;
     }
 
+    /**
+     * @return int
+     */
     function getTissu_id() {
         return $this->tissu_id;
     }
 
-    function getButton_id() {
-        return $this->button_id;
+    /**
+     * @return int
+     */
+    function getBouton_id() {
+        return $this->bouton_id;
     }
 
-    function getCol() {
+    /**
+     * @return int
+     */
+    function getCol_id() {
         return $this->col;
     }
 
-    function getCoupe() {
+    /**
+     * @return int
+     */
+    function getCoupe_id() {
         return $this->coupe;
     }
 
+    /**
+     * @return int
+     */
     function getPrix() {
         return $this->prix;
     }
     
+        
+    //Rajouté par Edouard
+    
+    /**
+     * @return int
+     */
     public function getQuantite() {
         return $this->quantite;
     }
-
-        /**********SETTERS****************/
     
-    function setId_config($id_config) {
-        $this->id_config = $id_config;
+    public function getProduitOrCustom()
+    {
+        return $this->produitOrCustom;
+    }
+    
+    public function getTitre() {
+        return $this->titre;
     }
 
+    /**********SETTERS****************/
+
+    
+    /**
+     * @param type $id_custom
+     * @return Custom
+     */
+    function setId_custom($id_custom) {
+        $this->id_custom = $id_custom;
+        return $this;
+    }
+
+    /**
+     * @param type $titre_custom
+     * @return Custom
+     */
+    public function setTitre_custom($titre_custom) {
+        $this->titre_custom = $titre_custom;
+        return $this;
+    }
+    
+    /**
+     * @param type $tissu_id
+     * @return Custom
+     */
     function setTissu_id($tissu_id) {
         $this->tissu_id = $tissu_id;
+        return $this;
     }
 
-    function setButton_id($button_id) {
-        $this->button_id = $button_id;
+    /**
+     * @param type $bouton_id
+     * return Custom
+     */
+    function setBouton_id($bouton_id) {
+        $this->bouton_id = $bouton_id;
+        return $this;
     }
 
-    function setCol($col) {
+    /**
+     * @param type $col
+     * @return Custom
+     */
+    function setCol_id($col) {
         $this->col = $col;
+        return $this;
     }
 
-    function setCoupe($coupe) {
+    /**
+     * @param type $coupe
+     * @return Custom
+     */
+    function setCoupe_id($coupe) {
         $this->coupe = $coupe;
+        return $this;
     }
 
+    /**
+     * @param type $prix
+     * @return Custom
+     */
     function setPrix($prix) {
         $this->prix = $prix;
+        return $this;
     }
 
+    //Rajouté par Edouard
+    
+    /**
+     * @param type $quantite
+     * @return Custom
+     */
     public function setQuantite($quantite) {
         $this->quantite = $quantite;
     }
-}
+   
+    public function setProduitOrCustom($produitOrCustom)
+    {
+        $this->produitOrCustom = $produitOrCustom;
+    }
+    
+    public function setTitre($titre) {
+        $this->titre = $titre;
+        return $this;
 
+    }
+}

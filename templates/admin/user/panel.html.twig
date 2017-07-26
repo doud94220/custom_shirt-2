@@ -1,0 +1,61 @@
+{% extends "layout.html.twig" %}
+
+{% block title 'Admin - gestion des clients' %}
+
+{% block content %}
+
+
+
+    <div class="container">
+
+    <h1>Panel de contrôle administrateur</h1>
+    <h2>Profils clients</h2>
+
+
+    <table class="table">
+        <tr>
+            <th>MODIFICATION</th>
+            <th>SUPPRESSION</th>
+            <th>id_user</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de naissance</th>
+            <th>Email</th>
+            <th width="800px">------------Adresse----------</th>
+            <th>Complément d'adresse</th>
+            <th>Code postal</th>
+            <th>Ville</th>
+            <th>Tel</th>
+            <th>Sexe</th>
+            {% if user_manager.admin %}
+                <th>Statut</th>
+            {% endif %}
+
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td><a href="{{ path('admin_cc',{id_user:user.id_user}) }}"><span class="glyphicon glyphicon-pencil"></span>Editer</a></th></td>
+                <td><a href="{{ path('admin_panel2',{id_user:user.id_user}) }}"><span class="glyphicon glyphicon-remove"></span>Ôter</a></th></td>
+                <td>{{ user.id_user}}</td>
+                <td>{{ user.nom}}</td>
+                <td>{{ user.prenom}}</td>
+                <td>{{ user.date_naissance|date('d/m/Y')}}</td>
+                <td>{{ user.email}}</td>
+                <td>{{ user.adresse}}</td>
+                <td>{{ user.complement_adresse}}</td>
+                <td>{{ user.code_postal}}</td>
+                <td>{{ user.ville}}</td>
+                <td>{{ user.tel}}</td>
+                <td>{{ user.sexe}}</td>
+
+            </tr>
+        {% endfor %}
+
+    </table>
+
+
+
+
+
+
+{% endblock %}

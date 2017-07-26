@@ -19,40 +19,48 @@ $(function() {
             })
 
                 .done(function (data) {
-                    console.log(data);
                     $('.display').html(data);
                 })
 
         });
 
-    $('.ajout_panier').click(function (e) {
-        e.preventDefault();
+
+
+    $('.ajout_panier').off('click').on('click', function (e) {
+        console.log('ok');
+       e.preventDefault();
         $.ajax({
             url: ajaxApiUrlPanier,
             method: "POST",
             data: {
                 id: $(".title h1").attr('id')
             }
+
+
         })
 
             .done(function (data) {
-                console.log('ok');
+                 console.log(data);
 
             })
+        localStorage.setItem("panier", $(".title h1").attr('id'))
+        localStorage.getItem("panier")
 
     });
 
 
 
+
 /********STOCKAGE INFORMATIONS DANS BALISE HIDDEN************/
+    $('.select_img').click(function(){
+        var id = $(this).data('id');
+        console.log(id);
+        $('#custom_product').val(id);
+    });
 
-$('.select_img').click(function(){
-    var id = $(this).data('id');
-    console.log(id);
-    $('#custom_product').val(id);
 });
 
-});
+
 
 
 
