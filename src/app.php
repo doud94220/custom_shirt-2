@@ -60,7 +60,7 @@ $app->register
                 'host'      => 'localhost',
                 'dbname'    => 'custom_shirt',
                 'user'      => 'root',
-                'password'  => '',
+                'password'  => 'root',
                 'charset'   => 'utf8'
 
             ]

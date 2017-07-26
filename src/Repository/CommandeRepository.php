@@ -96,7 +96,12 @@ EOS;
             'etat' => $commande->getEtat()
         ];
         
-        $this->persist($data);
+        $where = !empty($commande->getId_commande())
+            ? ['id_commande' => $commande->getId_commande()]
+            : null
+        ;
+        
+        $this->persist($data, $where);
     }
     
     
@@ -144,6 +149,7 @@ EOS;
         
         $commande
             ->setId_commande($dbCommande['id_commande'])
+            ->setUser_id($dbCommande['user_id'])    
             ->setPrix_livraison($dbCommande['prix_livraison'])
             ->setTotal($dbCommande['total'])
             ->setDate_commande(new DateTime($dbCommande['date_commande']))

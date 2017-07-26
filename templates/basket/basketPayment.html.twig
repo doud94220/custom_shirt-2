@@ -1,5 +1,23 @@
 {% extends "layout.html.twig" %}
 
+{% block title 'Paiement' %}
+    
 {% block content %}
-    <p>Le prix du panier est {{ basketTotalAmount }}</p>
+    <form action="{{ path('basket_charge') }}" method="POST">
+        <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+            data-amount="999"
+            data-name="Custom-shirt.com"
+            data-description="Chemise sur-mesure"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+            data-locale="auto"
+            data-currency='EUR'
+            data-label='Paiement sécurisé '
+            data-zip-code="true">
+        </script>
+        <p>Payer {{ basketTotalAmount }}</p>
+    </form>
 {% endblock %}
+    <p>Payer {{ basketTotalAmount }}</p>
+

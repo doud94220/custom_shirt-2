@@ -44,11 +44,6 @@ class DetailCommande
      */
     private $prix;
     
-    /**
-     * @var string
-     */
-    private $titre;
-    
     
     
     public function getCommande_id() {
@@ -223,5 +218,13 @@ class DetailCommande
         return $this;
     }
 
+    public function getTitre()
+    {
+        if (!empty($this->getTitreCustom())) {
+            return $this->getTitreCustom();
+        }
+        
+        return $this->getTitreProduit();
+    }
 
 }
