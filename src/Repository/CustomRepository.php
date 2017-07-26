@@ -12,6 +12,7 @@ class CustomRepository extends RepositoryAbstract
    }
 
    // Enregistrement des informations principales de configuration en base de donnée
+
    public function save(Custom $custom)
    {
         $data=[
@@ -26,6 +27,7 @@ class CustomRepository extends RepositoryAbstract
         $this->persist($data);
    }
    
+      /****Recherche par ID récupéré en session les informations à afficher******/
    public function find($id_custom){
         $dbCustom = $this->db->fetchAssoc(
             'SELECT * FROM custom WHERE id_custom = :id_custom',
@@ -53,4 +55,5 @@ class CustomRepository extends RepositoryAbstract
         
         return $custom;
    }
+
 }

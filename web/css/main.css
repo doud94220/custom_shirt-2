@@ -89,6 +89,10 @@ body {
     text-align: center;
 }
 
+li{
+    list-style-type: none;
+}
+
 .current_image {
     width: 150px;
     height: 150px;
@@ -128,3 +132,4 @@ body {
     margin-bottom : 0;
 
 }
+

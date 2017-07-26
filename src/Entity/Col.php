@@ -8,10 +8,10 @@ class Col
     private $id_col;
     
     private $stock;
-    private $description;
-    private $photo;
-    private $prix;
-    private $titre;
+    private $description_col;
+    private $photo_col;
+    private $prix_col;
+    private $titre_col;
     
     public function getId_col() {
         return $this->id_col;
@@ -21,20 +21,20 @@ class Col
         return $this->stock;
     }
 
-    public function getDescription() {
-        return $this->description;
+    public function getDescription_col() {
+        return $this->description_col;
     }
 
-    public function getPhoto() {
-        return $this->photo;
+    public function getPhoto_col() {
+        return $this->photo_col;
     }
 
-    public function getPrix() {
-        return $this->prix;
+    public function getPrix_col() {
+        return $this->prix_col;
     }
 
-    public function getTitre() {
-        return $this->titre;
+    public function getTitre_col() {
+        return $this->titre_col;
     }
 
     public function setId_col($id_col) {
@@ -47,24 +47,26 @@ class Col
         return $this;
     }
 
-    public function setDescription($description) {
-        $this->description = $description;
+    public function setDescription_col($description_col) {
+        $this->description_col = $description_col;
         return $this;
     }
 
-    public function setPhoto($photo) {
-        $this->photo = $photo;
+    public function setPhoto_col($photo_col) {
+        $this->photo_col = $photo_col;
         return $this;
     }
 
-    public function setPrix($prix) {
-        $this->prix = $prix;
+    public function setPrix_col($prix_col) {
+        $this->prix_col = $prix_col;
         return $this;
     }
 
-    public function setTitre($titre) {
-        $this->titre = $titre;
+    public function setTitre_col($titre_col) {
+        $this->titre_col = $titre_col;
         return $this;
     }
+
+
 
 }

@@ -1,7 +1,7 @@
 <?php
-
 use Controller\CustomController;
 use Controller\UserController;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,32 +19,12 @@ $app
     ->bind('admin_stock_edit')
 ;
 
-
 $app
     ->get('/template/{id}', 'index.controller:idAction')
     ->bind('show_product')// nom de la route
 ;
 
-
-//Ajax---------------------------------------------
-$app
-    ->get('/ajax_api', 'produit.controller:ajaxApi')
-    ->bind('ajax_api')// nom de la route
-;
-
-$app
-    ->match('/ajax_api_panier', 'produit.controller:ajaxApiPanier')
-    ->bind('ajax_api_panier')// nom de la route
-;
-
-$app
-    ->match('/ajax_api_produit_admin', 'produit.controller:ajaxApiAdmin')
-    ->bind('ajax_api_produit_admin')// nom de la route
-;
-
-
-
-/*********************FRONT****************************/
+/* * *******************FRONT*************************** */
 
 
 // Route du panier (basket en UK) en front
@@ -53,17 +33,19 @@ $app
     ->bind('basket_consult');
 $app
     ->match('/basket/incrementBasket/{idProduitEnSession}', 'basket.controller:incrementAction')
-    //->value('idProduitEnSession')
+        //->value('idProduitEnSession')
     ->bind('basket_increment');
 $app
-    ->match('/basket/decrementBasket/{idProduitEnSession}', 'basket.controller:decrementAction')
-    ->bind('basket_decrement');
+      ->match('/basket/decrementBasket/{idProduitEnSession}', 'basket.controller:decrementAction')
+      ->bind('basket_decrement');
 $app
+
     ->match('/basket/delete/{idProduitEnSession}', 'basket.controller:deleteAction')
     ->bind('basket_delete');
-$app
-    ->match('/basket/pay', 'basket.controller:payAction')
-    ->bind('basket_pay');
+
+//$app
+//    ->match('/basket/pay', 'basket.controller:payAction')
+//    ->bind('basket_pay');
 
 $app
     ->match('/basket/paiement', 'basket.controller:payAction')
@@ -75,8 +57,8 @@ $app
     ->bind('basket_charge')   
 ;
 
+/* HOMEPAGE */
 
-/*HOMEPAGE*/
 
 $app
     ->get('/', 'index.controller:homePage')
@@ -112,54 +94,57 @@ $app
 $app
     ->match('/ajax_api_produit_admin', 'produit.controller:ajaxApiAdmin')
     ->bind('ajax_api_produit_admin')// nom de la route
-
 ;
 
-
+//Custom--------------------------------------------------
 $app
     ->match('/custom', 'custom.controller:listTissu')
     ->bind('etape_1_tissu')
+
 ;
-
-
 $app
-   ->match('/custom_bouton', 'custom.controller:listBouton')
-   ->bind('etape_2_bouton')
-;
-
-$app
-   ->match('/custom_col', 'custom.controller:listCol')
-   ->bind('etape_3_col')
+    ->match('/custom_bouton', 'custom.controller:listBouton')
+    ->bind('etape_2_bouton')
 ;
 
 $app
-   ->match('/custom_coupe', 'custom.controller:listCoupe')
-   ->bind('etape_4_coupe')
+    ->match('/custom_col', 'custom.controller:listCol')
+    ->bind('etape_3_col')
 ;
 
 $app
-   ->match('/custom_recap', 'user.controller:showCustom')
-   ->bind('custom_recap')
+    ->match('/custom_coupe', 'custom.controller:listCoupe')
+    ->bind('etape_4_coupe')
 ;
 
 $app
-   ->match('/custom_poidstaille', 'user.controller:fillMeasureWeightHeight')
-   ->bind('etape_5_poidstaille')
+    ->match('/custom_poidstaille', 'custom.controller:fillTaillePoids')
+    ->bind('etape_5_poidstaille')
 ;
 
 $app
-   ->match('/custom_tronc', 'user.controller:fillMeasureTronc')
-   ->bind('etape_5_tronc')
+    ->match('/custom_tronc', 'custom.controller:fillTailleTronc')
+    ->bind('etape_5_tronc')
 ;
 
 $app
-   ->match('/custom_bras', 'user.controller:fillMeasureBras')
-   ->bind('etape_5_bras')
+    ->match('/custom_bras', 'custom.controller:fillTailleBras')
+    ->bind('etape_5_bras')
 ;
 
 $app
-   ->match('/custom_carrure', 'user.controller:fillMeasureCarrure')
-   ->bind('etape_5_carrure')
+    ->match('/custom_carrure', 'custom.controller:fillMeasureCarrure')
+    ->bind('etape_5_carrure')
+;
+
+$app
+    ->match('/custom_recap', 'custom.controller:consultSession')
+    ->bind('custom_recap')
+;
+
+$app
+    ->match('/custom_validate' , 'custom.controller:customValidateAction')
+    ->bind('custom_validate')
 ;
 
 /* UTILISATEUR */
@@ -189,12 +174,10 @@ $app
     ->bind('detail_commande')
 ;
 
-
-
-/*$app
-    ->get('/profile', 'commande.controller:showAction')
-    ->bind('profile_commandes')
-;*/
+//$app
+//    ->get('/profile', 'commande.controller:showAction')
+//    ->bind('profile_commandes')
+//;
 
 $app
     ->get('/profile/suivi_commandes', 'commande.controller:followAction')
@@ -226,13 +209,13 @@ $app
     ->bind('produits')// nom de la route
 ;
 
-/********************* ADMIN **************************/
+/* * ******************* ADMIN ************************* */
 // crée un groupe de routes pour la partie admin
 $admin = $app['controllers_factory'];
 
 //protection de l'accès au backoffice
-$admin->before(function () use ($app){
-    if(!$app['user.manager']->isAdmin()){
+$admin->before(function () use ($app) {
+    if (!$app['user.manager']->isAdmin()) {
         $app->abort(403, 'Accès refusé');
     }
 });
@@ -268,7 +251,7 @@ $admin
     ->bind('admin_stock_edit')
 ;
 
-// gestion des commandes -------------------------------------- 
+// gestion des commandes --------------------------------------
 $admin
     ->match('/commandes', 'admin.commande.controller:listAction')
     ->bind('admin_commandes')
@@ -314,9 +297,9 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
 
     // 404.html, or 40x.html, or 4xx.html, or error.html
     $templates = array(
-        'errors/'.$code.'.html.twig',
-        'errors/'.substr($code, 0, 2).'x.html.twig',
-        'errors/'.substr($code, 0, 1).'xx.html.twig',
+        'errors/' . $code . '.html.twig',
+        'errors/' . substr($code, 0, 2) . 'x.html.twig',
+        'errors/' . substr($code, 0, 1) . 'xx.html.twig',
         'errors/default.html.twig',
     );
 

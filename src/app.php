@@ -1,5 +1,6 @@
 <?php
 
+
 use Controller\Admin\ProduitController as AdminProduitController;
 use Controller\Admin\DetailCommandeController as AdminDetailCommandeController;
 use Controller\Admin\CommandeController as AdminCommandeController;
@@ -12,9 +13,8 @@ use Controller\IndexController;
 use Controller\ProduitController;
 use Controller\UserController;
 use Repository\BoutonRepository;
-use Repository\CoupeRepository;
 use Repository\ColRepository;
-use Repository\CommandeRepository;
+use Repository\CoupeRepository;
 use Repository\CustomRepository;
 use Repository\DetailCommandeRepository;
 use Repository\ProduitRepository;
@@ -46,6 +46,7 @@ $app->register(new SwiftmailerServiceProvider());
 $app['twig'] = $app->extend('twig', function ($twig, $app) {
     // add custom globals, filters, tags, ...
     $twig->addGlobal('user_manager', $app['user.manager']); // Global est une fonction de TWIG
+    $twig->addGlobal('basket_manager', $app['basket.manager']);
     return $twig;
 });
 
@@ -75,7 +76,6 @@ $app['user.manager'] = function () use ($app)
     return new UserManager($app['session']);
 };
 
-
 $app['basket.manager'] = function() use ($app)
 {
    return new BasketManager($app['session']);
@@ -86,38 +86,22 @@ $app['custom.manager'] = function() use ($app)
    return new CustomManager($app['session']);
 };
      
+/* Déclaration des CONTROLERS */
 
-$app['index.controller'] = function () use ($app) {
-
+$app['index.controller'] = function () use ($app) 
+{
     return new IndexController($app);
-
 };
 
-
-$app['produit.controller'] = function () use ($app) {
-
+$app['produit.controller'] = function () use ($app) 
+{
     return new ProduitController($app);
 };
-            
 
 $app['index.controller'] = function () use ($app) {
 
     return new IndexController($app);
-
 };
-
-$app['produit.repository'] = function () use ($app) {
-
-    return new ProduitRepository($app['db']);
-
-};
-
-
-$app['bouton.repository'] = function () use ($app) {
-
-    return new BoutonRepository($app['db']);
-};
-
 
 /* Déclaration des contrôleurs en service */
 /* FRONT */
@@ -126,7 +110,8 @@ $app['commande.controller'] = function () use ($app)
     return new CommandeController($app);
 };
 
-$app['detail.commande.controller'] = function () use ($app){
+$app['detail.commande.controller'] = function () use ($app)
+{
     return new DetailCommandeController($app);
 };
 
@@ -142,8 +127,6 @@ $app['basket.controller'] = function() use ($app)
 $app['detail.commande.controller'] = function () use ($app){
     return new DetailCommandeController($app);
 };
-
-
 
 /* ADMIN */
 
@@ -172,7 +155,6 @@ $app['custom.controller'] = function() use ($app)
     return new CustomController($app);
 };
 
-            
 /* Déclaration des repositories en service */
 $app['type.repository'] = function () use ($app) {
     return new TypeRepository($app['db']);
@@ -197,11 +179,20 @@ $app['coupe.repository'] = function() use ($app)
     return new CoupeRepository($app['db']);
 };
 
+$app['produit.repository'] = function () use ($app) 
+{
+    return new ProduitRepository($app['db']);
+};
+
+$app['bouton.repository'] = function () use ($app) 
+{
+    return new BoutonRepository($app['db']);
+};
+
 
 $app['commande.repository'] = function () use ($app)
 {
     return new CommandeRepository($app['db']);
-
 };
 
 $app['produit.repository'] = function () use ($app) {
