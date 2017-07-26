@@ -12,22 +12,22 @@
         <input type="hidden" name="id_user" value="{{ user.id_user }}">
         <div class="form-group">
             <label for="prenom">Prénom</label>
-            <input type="text" name="prenom" class="form-control" id="prenom" value={{ user.prenom }}>
+            <input type="text" name="prenom" class="form-control" id="prenom" value="{{ user.prenom }}">
         </div>
 
         <div class="form-group">
             <label for="nom">Nom</label>
-            <input type="text" name="nom" class="form-control" id="nom" value={{ user.nom }}>
+            <input type="text" name="nom" class="form-control" id="nom" value="{{ user.nom }}">
         </div>
 
-        {#<div class="form-group">
+        <div class="form-group">
             <label for="date_naissance">Date de naissance</label>
             <input type="date" name="date_naissance" class="form-control" id="date_naissance" value={{ user.date_naissance|date('d/m/Y') }}>
-        </div>#}
+        </div>
 
         <div class="form-group">
             <label for="email">Courriel</label>
-            <input type="email" name="email" class="form-control" id="email" value={{ user.email }}>
+            <input type="email" name="email" class="form-control" id="email" value="{{ user.email }}">
         </div>
 
         <div class="form-group">
@@ -37,27 +37,27 @@
 
         <div class="form-group">
             <label for="adresse">Adresse</label>
-            <input type="text" name="adresse" class="form-control" id="adresse" value={{ user.adresse }}>
+            <input type="text" name="adresse" class="form-control" id="adresse" value="{{ user.adresse }}">
         </div>
 
         <div class="form-group">
             <label for="complement_adresse">Complément d'adresse</label>
-            <input type="text" name="complement_adresse" class="form-control" id="complement_adresse" value={{ user.complement_adresse }}>
+            <input type="text" name="complement_adresse" class="form-control" id="complement_adresse" value="{{ user.complement_adresse }}">
         </div>
 
         <div class="form-group">
             <label for="code_postal">Code postal</label>
-            <input type="number" name="code_postal" class="form-control" id="code_postal" value={{ user.code_postal }}>
+            <input type="number" name="code_postal" class="form-control" id="code_postal" value="{{ user.code_postal }}">
         </div>
 
         <div class="form-group">
             <label for="ville">Ville</label>
-            <input type="text" name="ville" class="form-control" id="ville" value={{ user.ville }}>
+            <input type="text" name="ville" class="form-control" id="ville" value="{{ user.ville }}">
         </div>
 
         <div class="form-group">
             <label for="tel">Téléphone</label>
-            <input type="text" name="tel" class="form-control" id="tel" value={{ user.tel }}>
+            <input type="text" name="tel" class="form-control" id="tel" value="{{ user.tel }}">
         </div>
 
 
