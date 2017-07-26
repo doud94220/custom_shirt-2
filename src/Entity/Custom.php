@@ -5,9 +5,6 @@ namespace Entity;
 class Custom 
 {
 
-    /**
-     * @var int
-     */
     private $id_custom;
     
     /**

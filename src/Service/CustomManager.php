@@ -1,65 +1,128 @@
 <?php
 
-
 namespace Service;
 
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class CustomManager 
-{
+class CustomManager {
+
     private $session;
-    
-    public function __construct(Session $session)
-    {
+
+    //Création de la session
+    public function __construct(Session $session) {
         $this->session = $session;
     }
-
-    private function init()
-    {
+    
+    //Si pas de session > set session appelé custom + création d'un array
+    private function init() {
         if (!$this->session->has('custom')) {
             $this->session->set('custom', []);
         }
     }
-
-    public function setTissu($tissu)
-    {
+    
+    //Réutilisation de la fonction custom créé
+    //Et création d'un "indice" tissu 
+    //Indexation d'un attribut à cette indice tissu
+    public function setTissu($tissu) {
         $this->init();
         $custom = $this->session->get('custom');
         $custom['tissu'] = $tissu;
+        $this->session->set('custom', $custom);
     }
 
-    public function setBouton($bouton)
-    {
+    public function setBouton($bouton) {
         $this->init();
         $custom = $this->session->get('custom');
         $custom['bouton'] = $bouton;
+        $this->session->set('custom', $custom);
     }
-    
-     public function setCol($col)
-    {
+
+    public function setCol($col) {
         $this->init();
         $custom = $this->session->get('custom');
         $custom['col'] = $col;
+        $this->session->set('custom', $custom);
     }
-    
-      public function setCoupe($coupe)
+
+    public function setCoupe($coupe) {
+        $this->init();  
+        $custom = $this->session->get('custom');
+        $custom['coupe'] = $coupe;
+        $this->session->set('custom', $custom);
+    }
+
+    public function setPoidsTaille($poids, $taille)
     {
         $this->init();
         $custom = $this->session->get('custom');
-        $custom['coupe'] = $coupe;
+        $custom['user_poids'] = $poids;
+        $custom['user_taille'] = $taille;
+        $this->session->set('custom', $custom);
     }
 
-
-    
-    public function putCustominSession($custom)
+    public function setTronc($tour_cou, $tour_poitrine, $tour_taille, $tour_bassin)
     {
-        if(!$this->session)
+        $this->init();
+        $custom = $this->session->get('custom');
+        $custom['user_tour_cou'] = $tour_cou;
+        $custom['user_tour_poitrine'] = $tour_poitrine;
+        $custom['user_tour_taille'] = $tour_taille;
+        $custom['user_tour_bassin'] = $tour_bassin;
+        $this->session->set('custom', $custom);
+    }
+
+    public function setBras($manche_droite, $manche_gauche, $poignet_droit, $poignet_gauche)
         {
-           $_SESSION[] = $this->session->get('custom');
-        }
-        else
+        $this->init();
+        $custom = $this->session->get('custom');
+        $custom['user_manche_droite'] = $manche_droite;
+        $custom['user_manche_gauche'] = $manche_gauche;
+        $custom['user_poignet_droit'] = $poignet_droit;
+        $custom['user_poignet_gauche'] = $poignet_gauche;
+        $this->session->set('custom', $custom);
+    }
+    public function setCarrure($carrure, $epaule_droite, $epaule_gauche, $dos)
         {
-            
+        $this->init();
+        $custom = $this->session->get('custom');
+        $custom['user_carrure'] = $carrure;
+        $custom['user_epaule_droite'] = $epaule_droite;
+        $custom['user_epaule_gauche'] = $epaule_gauche;
+        $custom['user_dos'] = $dos;
+        $this->session->set('custom', $custom);
+    }
+
+//    /* **** affichage des informations mises en session******** */
+//
+    public function readCustom() 
+    {
+        if (!$this->session->has('custom')) { //Si y'a pas de panier
+            return null;
+        } 
+        else {
+            return $this->session->get('custom'); //lecture du panier
         }
     }
+
+      /* **** Méthode qui met en session les infos de la CONFIG choisi**/
+    
+//    public function showCustomSession($custom)
+//    {
+//        //Initialisation variable basket
+//        if(!$this->session->get('custom')) //Si y'a pas de panier
+//        {
+//          $this->addFlashMessage("Vous n'avez pas configuré de chemise sur mesure", 'error');
+//          return $this->redirectRoute('etape_1_tissu'); 
+//           //Y placer un tableau de produit(s) et config(s)
+//        }
+//        else //Si y'a une session custom
+//        {
+//           $custom = $this->session->get('custom'); //Je recup la value correspondant à la key 'custom'   
+//        
+//        );
+//        }
+//
+//    }
+
+
 }

@@ -32,10 +32,10 @@ class UserController extends ControllerAbstract
                 $errors['prenom'] = 'Le prénom est obligatoire';
             }
             
-//            if (empty($_POST['date_naissance'])) {
-//                $errors['date_naissance'] = 'La date de naissance est obligatoire';
-//            }
-            
+            if(empty($_POST['date_naissance'])) {
+                $errors['date_naissance'] = 'La date de naissance est obligatoire';
+            }
+
             if(empty($_POST['email'])){
                 $errors['email'] = "L'e-mail est obligatoire";
             }elseif(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
@@ -89,7 +89,6 @@ class UserController extends ControllerAbstract
                 $this->addFlashMessage($msg, 'error');
             }
         }
-        
         return $this->render(
             'user/register.html.twig',
             [
@@ -224,9 +223,6 @@ class UserController extends ControllerAbstract
             
             $details_commandes[] = $detailsCurrentCommande;
         }
-        
-        //
-        
         //echo '<pre>'; print_r($commandes); echo '</pre><hr>';
         //echo '<pre>'; print_r($details_commandes); echo '</pre>';
         return $this->render(

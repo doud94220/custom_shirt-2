@@ -17,7 +17,6 @@ class CoupeRepository extends RepositoryAbstract
         $query = <<<EOS
 SELECT *
 FROM coupe
-ORDER BY id_coupe DESC
 EOS;
     
 
@@ -38,10 +37,34 @@ EOS;
         
         $coupes
                ->setId_coupe($dbCoupe['id_coupe'])
-               ->setTitre($dbCoupe['titre'])
-               ->setDescription($dbCoupe['description'])
-               ->setPhoto($dbCoupe['photo'])
+               ->setTitre_coupe($dbCoupe['titre_coupe'])
+               ->setDescription_coupe($dbCoupe['description_coupe'])
+               ->setPhoto_coupe($dbCoupe['photo_coupe'])
         ;
         return $coupes;
+    }
+    
+    public function findCoupeById($id)
+    {
+        $query = <<<EOS
+SELECT id_coupe, titre_coupe, photo_coupe
+FROM coupe
+WHERE id_coupe = :id
+EOS;
+        $dbTabCoupes = $this->db->fetchAssoc(
+                $query,
+                ['id' => $id]
+                );
+        //$objetTabBoutons= [];
+        
+        //echo '<pre>';var_dump($dbTabTissus);echo '</pre>';die;
+        
+//        //foreach($dbTabTissus as $dbTabTissu)
+//        {
+//            $tissus = $this->buildFromArray($dbTabTissu);
+//            $objetTabTissus[] = $tissus;
+//            
+//        }
+        return $dbTabCoupes;
     }
 }

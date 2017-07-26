@@ -4,143 +4,144 @@ namespace Entity;
 
 use DateTime;
 
-class User 
-{
-    /********* INSCRIPTION ***********/
-    
+class User {
+    /*     * ******* INSCRIPTION ********** */
+
     /**
-     * @var int 
+     * @var int
      */
     private $id_user;
-    
+
     /**
      * @var string
      */
     private $prenom;
-    
+
     /**
-     * @var string 
+     * @var string
      */
     private $nom;
-    
+
     /**
-     * @var DateTime 
+     * @var DateTime
      */
     private $date_naissance;
-    
+
     /**
      * @var string
      */
     private $email;
-    
+
     /**
      * @var string
      */
     private $password;
-    
+
     /**
      * @var string
      */
     private $adresse;
-    
+
     /**
      * @var string
      */
     private $complement_adresse;
-    
+
     /**
      * @var int
      */
     private $code_postal;
-    
+
     /**
      * @var string
      */
     private $ville;
-    
+
     /**
      * @var int
      */
     private $tel;
-    
+
     /**
      * @var string
      */
     private $sexe;
-    
+
     /**
-     * @var string 
+     * @var string
      */
     private $statut = 'user';
-    
-    /********* MESURES *********/
+
+    /*     * ******* MESURES ******** */
+
     /**
      * @var int
      */
     private $taille;
-    
+
     /**
      * @var int
      */
     private $poids;
-    
+
     /**
      * @var int
      */
     private $tour_cou;
-    
+
     /**
      * @var int
      */
     private $tour_poitrine;
-    
+
     /**
      * @var int
      */
     private $tour_taille;
-    
+
     /**
      * @var int
      */
     private $tour_bassin;
-    
+
     /**
      * @var int
      */
     private $manche_droite;
-    
+
     /**
      * @var int
      */
     private $manche_gauche;
-    
+
     /**
      * @var int
      */
     private $poignet_droit;
-    
+
     /**
      * @var int
      */
     private $poignet_gauche;
-    
+
     /**
      * @var int
      */
     private $carrure;
-    
+
     /**
      * @var int
      */
     private $dos;
-    
-    
-     /************ GETTERS ***************/
-    
+    private $epaule_gauche;
+    private $epaule_droite;
+
+    /*     * ********** GETTERS ************** */
+
     public function getId_user() {
         return $this->id_user;
     }
-    
+
     public function getPrenom() {
         return $this->prenom;
     }
@@ -150,14 +151,13 @@ class User
     }
 
     /**
-     * 
+     *
      * @return DateTime
      */
-    //à verifier
+//à verifier
     public function getDate_naissance() {
         return $this->date_naissance;
     }
-    
 
     public function getEmail() {
         return $this->email;
@@ -194,7 +194,7 @@ class User
     public function getStatut() {
         return $this->statut;
     }
- 
+
     public function getTaille() {
         return $this->taille;
     }
@@ -242,10 +242,17 @@ class User
     public function getDos() {
         return $this->dos;
     }
-    
 
-    /**********SETTERS****************/
-    
+    public function getEpaule_gauche() {
+        return $this->epaule_gauche;
+    }
+
+    public function getEpaule_droite() {
+        return $this->epaule_droite;
+    }
+
+    /*     * ********SETTERS*************** */
+
     public function setId_user($id_user) {
         $this->id_user = $id_user;
         return $this;
@@ -273,14 +280,12 @@ class User
      * @param DateTime $date_naissance
      * @return User
      */
-    //à vérifier
+//à vérifier
     public function setDate_naissance(\DateTime $date_naissance) {
         $this->date_naissance = $date_naissance;
         return $this;
     }
-  
-    
-    
+
     /**
      * @param string $email
      * @return User
@@ -353,7 +358,6 @@ class User
         return $this;
     }
 
-
     /**
      * @param string $statut
      * @return User
@@ -362,9 +366,9 @@ class User
         $this->statut = $statut;
         return $this;
     }
-    
-  /* Mesures */
-  
+
+    /* Mesures */
+
     public function setTaille($taille) {
         $this->taille = $taille;
         return $this;
@@ -420,28 +424,38 @@ class User
         return $this;
     }
 
+    public function setEpaule_gauche($epaule_gauche) {
+        $this->epaule_gauche = $epaule_gauche;
+        return $this;
+    }
+
+    public function setEpaule_droite($epaule_droite) {
+        $this->epaule_droite = $epaule_droite;
+        return $this;
+    }
+    
     public function setDos($dos) {
         $this->dos = $dos;
         return $this;
     }
 
+    /*     * ****** RECUPERATION DU NOM COMPLET ****** */
 
-    /******** RECUPERATION DU NOM COMPLET *******/
     /**
      * @return string
      */
-    public function getFullName(){
+    public function getFullName() {
         return $this->prenom . ' ' . $this->nom;
     }
-    
-    
-    /********** VERIFICATION DU STATUT **********/
-  
+
+    /*     * ******** VERIFICATION DU STATUT ********* */
+
     /**
-     * 
+     *
      * @return bool
      */
-    public function isAdmin(){
+    public function isAdmin() {
         return $this->statut == 'admin';
     }
+
 }
