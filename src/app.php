@@ -80,7 +80,7 @@ $app['basket.manager'] = function() use ($app)
 {
    return new BasketManager($app['session']);
 };
-            
+
 $app['custom.manager'] = function() use ($app)
 {
    return new CustomManager($app['session']);
