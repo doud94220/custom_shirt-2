@@ -3,7 +3,7 @@
 {% block title 'Admin produit' %}
 
 {% block content %}
-{{ dump(produits) }}
+{#{{ dump(produits) }}#}
     <h1>Gestion de Stock</h1>
     <div class="row">
         <div class="col-md-2">
@@ -41,7 +41,7 @@
                     <input name="stock-XL" type="text" class="form-control" value="{% if produits is not empty %}{{ produits[4].stock }}{% endif %}"></input>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-default" type="submit">Submit</button>
+                    <button class="btn btn-primary" type="submit">Enregistrer</button>
                     <a href="{{ path('admin_produits') }}" class="btn btn-default">
                         Annuler
                     </a>

@@ -2,8 +2,8 @@
 
 {% block content %}
 
-
-
+<div class="row">
+    <div class="col-sm-12 chemise-index">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
@@ -14,28 +14,26 @@
 
             <div class="carousel-inner" role="listbox">
                 <div class="item active">
-                    <img src="http://www.mcapitalpartners.fr/wp-content/uploads/topsite.jpg" alt="...">
+                    <img src="http://www.mcapitalpartners.fr/wp-content/uploads/topsite.jpg" alt="chemise">
                     <div class="carousel-caption">
                         <h3> Créez votre chemise sur mesure en un rien de temps ! </h3>
                         <a href="{{path ('etape_1_tissu') }}" > Commmandez </a>
-                        <button type="button" class="btn btn-primary btn-lg btn-block"></button>
                     </div>
                 </div>
                 <div class="item">
-                    <img src="http://www.mcapitalpartners.fr/wp-content/uploads/topsite.jpg" alt="...">
+                    <img src="http://localhost/custom_shirt-2/web/img/carousel2.jpg" alt="chemise">
                     <div class="carousel-caption">
                         <h3> Des chemises en prêt-à-porter sans prises de mesures ! </h3>
-                        <a href="{#{{path ('etape_1_tissu') }}#}" > Commmandez </a>
+                        <a href="{{path ('produits') }}" > Commmandez </a>
                     </div>
                 </div>
                 <div class="item">
-                    <img src="http://www.mcapitalpartners.fr/wp-content/uploads/topsite.jpg" alt="...">
+                    <img src="http://localhost/custom_shirt-2/web/img/carousel3.jpg" alt="chemise">
                     <div class="carousel-caption">
                         <h3> De très belles chemises pas cher ! </h3>
-                        <a href="{#{{path ('etape_1_tissu') }}#}" > Commmandez </a>
+                        <a href="{{path ('produits') }}" > Commmandez </a>
                     </div>
                 </div>
-
             </div>
 
             <!-- Controls -->
@@ -49,39 +47,35 @@
             </a>
         </div>
     </div>
+</div>
 
-        <div class="container">
-        <row>
-           <div class="col-xs-12 col-sm-6 col-lg-3">
-               <img src= "https://dyn1.tailorstore.com/MTE1Mnx8OTB8ZmZmZmZm/images/catalog/mens-shirt-brandon-blue-964-jpg">
-               <p>Une chemise</p>
-           </div>
 
-            <div class="col-xs-12 col-sm-6 col-lg-3">
-                <img src="https://dyn1.tailorstore.com/MTE1Mnx8OTB8ZmZmZmZm/images/catalog/mens-shirt-hinton-blue-958-jpg">
-                <p>Une chemise</p>
+        <div class="row collection">
+            <div class="col-sm-12 chemise-index">
+                <h3>NOS COLLECTIONS</h3>
+
+                <div class="col-sm-3">
+                    <a href="{{ path('show_product', {"id":  produits[5].id}) }}"><img class="img_template" src="{{ 'http://localhost/custom_shirt-2/web/img/' ~ produits[5].photo }}" alt="chemise"></a>
+                    <p><a href="{{ path('show_product', {"id":  produits[5].id}) }}">{{ produits[5].tissu.nom }}</a></p>
+                    <p>{{ produits[5].prix ~ ' €' }}</p>
+                </div>
+                <div class="col-sm-3">
+                    <a href="{{ path('show_product', {"id":  produits[12].id}) }}"><img class="img_template" src="{{ 'http://localhost/custom_shirt-2/web/img/' ~ produits[12].photo }}" alt="chemise"></a>
+                    <p><a href="{{ path('show_product', {"id":  produits[12].id}) }}">{{ produits[5].tissu.nom }}</a></p>
+                    <p>{{ produits[12].prix ~ ' €' }}</p>
+                </div>
+                <div class="col-sm-3">
+                    <a href="{{ path('show_product', {"id":  produits[9].id}) }}"><img class="img_template" src="{{ 'http://localhost/custom_shirt-2/web/img/' ~ produits[9].photo }}" alt="chemise"></a>
+                    <p><a href="{{ path('show_product', {"id":  produits[9].id}) }}">{{ produits[5].tissu.nom }}</a></p>
+                    <p>{{ produits[9].prix ~ ' €' }}</p>
+                </div>
+                <div class="col-sm-3">
+                    <a href="{{ path('show_product', {"id":  produits[20].id}) }}"><img class="img_template" src="{{ 'http://localhost/custom_shirt-2/web/img/' ~ produits[20].photo }}" alt="chemise"></a>
+                    <p><a href="{{ path('show_product', {"id":  produits[20].id}) }}">{{ produits[5].tissu.nom }}</a></p>
+                    <p>{{ produits[20].prix ~ ' €' }}</p>
+                </div>
+
             </div>
-
-            <div class="col-xs-12 col-sm-6 col-lg-3">
-                <img src="https://dyn1.tailorstore.com/MTE1Mnx8OTB8ZmZmZmZm/images/catalog/mens-shirt-hinton-blue-1103-jpg">
-                <p>Une chemise</p>
-            </div>
-
-            <div class="col-xs-12 col-sm-6 col-lg-3">
-                <img src="https://dyn1.tailorstore.com/MTE1Mnx8OTB8ZmZmZmZm/images/catalog/mens-shirt-alassio-1932-jpg">
-                <p>Une chemise</p>
-            </div>
-
-        </row>
-
         </div>
-
-{% endblock %}
-
-
-{% block effetVisuel %}
-
-    <script>
-
 
 {% endblock %}

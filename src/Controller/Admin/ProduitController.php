@@ -45,7 +45,7 @@ class ProduitController extends ControllerAbstract
         if(!empty($_FILES['photo']['name']))
         {
             $nom_photo = $_POST['titre'] . '_' . $_FILES['photo']['name'];
-            $photo_dossier = '/custom-shirt_2/web/img/' . $nom_photo;
+            $photo_dossier = '/custom_shirt-2/web/img/' . $nom_photo;
             move_uploaded_file($_FILES['photo']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $photo_dossier);
 
             $photo_bd = $nom_photo;
@@ -113,7 +113,6 @@ class ProduitController extends ControllerAbstract
                 'produit' => $produit,
                 'types' => $types,
                 'tissus' => $tissus,
-                'post' => var_dump($_POST)
             ]
         );
     }

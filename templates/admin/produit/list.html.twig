@@ -20,8 +20,10 @@
 		            <th>Description</th>
 		            <th>Photo</th>
 		            <th>Sexe</th>
-		            <th>Prix</th>
-		            <th width="200px"></th>
+		            <th width="60px">Prix</th>
+		            <th width="80px"></th>
+		            <th width="80px"></th>
+		            <th width="80px"></th>
 		        </tr>
 				{% for produit in produits %}
 		            <tr>
@@ -34,24 +36,10 @@
 		                <td><img class="image_list_produit" src="http://localhost/custom_shirt-2/web/img/{{ produit.photo }}"></td>
 
 		                <td>{{ produit.sexe }}</td>
-		                <td>{{ produit.prix }}</td>
-		                <td>
-		                    <a
-		                        href="{{ path('admin_produit_edit', {id: produit.id}) }}"
-		                        class="btn btn-primary">
-		                        Modifier
-		                    </a>
-		                    <a
-		                        href="{{ path('admin_produit_delete', {id: produit.id}) }}"
-		                        class="btn btn-danger">
-		                        Supprimer
-		                    </a>
-		                    <a
-		                        href="{{ path('admin_stock', {id: produit.id}) }}"
-		                        class="btn btn-default">
-		                        Voir stock
-		                    </a>
-		                </td>
+		                <td>{{ produit.prix ~ ' €' }}</td>
+		                <td><a href="{{ path('admin_produit_edit', {id: produit.id}) }}" class="btn btn-primary btn-sm">Modifier</a></td>
+		                <td><a href="{{ path('admin_produit_delete', {id: produit.id}) }}" class="btn btn-danger btn-sm">Supprimer</a></td>
+		                <td><a href="{{ path('admin_stock', {id: produit.id}) }}" class="btn btn-default btn-sm">Voir - Modifier stock</a></td>
 		            </tr>
 		        {% endfor %}
 		    </table>
