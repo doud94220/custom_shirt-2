@@ -9,7 +9,7 @@ $(function()
             method: "POST",
             data:
             {
-                id: $(".title h1").attr('id')
+                id: $(".title h2").attr('id')
             }
         })
 

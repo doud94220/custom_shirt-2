@@ -24,7 +24,6 @@ class StockRepository extends RepositoryAbstract
     //Pour récupérer les données de la tables produit_taill avec objetss (voir 'buildFromArrayStock' plus bas)
     public function findStock($id)
     {
-        var_dump($id);
         $query = <<<EOS
 SELECT p.*, t.id AS ta_id, t.taille, p_t.stock
 FROM produit_taille p_t
@@ -45,7 +44,6 @@ EOS;
 
             $produits[] = $produit;
         }
-        var_dump($produits);
 
         return $produits;
 
@@ -79,27 +77,24 @@ EOS;
     }
 
 
-    public function save($produits)
+    public function save($produits, $id)
     {
-        var_dump($produits);
         foreach ($produits as $value) {//ce boucle va envoyer le $data un par à méthode 'persist' de RepositoryAbstract
             //pour la requete d'Update
             $data = [
-                'produit_id' => $value->getProduit(),
+                'produit_id' => $id,
                 'taille_id' => $value->getTaille(),
                 'stock' => $value->getStock(),
-
             ];
 
+            $where = !empty($value->getProduit())
+                ? ['produit_id' => $value->getProduit(),
+                    'taille_id' => $value->getTaille()
+                ] // modification
+                : null // création
+            ;
 
-//            $where = !empty($value->getProduit())
-//                ? ['produit_id' => $value->getProduit(),
-//                    'taille_id' => $value->getTaille()
-//                ] // modification
-//                : null // création
-//            ;
-
-            $this->persist($data);
+            $this->persist($data, $where);
         }
 
     }

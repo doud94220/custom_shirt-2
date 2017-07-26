@@ -2,16 +2,10 @@
 
 {% block content %}
 
-
-    <h1>Accueil</h1>
-    {# {% include 'custom/tissu.html.twig' %} #}
-
     {% if user_manager.admin %}
-        <h1>Hello Admin {{ user_manager.userName }}</h1>
+        <h4>Hello Admin {{ user_manager.userName }}</h4>
     {% elseif user_manager.user %}
-        <h1>Hello {{ user_manager.userName }}</h1>
-    {% else %}
-        <h1>Hello visiteur</h1>
+        <h4>Hello {{ user_manager.userName }}</h4>
     {% endif %}
 
     <div class="container">
@@ -121,5 +115,5 @@
     <script>
         var ajaxApiUrl = "{{ path('ajax_api') }}";
     </script>
-    <script src="{{ asset('script/script.js') }}"></script>
+    <script src="{{ asset('script/scriptBoutique.js') }}"></script>
 {% endblock %}

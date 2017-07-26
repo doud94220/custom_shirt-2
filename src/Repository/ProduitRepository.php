@@ -161,8 +161,8 @@ EOS;
             ->setGrammage($dbProduit['grammage'])
             ->setDescr($dbProduit['descr'])
             ->setTirage($dbProduit['tirage'])
+            ->setFil($dbProduit['fil'])
 
-//            ->setFil($dbProduit['fil'])
         ;
 
         $category

@@ -39,69 +39,138 @@
 
             <nav class="navbar navbar-inverse">
                 <div class="container">
-                    <a class="navbar-brand">Menu admin</a>
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="{{ path('admin_produits') }}">Gestion produits</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('admin_panel') }}">Gestion utilisateurs</a>
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <span class="navbar-brand" href="#">Menu admin</span>
+                    </div>
 
-                        </li>
-                        <li>
-                            <a href="{{ path('admin_commandes') }}">Gestion commandes</a>
-                        </li>
-                    </ul>
-                </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="{{ path('admin_produits') }}">Gestion produits</a></li>
+                            <li><a href="{{ path('admin_panel') }}">Gestion utilisateurs</a></li>
+                            <li><a href="{{ path('admin_commandes') }}">Gestion commandes</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
             </nav>
 
         {% endif %}
             <nav class="navbar navbar-default">
                 <div class="container">
-                    <a class="navbar-brand" href="{{path('homepage')}}">Custom Shirt</a>
-                    {# affiche le rendu de la route category_menu 
-                    {{ render(url('category_menu')) }}#}
-                    <ul class="nav navbar-nav navbar-left">
-                        {#<li>
-                            <a href="{{ path('presentation') }}">Qui sommes-nous ?</a>
-                        </li>#}
-                        <li>
-                            <a href="{{ path('etape_1_tissu') }}"><span class="glyphicon glyphicon-scissors"></span> Chemise à customiser</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('produits') }}"><span class="glyphicon glyphicon-sunglasses"></span> Chemise prêt à porter</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('contact') }}">Contactez-nous</a>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        {# voir l'ajout de la globale user_manager dans twig dans src/app.php #}
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" class="navbar-brand" href="{{path('homepage')}}">Custom Shirt</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                        <ul class="nav navbar-nav">
+                            {#<li>#}
+                            {#<a href="{{ path('presentation') }}">Qui sommes-nous ?</a>#}
+                        {#</li>#}
+                            <li>
+                                <a href="{{ path('etape_1_tissu') }}"><span class="glyphicon glyphicon-scissors"></span> Chemise à customiser</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('produits') }}"><span class="glyphicon glyphicon-sunglasses"></span> Chemise prêt à porter</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('contact') }}">Contactez-nous</a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            {# voir l'ajout de la globale user_manager dans twig dans src/app.php #}
                             <li>
                                 <a href="{{ path('basket_consult') }}"><span class="glyphicon glyphicon-shopping-cart fa-2x"></span></a> {# Icone Panier #}
                             </li>
-                        {% if user_manager.user %}
+
+                            {% if user_manager.user %}
+
+                                <li>
+
+                                    <a href="{{ path('profile', {user:user_manager.user}) }}"><span class="glyphicon glyphicon-user"></span> {{ user_manager.userName }}</a>
+
+                                </li>
+                                <li>
+                                    <a href="{{ path('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Se déconnecter</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ path('register') }}"><span class="glyphicon glyphicon-pencil"></span> Créer un compte</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('login') }}"><span class="glyphicon glyphicon-log-in"></span> Se connecter</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.navbar-collapse -->
+                 </nav>
 
 
-                            <li>
 
-                                <a href="{{ path('profile', {user:user_manager.user}) }}"><span class="glyphicon glyphicon-user"></span> {{ user_manager.userName }}</a>
 
-                            </li>
-                            <li>
-                                <a href="{{ path('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Se déconnecter</a>
-                            </li>
-                        {% else %}
-                            <li>
-                                <a href="{{ path('register') }}"><span class="glyphicon glyphicon-pencil"></span> Créer un compte</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('login') }}"><span class="glyphicon glyphicon-log-in"></span> Se connecter</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </nav>
+
+
+                    {#<a class="navbar-brand" href="{{path('homepage')}}">Custom Shirt</a>#}
+                    {# affiche le rendu de la route category_menu#}
+                    {#{{ render(url('category_menu')) }}#}
+                    {#<ul class="nav navbar-nav navbar-left">#}
+                        {#<li>#}
+                            {#<a href="{{ path('presentation') }}">Qui sommes-nous ?</a>#}
+                        {#</li>#}
+                        {#<li>#}
+                            {#<a href="{{ path('etape_1_tissu') }}"><span class="glyphicon glyphicon-scissors"></span> Chemise à customiser</a>#}
+                        {#</li>#}
+                        {#<li>#}
+                            {#<a href="{{ path('produits') }}"><span class="glyphicon glyphicon-sunglasses"></span> Chemise prêt à porter</a>#}
+                        {#</li>#}
+                        {#<li>#}
+                            {#<a href="{{ path('contact') }}">Contactez-nous</a>#}
+                        {#</li>#}
+                    {#</ul>#}
+                    {#<ul class="nav navbar-nav navbar-right">#}
+                        {# voir l'ajout de la globale user_manager dans twig dans src/app.php #}
+                            {#<li>#}
+                                {#<a href="{{ path('basket_consult') }}"><span class="glyphicon glyphicon-shopping-cart fa-2x"></span></a> #}{# Icone Panier #}
+                            {#</li>#}
+                        {#{% if user_manager.user %}#}
+
+
+                            {#<li>#}
+
+                                {#<a href="{{ path('profile', {user:user_manager.user}) }}"><span class="glyphicon glyphicon-user"></span> {{ user_manager.userName }}</a>#}
+
+                            {#</li>#}
+                            {#<li>#}
+                                {#<a href="{{ path('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Se déconnecter</a>#}
+                            {#</li>#}
+                        {#{% else %}#}
+                            {#<li>#}
+                                {#<a href="{{ path('register') }}"><span class="glyphicon glyphicon-pencil"></span> Créer un compte</a>#}
+                            {#</li>#}
+                            {#<li>#}
+                                {#<a href="{{ path('login') }}"><span class="glyphicon glyphicon-log-in"></span> Se connecter</a>#}
+                            {#</li>#}
+                        {#{% endif %}#}
+                    {#</ul>#}
+                {#</div>#}
+            {#</nav>#}
         <div class="container">
             {# bloc d'affichage des messages flash #}
             {% for type, flashes in app.session.flashbag.all %}
