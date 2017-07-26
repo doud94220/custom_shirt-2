@@ -79,8 +79,9 @@ class CommandeController extends ControllerAbstract
             }
             else //Si c'est une config
             {
-                $idConfig = $productOrConfig->getId_config();
-                $detailCommande->setCustom_id($idConfig);
+                //// COMMENTAIRES TEMPORAIRES
+                //$idConfig = $productOrConfig->getId_config();
+                //$detailCommande->setCustom_id($idConfig);
             }
 
             //Set de la quantite

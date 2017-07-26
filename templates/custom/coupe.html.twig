@@ -45,3 +45,8 @@
         </div>
 
     {% endblock %}
+
+        {% block javascripts %}
+        {{ parent() }}
+     <script src="{{ asset('script/choixcustom.js')}}"></script>
+          {% endblock %}

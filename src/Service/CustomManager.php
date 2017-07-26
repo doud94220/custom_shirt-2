@@ -2,16 +2,23 @@
 
 namespace Service;
 
+use Repository\TissuRepository;
+use Repository\BoutonRepository;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Entity\Custom;
 
 class CustomManager {
 
     private $session;
+    
+    private $app;
 
     //Création de la session
-    public function __construct(Session $session) {
-        $this->session = $session;
-    }
+    public function __construct(\Silex\Application $app) {
+       $this->session = $app['session'];
+       $this->app = $app;
+   }
+
     
     //Si pas de session > set session appelé custom + création d'un array
     private function init() {
@@ -91,6 +98,22 @@ class CustomManager {
         $custom['user_dos'] = $dos;
         $this->session->set('custom', $custom);
     }
+    
+    public function setTitre_custom($titre_custom)
+    {
+        $this->init();
+        $custom = $this->session->get('custom');
+        $custom['titre_custom'] = $titre_custom;
+        $this->session->set('custom' ,$custom);
+    }
+    
+    public function setId_custom($id_custom)
+    {
+        $this->init();
+        $custom = $this->session->get('custom');
+        $custom['id_custom'] = $id_custom;
+        $this->session->set('custom' , $custom);
+    }
 
 //    /* **** affichage des informations mises en session******** */
 //
@@ -103,26 +126,55 @@ class CustomManager {
             return $this->session->get('custom'); //lecture du panier
         }
     }
-
-      /* **** Méthode qui met en session les infos de la CONFIG choisi**/
     
-//    public function showCustomSession($custom)
-//    {
-//        //Initialisation variable basket
-//        if(!$this->session->get('custom')) //Si y'a pas de panier
-//        {
-//          $this->addFlashMessage("Vous n'avez pas configuré de chemise sur mesure", 'error');
-//          return $this->redirectRoute('etape_1_tissu'); 
-//           //Y placer un tableau de produit(s) et config(s)
-//        }
-//        else //Si y'a une session custom
-//        {
-//           $custom = $this->session->get('custom'); //Je recup la value correspondant à la key 'custom'   
-//        
-//        );
-//        }
-//
-//    }
+    //Par edouard by Edouard pour info
+   //Fonction qui calcule le prix d'une custom shirt à partir de id tissu et id bouton
+   public function calculateCustomPrice($idTissu, $idBouton)
+   {
+       //Recup prix tissu
+       $dbTabTissu = $this->app['tissu.repository']->findTissuById($idTissu); //Note : pour faire $this->app, on a rajouté app au custom manager dans app.php
+       $prixTissu = $dbTabTissu['prix'];
+       
+       //Recup prix bouton
+       $dbTabBouton = $this->app['bouton.repository']->findBoutonById($idBouton);
+       $prixBouton = $dbTabBouton['prix_bouton'];
+       
+       //Calcul prix chemise, et return de ce prix
+       $prixChemiseCusto = $prixTissu + $prixBouton;
+       return $prixChemiseCusto;
+   }
 
+    //Par edouard by Edouard pour info
+   //Fonction qui lit le custom en session, recupère qques infos, et instancie un objet Custom pour le setter avec les infos requises pour le panier, et renvoie cet objet Custom
+   public function getCustomSessionAndMoreAndCreateCustomObjectForSessionBasket ()
+   {
+       //Recup custom en session
+       $customSessionArray =  $this->readCustom();
+       
+       //Mettre les infos utiles en variable dans cette fonction
+       $idCustomShirt = $customSessionArray['id_custom'];
+       $idTissu = $customSessionArray['tissu'];
+       $idBouton = $customSessionArray['bouton'];
+       $titreCustomShirt = $customSessionArray['titre_custom'];
+               
+       //Recup infos custom absentes
+       $prixChemiseCustom = $this->calculateCustomPrice($idTissu, $idBouton);
+       $quantiteChemiseCustom = 1;
+       
+       //Creer un objet "Custom" et le setter
+       $customShirt = new Custom();
+       $customShirt->setId_custom($idCustomShirt);
+       $customShirt->setTitre_custom($titreCustomShirt);
+       $customShirt->setPrix($prixChemiseCustom);
+       $customShirt->setQuantite($quantiteChemiseCustom);
+
+       //Retourner l'objet
+       return $customShirt;
+   }
+
+    public function flushCustomSession()
+    {
+       $this->session->remove('custom');
+    }
 
 }

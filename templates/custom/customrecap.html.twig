@@ -156,18 +156,19 @@
                              <td>{{epaule_droite}} cm</td>
                              <td>{{epaule_gauche}} cm</td>
                              <td>{{dos}} cm</td>
-                             <td><a href="{{ path('etape_5_bras') }}">Modifier</a></td>
+                             <td><a href="{{ path('etape_5_carrure') }}">Modifier</a></td>
                          </tr>
                     </table>
                 </div>
             </div>
+{#            <form method="post">
+                <div class="form-group">
+                    <label>Nommez votre configuration</label>
+                    <input type="text" name="titre_custom" value="{{ titre_custom }}" class="form-control" placeholder="Merci de renseigner un nom à votre configuration">
+                </div>       
+            <button type="submit">Valider votre configuration</button><br><br><br>
+            </form>#}
+           <a href="{{path('custom_validate')}}">Allez vers le panier</a>
         </div>                                 
-        
-        {# Lien vers le panier #}
-        <hr>
-       
-        <a href="{{path('custom_validate')}}">Valider votre configuration</a><br><br><br>
-
-        
 
     {% endblock %}
