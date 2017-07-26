@@ -23,7 +23,7 @@ class ProduitController extends ControllerAbstract
     public function ajaxApi()
     {
 
-        $req = "SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, t.categorie_id, c.categorie 
+        $req = "SELECT p.*, t.type, ti.nom, ti.descr, ti.composition, ti.grammage, ti.tirage, t.categorie_id, c.categorie 
                 FROM produit p
                 JOIN type t ON p.type_id = t.id
                 JOIN tissu ti ON p.tissu_id = ti.id

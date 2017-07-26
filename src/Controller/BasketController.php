@@ -3,13 +3,12 @@
 namespace Controller;
 
 use Service\BasketManager;
+use Service\CustomManager;
 use Entity\Basket;
-
-//Pour tests (ou pas)
 use Entity\Produit;
 use Entity\Custom;
 use Repository\ProduitRepository;
-
+use Repository\CustomRepository;
 
 class BasketController extends ControllerAbstract
 {
@@ -23,6 +22,35 @@ class BasketController extends ControllerAbstract
     //Fonction pour voir tout le panier
     public function consultAction()
     { 
+        ////////////////// JE CREER UNE CUSTOM ET LA MET DANS LE PANIER EN DUR //////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////
+
+        //Recup du dernier id dans table custom
+        $idCustom = $this->app['custom.repository']->getLastInsertId();
+        
+        //Creation d'un array custom pour session => BOUCHON
+        $custom = array(
+                    'tissu' => 1,
+                    'bouton'  => 1,
+                    'titre_custom'  => 'Ma premiere chemise custom',
+                    'id_custom' => 1
+                );
+
+        //Mise en session du Custom
+        $this->session->set('custom', $custom);
+        
+        
+        //Pour GUILLAUME
+        
+        //Creation d'un objet Custom à partir des données du custom en session
+        $customShirtObject = $this->app['custom.manager']->getCustomSessionAndMoreAndCreateCustomObjectForSessionBasket();
+        
+        //Mise dans panier du Custom
+        $this->app['basket.manager']->putConfigToBasket($customShirtObject);
+        
+         /////////////////////////////////////////////////////////////////////////////////////////       
+        //////////////////////////////// FIN FORCAGE EN DUR //////////////////////////////////////
+        
         //Je recupère le panier en session
         $productsAndConfigs = $this->app['basket.manager']->readBasket(); //auto-completion marche pas mais normal
         
@@ -81,9 +109,17 @@ class BasketController extends ControllerAbstract
         //Je recupère le basket de la session
         $productsAndConfigs = $this->app['basket.manager']->readBasket();
 
-        //Je décrémente la quantité du produit passé en arg de la fonction
-        $productsAndConfigs[$idProduitEnSession]->setQuantite($productsAndConfigs[$idProduitEnSession]->getQuantite() - 1);
-
+        if($productsAndConfigs[$idProduitEnSession]->getQuantite() == 1) //Si quantite du produit cliqué = 1
+        {
+            //Je mets un message warning et je reviens vers le panier
+            $this->addFlashMessage("La quantité est de 1, si vous voulez retirer ce produit, cliquer sur le lien 'Retirer le produit'", "warning");
+            return $this->redirectRoute('basket_consult');
+        }
+        else //Si quantite du produit cliqué > 1
+        {
+            //Je décrémente la quantité du produit passé en arg de la fonction
+            $productsAndConfigs[$idProduitEnSession]->setQuantite($productsAndConfigs[$idProduitEnSession]->getQuantite() - 1);
+        }
         //Je mets le nouveau panier en session
         $this->session->set('basket', $productsAndConfigs);
 
@@ -93,6 +129,7 @@ class BasketController extends ControllerAbstract
     }//Fin decrementAction()
     
     /**
+     * TEST JULIEN :
      * Cette méthode sert à envoyer sur la page de paiement lorsque l'utilisateur valide son panier
      */
 //    public function payAction(){
@@ -118,12 +155,19 @@ class BasketController extends ControllerAbstract
         {
             $this->app['basket.manager']->putTotalAmountToBasket($_POST['montantTotalPanier']); //On met le montant total du panier en session
         }
+        else //Si y'a rien dans $_POST => probleme
+        {
+            $this->addFlashMessage("Le montant du panier n'est pas dans POST", "error"); 
+            return $this->redirectRoute('basket_consult');
+        }
         
         
-        //////////////////////////////////////////////////////////
-        //TEMPORAIRE - TEST INSERTION DANS TABLE COMMANDE
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        //TEMPORAIRE -INSERTION DANS TABLE COMMANDE - JULIEN DOIT L'UTILISER DANS SA PARTIE PAIEMENT
         $this->app['commande.controller']->createCommandAction();
-        //////////////////////////////////////////////////////////
+        //Virer basket et basketTotalAmount de la session
+        $this->app['basket.manager']->flushBasketAndBasketAmount();
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
         
         
         //On va vers la page de paiment du panier en passant en param le montant total du panier

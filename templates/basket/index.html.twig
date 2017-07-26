@@ -4,7 +4,7 @@
 
     {% if basket is not empty %} {# Si panier passé en paramètre n'est pas null #}
     
-        <!-- CSS TEMPORAIRE EN DUR pour tableau ci-dessous -->
+        <!-- CSS pour tableau ci-dessous -->
         <style>      
                 table, td, th
                 {
@@ -28,6 +28,17 @@
                 {
                     background: #E0E0E0;
                 }
+                
+                #panier>tr>th /* Casser l'héritage du css de boostrap */
+                {
+                    border-top:solid 1px black;
+                }
+                
+                .vigilance:hover
+                {
+                    color:red;
+                }
+                                     
         </style>
 
         <h2>Voici votre panier :</h2><br><br>
@@ -35,7 +46,7 @@
         <form method="post" action={{ path('basket_pay') }} > {#'http://localhost/custom_shirt-2/web/index_dev.php/basket/pay'#}
 
 
-            <table class='table'>  
+            <table class='table' id='panier'>
                 <tr>
                     <th>Titre</th>
                     <th>Prix unitaire</th>
@@ -51,15 +62,15 @@
 
                         {# Le if else va p'etre etre retiré (si mêmes champs pour config et produit) #}
 
-                        {% if productOrConfig.id_config is defined %} {# Si on est dans le cas d'une config => cad une chemise en demi-mesure #}
+                        {% if productOrConfig.titre_custom is defined %} {# Si on est dans le cas d'une config => cad une chemise en demi-mesure #}
 
                             <tr class="customOrProduct">
-                                <td><strong>{{ productOrConfig.titre }}</strong></td>
+                                <td><strong>{{ productOrConfig.titre_custom }}</strong></td>
                                 <td class='prix'>{{ productOrConfig.prix }} €</td>
                                 <td class='quantite'>{{ productOrConfig.quantite }}</td>  
                                 <td><a href={{ path('basket_increment', {idProduitEnSession: loop.index0}) }}><strong> + </strong></a></td> {# loop.index0 permet de commencer à numéroter à 0 et non 1 #}
                                 <td><a href={{ path('basket_decrement', {idProduitEnSession: loop.index0}) }}><strong> - </strong></a></td>
-                                <td><a href={{ path('basket_delete', {idProduitEnSession: loop.index0}) }}> Retirer le produit </a></td>
+                                <td><u><a class='vigilance' href={{ path('basket_delete', {idProduitEnSession: loop.index0}) }}> Retirer le produit </a></u></td>
                                 <td>{{ productOrConfig.prix * productOrConfig.quantite }} €</td>
                             </tr> 
 
@@ -71,7 +82,7 @@
                                 <td class='quantite'>{{ productOrConfig.quantite }}</td>
                                 <td><a href={{ path('basket_increment', {idProduitEnSession: loop.index0}) }}><strong> + </strong></a></td> {# loop.index0 permet de commencer à numéroter à 0 et non 1 #}
                                 <td><a href={{ path('basket_decrement', {idProduitEnSession: loop.index0}) }}><strong> - </strong></a></td>
-                                <td><a href={{ path('basket_delete', {idProduitEnSession: loop.index0}) }}> Retirer le produit </a></td>
+                                <td><u><a class='vigilance' href={{ path('basket_delete', {idProduitEnSession: loop.index0}) }}> Retirer le produit </a></u></td>
                                 <td>{{ productOrConfig.prix * productOrConfig.quantite }} €</td>
                             </tr>
 

@@ -115,6 +115,7 @@ class BasketManager
     }
     
     //Méthode qui retourne la position d'une config dans le panier de la session (si elle existe), si elle n'existe pas on retourne -1
+
 //    public function findConfigInBasket(Custom $config)
 //    {
 //        $productsAndConfigs = $this->readBasket(); //Récupérer le panier en session
@@ -147,7 +148,7 @@ class BasketManager
 //            return -1;
 //        }
 //    }//Fin de findConfigInBasket()
-    
+   
     
     //Méthode putProductToBasket($produit) qui met en session les infos du produit choisi
     public function putProductToBasket($produit)
@@ -217,7 +218,13 @@ class BasketManager
     }
     
     
-    
+    //Fonction qui retire toutes les infos basket de la session
+    public function flushBasketAndBasketAmount()
+    {
+        $this->session->remove('basket');
+        $this->session->remove('basketTotalAmount');   
+    }
+
                             //////FONCTION COMMENTEE CAR FAITE EN JQUERY
                             //Méthode calculateAmountBasket() qui va calculer me montant total du panier
                             //

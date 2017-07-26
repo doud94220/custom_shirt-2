@@ -42,8 +42,7 @@ class Custom
      */
     
     private $quantite;
-    private $produitOrCustom; //booleen ///Rajoute par Edouard
-    private $titre;
+    private $produitOrCustom; //booleen
     
     //Constructeur ///Rajoute par Edouard
     public function __construct()
@@ -117,10 +116,7 @@ class Custom
     {
         return $this->produitOrCustom;
     }
-    
-    public function getTitre() {
-        return $this->titre;
-    }
+
 
     /**********SETTERS****************/
 
@@ -202,10 +198,5 @@ class Custom
     {
         $this->produitOrCustom = $produitOrCustom;
     }
-    
-    public function setTitre($titre) {
-        $this->titre = $titre;
-        return $this;
 
-    }
 }

@@ -45,7 +45,8 @@ class CustomRepository extends RepositoryAbstract
         ;
         return $custom;
    }
-   
+
+
     public function getLastInsertId()
     {
       return $this->db->lastInsertId();
@@ -66,5 +67,6 @@ class CustomRepository extends RepositoryAbstract
 //                ); 
 //        return $dbTabCustoms;
 //    }
+
 
 }

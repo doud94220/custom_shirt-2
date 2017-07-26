@@ -10,12 +10,15 @@ use Entity\Custom;
 class CustomManager {
 
     private $session;
+    
+    private $app;
 
     //Création de la session
     public function __construct(\Silex\Application $app) {
        $this->session = $app['session'];
        $this->app = $app;
    }
+
     
     //Si pas de session > set session appelé custom + création d'un array
     private function init() {
@@ -129,7 +132,7 @@ class CustomManager {
    public function calculateCustomPrice($idTissu, $idBouton)
    {
        //Recup prix tissu
-       $dbTabTissu = $this->app['tissu.repository']->findTissuById(1); //Note : pour faire $this->app, on a rajouté app au custom manager dans app.php
+       $dbTabTissu = $this->app['tissu.repository']->findTissuById($idTissu); //Note : pour faire $this->app, on a rajouté app au custom manager dans app.php
        $prixTissu = $dbTabTissu['prix'];
        
        //Recup prix bouton
@@ -140,9 +143,7 @@ class CustomManager {
        $prixChemiseCusto = $prixTissu + $prixBouton;
        return $prixChemiseCusto;
    }
-    
-    
-    
+
     //Par edouard by Edouard pour info
    //Fonction qui lit le custom en session, recupère qques infos, et instancie un objet Custom pour le setter avec les infos requises pour le panier, et renvoie cet objet Custom
    public function getCustomSessionAndMoreAndCreateCustomObjectForSessionBasket ()
@@ -175,6 +176,5 @@ class CustomManager {
     {
        $this->session->remove('custom');
     }
-
 
 }
