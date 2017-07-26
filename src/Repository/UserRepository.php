@@ -16,7 +16,7 @@ class UserRepository extends RepositoryAbstract {
         $data = [
             'prenom' => $user->getPrenom(),
             'nom' => $user->getNom(),
-            //'date_naissance'=> $user->getDate_naissance()->format('Y-m-d'),
+            'date_naissance'=> $user->getDate_naissance()->format('Y-m-d'),
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'adresse' => $user->getAdresse(),
@@ -28,15 +28,18 @@ class UserRepository extends RepositoryAbstract {
             'statut' => $user->getStatut(),
 
         ];
-
+        //var_dump($data);
         $where = !empty($user->getId_user())
             ? ['id_user' => $user->getId_user()]
             : null
         ;
         $this->persist($data, $where);
+
+        if (empty($user->getId_user())) {
+            $user->setId_user($this->db->lastInsertId());
+        }
     }
 
-        
     public function saveUserMeasure(User $user) {
         $data = [
                 'taille' => $user->getTaille(),
@@ -49,14 +52,18 @@ class UserRepository extends RepositoryAbstract {
                 'manche_gauche' => $user->getManche_gauche(),
                 'poignet_droit' => $user->getPoignet_droit(),
                 'poignet_gauche' => $user->getPoignet_gauche(),
+                'epaule_gauche' => $user->getEpaule_gauche(),
+                'epaule_droite' => $user->getEpaule_droite(),
                 'carrure' => $user->getCarrure(),
                 'dos' => $user->getDos()
         ];
-
-        $where = !empty($user->getId_user()) ? ['id' => $user->getId_user()] : null
+        
+        $where = !empty($user->getId_user()) ? ['id_user' => $user->getId_user()] : null
         ;
         $this->persist($data, $where);
-    }    
+    }
+
+    
 
     public function findByEmail($email) {
         $dbUser = $this->db->fetchAssoc(
@@ -81,7 +88,7 @@ class UserRepository extends RepositoryAbstract {
             ->setId_user($dbUser['id_user'])
             ->setNom($dbUser['nom'])
             ->setPrenom($dbUser['prenom'])
-            //->setDate_naissance(new DateTime($dbUser['date_naissance']))
+            ->setDate_naissance(new DateTime($dbUser['date_naissance']))
             ->setEmail($dbUser['email'])
             ->setPassword($dbUser['password'])
             ->setAdresse($dbUser['adresse'])

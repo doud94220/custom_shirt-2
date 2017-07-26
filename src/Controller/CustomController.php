@@ -2,8 +2,11 @@
 
 namespace Controller;
 
+use Repository\CustomRepository;
+use Entity\Custom;
 use Entity\User;
-use Repository\UserRepository;
+use Service\CustomManager;
+use Service\BasketManager;
 
 class CustomController extends ControllerAbstract {
 
@@ -12,7 +15,7 @@ class CustomController extends ControllerAbstract {
 
     public function listTissu() {
         $tissus = $this->app['tissu.repository']->findAllTissu();
-
+        
         if (!empty($_POST)) {
             if (empty($_POST['custom_product'])) {
                 
@@ -22,11 +25,9 @@ class CustomController extends ControllerAbstract {
                 //var_dump($_POST['custom_product']);
 
                 $this->app['custom.manager']->setTissu($_POST['custom_product']);
-                
-
                 //var_dump($this->app['custom.manager']->readCustom());
                 return $this->redirectRoute('etape_2_bouton');
-                
+
             }
         }
         return $this->render
@@ -114,87 +115,110 @@ class CustomController extends ControllerAbstract {
 
     public function fillTaillePoids() {
 
-        $user = new User();
+        $user = $this->app['user.manager']->getUser();
+        $sessioncustom = $this->app['custom.manager']->readCustom();
         
-
+        if (is_null($user))
+        {
+            $this->addFlashMessage("Merci de vous connecter pour entrer vos mesures !", 'error');
+            return $this->redirectRoute('login');
+            
+        }
+        if (!is_null($user)) {
+            $taille = $user->getTaille();
+            $poids = $user->getPoids();
+        } else {
+            $taille = $poids = '';
+        }
+        
         if (!empty($_POST)) {
-            $user
-                    ->setPoids($_POST['poids'])
-                    ->setTaille($_POST['taille'])
-            ;
-
+            $taille = $_POST['taille'];
+            $poids = $_POST['poids'];
+            
             if (empty($_POST['poids'])) {
                 $this->addFlashMessage("Merci de renseigner un poids", 'error');
             }
 
             elseif (empty($_POST['taille'])) {
-                $errors['taille'] = 'Merci de renseigner votre taille';
+                $this->addFlashMessage("Merci de renseigner votre taille", 'error');
             }
 
             elseif (!is_numeric($_POST['poids'])) {
-                $errors['poids'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Merci de renseigner un chiffre", 'error');
             }
             elseif (!is_numeric($_POST['taille'])) {
-                $errors['taille'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Merci de renseigner un chiffre", 'error');
             }
 
             else 
             {
                 $this->app['custom.manager']->setPoidsTaille($_POST['poids'], $_POST['taille']);
                 return $this->redirectRoute('etape_5_tronc');
-                
             }
         }
+        //echo '<pre>'; var_dump($sessioncustom); echo '</pre>';
 
         return $this->render
                         (
                         'custom/mesure_etape1.html.twig', 
                         [
-                            'user' => $user
+                            'user' =>$user,
+                            'session' => $sessioncustom,    
+                            'taille' => $taille,
+                            'poids' => $poids
                         ]
         );
     }
 
     public function fillTailleTronc() {
-        //chercher l'user qui correspond
-        $user = new User();
-        $errors = [];
+        
+        $user = $this->app['user.manager']->getUser();
+        $sessioncustom = $this->app['custom.manager']->readCustom();
+
+        if (!is_null($user)) {
+            $tour_cou = $user->getTour_cou();
+            $tour_poitrine = $user->getTour_poitrine();
+            $tour_taille = $user->getTour_taille();
+            $tour_bassin =$user->getTour_bassin();
+        } else {
+            $tour_cou = $tour_poitrine = $tour_taille = $tour_bassin = '';
+        }      
 
         if (!empty($_POST)) {
-            $user
-                    ->setTour_cou($_POST['tour_cou'])
-                    ->setTour_poitrine($_POST['tour_poitrine'])
-                    ->setTour_taille($_POST['tour_taille'])
-                    ->setTour_bassin($_POST['tour_bassin'])
-            ;
+ 
+                    $tour_cou = $_POST['tour_cou'];
+                    $tour_poitrine = $_POST['tour_poitrine'];
+                    $tour_taille = $_POST['tour_taille'];
+                    $tour_bassin = $_POST['tour_bassin'];
+            
 
             if (empty($_POST['tour_cou'])) {
-                $errors['tour_cou'] = 'Merci de renseigner la mesure : Tour de cou';
+                $this->addFlashMessage("Merci de renseigner la mesure : Tour de cou", 'error');
             }
 
             if (empty($_POST['tour_poitrine'])) {
-                $errors['tour_poitrine'] = 'Merci de renseigner la mesure : Tour de Poitrine';
+                $this->addFlashMessage("Merci de renseigner la mesure : Tour de Poitrine", 'error');
             }
 
             if (empty($_POST['tour_taille'])) {
-                $errors['tour_taille'] = 'Merci de renseigner la mesure : Tour de taille';
+                $this->addFlashMessage("Merci de renseigner la mesure : Tour de taille", 'error');
             }
 
             if (empty($_POST['tour_bassin'])) {
-                $errors['tour_bassin'] = 'Merci de renseigner la mesure : Tour de bassin';
+                $this->addFlashMessage("Merci de renseigner la mesure : Tour de bassin", 'error');
             }
 
             if (!is_numeric($_POST['tour_cou'])) {
-                $errors['tour_cou'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Merci de renseigner un chiffre", 'error');
             }
             if (!is_numeric($_POST['tour_poitrine'])) {
-                $errors['tour_poitrine'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Merci de renseigner un chiffre", 'error');
             }
             if (!is_numeric($_POST['tour_taille'])) {
-                $errors['tour_taille'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Merci de renseigner un chiffre", 'error');
             }
             if (!is_numeric($_POST['tour_bassin'])) {
-                $errors['tour_bassin'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Merci de renseigner un chiffre", 'error');
             }
             if (empty($errors)) {
                 $this->app['custom.manager']->setTronc($_POST['tour_cou'], $_POST['tour_poitrine'], $_POST['tour_taille'], $_POST['tour_bassin']);
@@ -204,51 +228,66 @@ class CustomController extends ControllerAbstract {
         return $this->render
                         (
                         'custom/mesure_etape2.html.twig', [
-                    'user' => $user
+                            'user' =>$user,
+                            'session' => $sessioncustom,   
+                            'tour_cou' => $tour_cou,
+                            'tour_poitrine' => $tour_poitrine,
+                            'tour_taille' => $tour_taille,
+                            'tour_bassin' => $tour_bassin
                         ]
         );
     }
 
     public function fillTailleBras() {
         //chercher l'user qui correspond
-        $user = new User();
-        $errors = [];
+                
+        $user = $this->app['user.manager']->getUser();
+        $sessioncustom = $this->app['custom.manager']->readCustom();
+
+        if (!is_null($user)) {
+            $manche_droite = $user->getManche_droite();
+            $manche_gauche = $user->getManche_gauche();
+            $poignet_droit = $user->getPoignet_droit();
+            $poignet_gauche =$user->getPoignet_gauche();
+        } else {
+            $manche_droite = $manche_gauche = $poignet_droit = $poignet_gauche = '';
+        }  
 
         if (!empty($_POST)) {
-            $user
-                    ->setManche_droite($_POST['manche_droite'])
-                    ->setManche_gauche($_POST['manche_gauche'])
-                    ->setPoignet_droit($_POST['poignet_droit'])
-                    ->setPoignet_gauche($_POST['poignet_gauche'])
+            
+                    $manche_droite = $_POST['manche_droite'];
+                    $manche_gauche = $_POST['manche_gauche'];
+                    $poignet_droit = $_POST['poignet_droit'];
+                    $poignet_gauche = $_POST['poignet_gauche'];
             ;
 
             if (empty($_POST['manche_droite'])) {
-                $errors['manche_droite'] = 'Merci de renseigner la mesure : Manche Droite';
+                $this->addFlashMessage("Merci de renseigner la mesure : Manche Droite", 'error');
             }
 
             if (empty($_POST['manche_gauche'])) {
-                $errors['manche_gauche'] = 'Merci de renseigner la mesure : Tour de Poitrine';
+                $this->addFlashMessage("Merci de renseigner la mesure : Tour de Poitrine", 'error');
             }
 
             if (empty($_POST['poignet_droit'])) {
-                $errors['poignet_droit'] = 'Merci de renseigner la mesure : Poignet droit';
+                $this->addFlashMessage("Merci de renseigner la mesure : Poignet droit", 'error');
             }
 
             if (empty($_POST['poignet_gauche'])) {
-                $errors['poignet_gauche'] = 'Merci de renseigner la mesure : Poignet gauche';
+                $this->addFlashMessage("Merci de renseigner la mesure : Poignet gauche", 'error');
             }
 
             if (!is_numeric($_POST['manche_droite'])) {
-                $errors['manche_droite'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Merci de renseigner un chiffre", 'error');
             }
             if (!is_numeric($_POST['manche_gauche'])) {
-                $errors['manche_gauche'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Merci de renseigner un chiffre", 'error');
             }
             if (!is_numeric($_POST['poignet_droit'])) {
-                $errors['poignet_droit'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Merci de renseigner un chiffre", 'error');
             }
             if (!is_numeric($_POST['poignet_gauche'])) {
-                $errors['poignet_gauche'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Merci de renseigner un chiffre", 'error');
             }
             if (empty($errors)) {
                 $this->app['custom.manager']->setBras($_POST['manche_droite'], $_POST['manche_gauche'], $_POST['poignet_droit'], $_POST['poignet_gauche']);
@@ -258,52 +297,65 @@ class CustomController extends ControllerAbstract {
         return $this->render
                         (
                         'custom/mesure_etape3.html.twig', [
-                    'user' => $user
+                            'user' =>$user,
+                            'session' => $sessioncustom,                              
+                            'manche_gauche' => $manche_gauche,
+                            'manche_droite' => $manche_droite,
+                            'poignet_droit' => $poignet_droit,
+                            'poignet_gauche' => $poignet_gauche
                         ]
         );
     }
-
+    
     public function fillMeasureCarrure() {
         //chercher l'user qui correspond
-        $user = new User();
-        $errors = [];
+        $user = $this->app['user.manager']->getUser();
+        $sessioncustom = $this->app['custom.manager']->readCustom();
 
-        if (!empty($_POST)) {
-            //var_dump($_POST);
-            $user
-                    ->setCarrure($_POST['carrure'])
-                    ->setEpaule_droite($_POST['epaule_droite'])
-                    ->setEpaule_gauche($_POST['epaule_gauche'])
-                    ->setDos($_POST['dos'])
-            ;
+        if (!is_null($user)) {
+            $carrure = $user->getCarrure();
+            $epaule_gauche = $user->getEpaule_gauche();
+            $epaule_droite = $user->getEpaule_droite();
+            $dos =$user->getDos();
+        } else {
+            $carrure = $epaule_gauche = $epaule_droite = $dos = '';
+        } 
+
+        if (!empty($_POST)) 
+        {
+                $carrure = $_POST['carrure'];
+                $epaule_droite = $_POST['epaule_droite'];
+                $epaule_gauche = $_POST['epaule_gauche'];
+                $dos = $_POST['dos'];
 
             if (empty($_POST['carrure'])) {
                 $errors['carrure'] = 'Merci de renseigner la mesure : Carrure';
+                $this->addFlashMessage("Carrure : Merci de renseigner la mesure en cm", 'error');
             }
 
             if (empty($_POST['epaule_gauche'])) {
-                $errors['epaule_gauche'] = 'Merci de renseigner la mesure : Epaule gauche en cm';
+                $this->addFlashMessage("Epaule gauche : Merci de renseigner la mesure en cm", 'error');
             }
 
             if (empty($_POST['epaule_droite'])) {
-                $errors['epaule_droite'] = 'Merci de renseigner la mesure : Epaule_droite en cm';
+                $this->addFlashMessage("Epaule droite: Merci de renseigner la mesure en cm", 'error');
             }
 
             if (empty($_POST['dos'])) {
-                $errors['dos'] = 'Merci de renseigner la mesure : Longueur dos en cm';
+                $this->addFlashMessage("Dos : Merci de renseigner la mesure en cm", 'error');
             }
 
             if (!is_numeric($_POST['carrure'])) {
-                $errors['carrure'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Carrure : Merci de renseigner un chiffre", 'error');
             }
             if (!is_numeric($_POST['epaule_gauche'])) {
-                $errors['epaule_gauche'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Epaule gauche : Merci de renseigner un chiffre", 'error');
             }
             if (!is_numeric($_POST['epaule_droite'])) {
-                $errors['epaule_droite'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Epaule Droite : Merci de renseigner un chiffre", 'error');
             }
             if (!is_numeric($_POST['dos'])) {
-                $errors['dos'] = 'Merci de renseigner un chiffre';
+                $this->addFlashMessage("Dos : Merci de renseigner un chiffre", 'error');
             }
             if (empty($errors)) {
                 $this->app['custom.manager']->setCarrure($_POST['carrure'], $_POST['epaule_gauche'], $_POST['epaule_droite'], $_POST['dos']);
@@ -313,10 +365,51 @@ class CustomController extends ControllerAbstract {
         return $this->render
                         (
                         'custom/mesure_etape4.html.twig', [
-                    'user' => $user
+                            'user' =>$user,
+                            'session' => $sessioncustom,                               
+                            'carrure' => $carrure,
+                            'epaule_droite' => $epaule_droite,
+                            'epaule_gauche' => $epaule_gauche,
+                            'dos' => $dos
                         ]
         );
     }
+
+//    public function fillTitreCustom()
+//    {
+//        $user = $this->app['user.manager']->getUser();
+//        $sessioncustom = $this->app['custom.manager']->readCustom();
+//        if (!is_null($user)) {
+//            $titre_custom = $user->getTitre_custom();
+//        } else {
+//            $titre_custom = '';
+//
+//        } 
+//            if (!empty($_POST)) 
+//            {
+//                $titre_custom = $_POST['titre_custom'];
+//                 
+//                if (empty($_POST['titre_custom'])) 
+//                {
+//                $this->addFlashMessage("Merci de renseigner un titre", 'error');
+//                }
+//                if(empty($errors))
+//                {
+//                    $this->app['custom.manager']->setTitreCustom($_POST['titre_custom']);
+//                    return $this->redirectRoute('custom_validate');
+//                }
+//            }
+//        return $this->render
+//                        (
+//                        'custom/customrecap.html.twig', 
+//                        [
+//                            'user' =>$user,
+//                            'session' => $sessioncustom,   
+//                            'titre_custom' => $titre_custom
+//                            
+//                        ]
+//        );
+//    }
 
     //Fonction pour voir tout le panier
     public function consultSession() 
@@ -325,20 +418,19 @@ class CustomController extends ControllerAbstract {
         { //S'il n'y a pas de session existante
             return $this->redirectRoute('etape_1_tissu');
         } 
-        
+
         else 
         {
             $custom = $this->session->get('custom');
             //$custom = $this->app['custom.manager']->readCustom()->getTissu(); //S'il y a une session affichage des informations
             //print_r($custom);die;
         }
-        
-        $elements = [];
+        //$elements = [];
         $tissu = $this->app['tissu.repository']->findTissuById($custom['tissu']);
         $bouton = $this->app['bouton.repository']->findBoutonById($custom['bouton']);
         $col = $this->app['col.repository']->findColById($custom['col']);
         $coupe = $this->app['coupe.repository']->findCoupeById($custom['coupe']);
-        $poids = $custom ['user_poids'];
+        $poids = $custom ['user_poids']; 
         $taille = $custom ['user_taille'];
         $tour_cou = $custom ['user_tour_cou'];
         $tour_poitrine = $custom ['user_tour_poitrine'];
@@ -352,24 +444,7 @@ class CustomController extends ControllerAbstract {
         $epaule_droite = $custom['user_epaule_droite'];
         $epaule_gauche = $custom['user_epaule_gauche'];
         $dos = $custom['user_dos'];
-        $elements[] = $bouton;
-        $elements[] = $tissu;
-        $elements[] = $col;
-        $elements[] = $coupe;
-        $elements[] = $poids;
-        $elements[] = $tour_cou;
-        $elements[] = $tour_poitrine;
-        $elements[] = $tour_taille;
-        $elements[] = $tour_bassin;
-        $elements[] = $manche_droite;
-        $elements[] = $manche_gauche;
-        $elements[] = $poignet_droit;
-        $elements[] = $poignet_gauche;
-        $elements[] = $carrure;
-        $elements[] = $epaule_droite;
-        $elements[] = $epaule_gauche;
-        $elements[] = $dos;
-        //print_r($elements);die;
+
         return $this->render
                         (
                     'custom/customrecap.html.twig', 
@@ -395,13 +470,14 @@ class CustomController extends ControllerAbstract {
                     ]
         );
     }
-    
+
     public function customValidateAction()
     {
-        $user = new User();
-         
+        $user = $this->app['user.manager']->getUser();
         $sessioncustom = $this->app['custom.manager']->readCustom();
-        print_r($sessioncustom);
+        
+        $nom = $this->app['user.manager']->getUser()->getPrenom();
+        $custom_titre = 'custom-shirt'.$nom;
         $poids = $sessioncustom['user_poids'];
         $taille = $sessioncustom ['user_taille'];
         $tour_cou = $sessioncustom ['user_tour_cou'];
@@ -416,7 +492,7 @@ class CustomController extends ControllerAbstract {
         $epaule_droite = $sessioncustom['user_epaule_droite'];
         $epaule_gauche = $sessioncustom['user_epaule_gauche'];
         $dos = $sessioncustom['user_dos'];
-
+        
         $user
             ->setPoids($poids)
             ->setTaille($taille)
@@ -424,7 +500,7 @@ class CustomController extends ControllerAbstract {
             ->setTour_cou($tour_cou)
             ->setTour_poitrine($tour_poitrine)
             ->setTour_taille($tour_taille)
-            ->setTour_bassin($tour_bassin)
+            ->setTour_bassin($tour_bassin)  
             ->setManche_droite($manche_droite)
             ->setManche_gauche($manche_gauche)
             ->setPoignet_gauche($poignet_gauche)
@@ -433,70 +509,46 @@ class CustomController extends ControllerAbstract {
             ->setEpaule_droite($epaule_droite)
             ->setEpaule_gauche($epaule_gauche)
             ->setDos($dos)
+                
             ;
         
-        $this->app['user.repository']->saveUserMeasure($user); 
+        $this->app['user.repository']->saveUserMeasure($user);
         
-                return $this->render
-                        (
-                        'custom/customvalidate.html.twig', 
-                        [
-//                    'user' => $user
-                       ]
+        $custom = new Custom();
+        
+        $custom
+            ->setTitre_custom($custom_titre)
+            ->setTissu_id($sessioncustom['tissu'])
+            ->setBouton_id($sessioncustom['bouton'])
+            ->setCol_id($sessioncustom['col'])
+            ->setCoupe_id($sessioncustom['coupe'])
+            ->setPrix('')
+           ;
+        
+        $this->app['custom.repository']->save($custom);
+        $idCustom = $this->app['custom.repository']->getLastInsertId();
+        
+        $this->app['custom.manager']->setId_custom($idCustom);
+        $this->app['custom.manager']->setTitre_custom($custom_titre);
+
+        //Creation d'un objet Custom à partir des données du custom en session
+       $customShirtObject = $this->app['custom.manager']->getCustomSessionAndMoreAndCreateCustomObjectForSessionBasket();
+       
+       //Mise dans panier du Custom
+       $this->app['basket.manager']->putConfigToBasket($customShirtObject);
+       $this->app['custom.manager']->flushCustomSession();  
+        
+        return $this->render
+                (
+                'custom/customvalidate.html.twig', 
+                [
+                    'user' => $user,
+                    'custom' => $sessioncustom,
+                    //'titre_custom' => $titre_custom
+               ]
        );
 
     }
-    
-//    public function consultSessionCustomBouton() 
-//    {
-//        if (!$this->session->has('custom')) 
-//        { //S'il n'y a pas de session existante
-//            return $this->redirectRoute('etape_1_tissu');
-//        } 
-//        
-//        else 
-//        {
-//            $custom = $this->session->get('custom');
-//            //$custom = $this->app['custom.manager']->readCustom()->getTissu(); //S'il y a une session affichage des informations
-//            //print_r($custom['tissu']);
-//        }
-//        $elements = [];
-//        $bouton = $this->app['customrecapbouton.repository']->findBoutonById($custom['bouton']);
-//        $elements[] = $bouton;
-//        
-//        //print_r($elements);die;
-//        
-//        return $this->render
-//                        (
-//                    'custom/customrecap.html.twig', [
-//                    'custom' => $bouton
-//                        ]
-//        );
-//    }
-    
-//        //Fonction pour supprimer un produit du panier
-//    public function deleteAction($idProduitEnSession)
-//    {
-//        //// TEMPORAIRE (Debug)
-//        //$messagePourDebug = "je vais supprimer le produit en position " . $idProduitEnSession . " dans le panier";
-//        //$this->addFlashMessage($messagePourDebug);
-//
-//        //Je recupère le basket de la session
-//        $productsAndConfigs = $this->app['basket.manager']->readBasket();
-//
-//        //Je retire le produit à supprimer
-//        array_splice($productsAndConfigs, $idProduitEnSession, 1);
-//
-//        //Je mets le nouveau panier 'allégé d'un produit' en session
-//        $this->session->set('basket', $productsAndConfigs);
-//
-//        //Je redirige vers la page consultation panier
-//        return $this->redirectRoute('basket_consult');
-//
-//    }//Fin deleteAction()
 
-    
-    
-    
 }
 

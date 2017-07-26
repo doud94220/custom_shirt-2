@@ -13,11 +13,11 @@
                     <form method="post">
                         <div class="form-group">
                             <label>Votre taille</label>
-                            <input type="value" name="taille" value="{{ user.taille }}" class="form-control" placeholder="Merci de renseigner votre taille en cm">
+                            <input type="number" name="taille" value="{{ user.taille }}" class="form-control" placeholder="Merci de renseigner votre taille en cm">
                         </div>
                         <div class="form-group">
                             <label>Votre poids</label>
-                            <input type="value" name="poids" value="{{ user.poids }}" class="form-control" placeholder="Merci de renseigner votre poids en kilogrammes">
+                            <input type="number" name="poids" value="{{ user.poids }}" class="form-control" placeholder="Merci de renseigner votre poids en kilogrammes">
                         </div>
                         <button type="submit" class="btn btn-primary">Passez à l'étape suivante</button>
                     </form>

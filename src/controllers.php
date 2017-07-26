@@ -139,6 +139,11 @@ $app
     ->bind('etape_5_carrure')
 ;
 
+//$app
+//    ->match('/custom_recap', 'custom.controller:fillTitreCustom')
+//    ->bind('custom_recap')
+//;
+
 $app
     ->match('/custom_recap', 'custom.controller:consultSession')
     ->bind('custom_recap')
