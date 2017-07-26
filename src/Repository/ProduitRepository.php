@@ -31,7 +31,7 @@ class ProduitRepository extends RepositoryAbstract
     {
         $query = <<<EOS
 
-SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie
+SELECT p.*, t.type, ti.nom, ti.descr, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie
 FROM produit p
 JOIN type t ON p.type_id=t.id
 JOIN categorie cat ON cat.id=t.categorie_id
@@ -58,7 +58,7 @@ EOS;
     {
         $query = <<<EOS
 
-SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie
+SELECT p.*, t.type, ti.nom, ti.descr, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie
 FROM produit p
 JOIN type t ON p.type_id=t.id
 JOIN categorie cat ON cat.id=t.categorie_id
@@ -85,7 +85,7 @@ EOS;
     {
         $query = <<<EOS
 
-SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie 
+SELECT p.*, t.type, ti.nom, ti.descr, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie 
 FROM produit p
 JOIN type t ON p.type_id=t.id
 JOIN categorie cat ON cat.id=t.categorie_id

@@ -7,12 +7,14 @@ use DateTime;
 class UserController extends ControllerAbstract
 {
     public function registerAction(){
+        $user = new User();
+        $errors = [];
         
         if(!empty($_POST)){
             $user
                 ->setNom($_POST['nom'])
                 ->setPrenom($_POST['prenom'])
-                ->setDate_naissance(\DateTime::createFromFormat('d/m/Y', $_POST['date_naissance']))
+                //->setDate_naissance(\DateTime::createFromFormat('d/m/Y', $_POST['date_naissance']))
                 ->setEmail($_POST['email'])
                 ->setPassword($_POST['password'])
                 ->setAdresse($_POST['adresse'])
@@ -32,9 +34,9 @@ class UserController extends ControllerAbstract
                 $errors['prenom'] = 'Le prénom est obligatoire';
             }
             
-            if(empty($_POST['date_naissance'])) {
-                $errors['date_naissance'] = 'La date de naissance est obligatoire';
-            }
+//            if(empty($_POST['date_naissance'])) {
+//                $errors['date_naissance'] = 'La date de naissance est obligatoire';
+//            }
 
             if(empty($_POST['email'])){
                 $errors['email'] = "L'e-mail est obligatoire";
@@ -88,6 +90,7 @@ class UserController extends ControllerAbstract
                 
                 $this->addFlashMessage($msg, 'error');
             }
+            
         }
         return $this->render(
             'user/register.html.twig',
@@ -138,7 +141,7 @@ class UserController extends ControllerAbstract
             $user
                 ->setPrenom($_POST['prenom'])
                 ->setNom($_POST['nom'])
-                ->setDate_naissance(\DateTime::createFromFormat('d/m/Y', $_POST['date_naissance']))
+                //->setDate_naissance(\DateTime::createFromFormat('d/m/Y', $_POST['date_naissance']))
                 ->setEmail($_POST['email'])
                 ->setPassword($_POST['password'])
                 ->setAdresse($_POST['adresse'])
@@ -158,9 +161,9 @@ class UserController extends ControllerAbstract
                 $errors['nom'] = 'Le prénom est obligatoire';
             }
 
-            if (empty($_POST['date_naissance'])) {
-                $errors['date_naissance'] = 'La date de naissance est obligatoire';
-            }
+//            if (empty($_POST['date_naissance'])) {
+//                $errors['date_naissance'] = 'La date de naissance est obligatoire';
+//            }
 
 
             if (empty($_POST['adresse'])) {
@@ -207,12 +210,12 @@ class UserController extends ControllerAbstract
 
     public function showProfile(){
         $user = $this->app['user.manager']->getUser();
-        echo '<pre>';print_r($user);echo '</pre>';
+        //echo '<pre>';print_r($user);echo '</pre>';
         $commandes = $this->app['commande.repository']->findAllByUser($user);
         $details_commandes =[];
         foreach($commandes as $commande){
             $detailsCurrentCommande = $this->app['detail.commande.repository']->findAllByCommande($commande->getId_commande());
-            echo '<pre>'; print_r($detailsCurrentCommande); echo '</pre><hr>';
+            //echo '<pre>'; print_r($detailsCurrentCommande); echo '</pre><hr>';
             foreach ($detailsCurrentCommande as $currentDetails) {
                 
                 //echo '<pre>'; print_r($currentDetails->getCustom_id()); echo '</pre><hr>';
@@ -258,7 +261,7 @@ class UserController extends ControllerAbstract
             $user
                 ->setPrenom($_POST['prenom'])
                 ->setNom($_POST['nom'])
-                ->setDate_naissance(\DateTime::createFromFormat('d/m/Y', $_POST['date_naissance']))
+                //->setDate_naissance(\DateTime::createFromFormat('d/m/Y', $_POST['date_naissance']))
                 ->setEmail($_POST['email'])
                 ->setPassword($_POST['password'])
                 ->setAdresse($_POST['adresse'])
@@ -278,9 +281,9 @@ class UserController extends ControllerAbstract
                 $errors['nom'] = 'Le prénom est obligatoire';
             }
 
-            if (empty($_POST['date_naissance'])) {
-                $errors['date_naissance'] = 'La date de naissance est obligatoire';
-            }
+//            if (empty($_POST['date_naissance'])) {
+//                $errors['date_naissance'] = 'La date de naissance est obligatoire';
+//            }
 
 
             if (empty($_POST['adresse'])) {

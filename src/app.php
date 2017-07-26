@@ -1,9 +1,8 @@
 <?php
 
-
-use Controller\Admin\ProduitController as AdminProduitController;
-use Controller\Admin\DetailCommandeController as AdminDetailCommandeController;
 use Controller\Admin\CommandeController as AdminCommandeController;
+use Controller\Admin\DetailCommandeController as AdminDetailCommandeController;
+use Controller\Admin\ProduitController as AdminProduitController;
 use Controller\Admin\StockController as AdminStockController;
 use Controller\BasketController;
 use Controller\CommandeController;
@@ -15,13 +14,14 @@ use Controller\UserController;
 use Repository\BoutonRepository;
 use Repository\ColRepository;
 use Repository\CoupeRepository;
+use Repository\CommandeRepository;
 use Repository\CustomRepository;
 use Repository\DetailCommandeRepository;
 use Repository\ProduitRepository;
+use Repository\StockRepository;
 use Repository\TissuRepository;
 use Repository\TypeRepository;
 use Repository\UserRepository;
-use Repository\StockRepository;
 use Service\BasketManager;
 use Service\CustomManager;
 use Service\UserManager;
@@ -60,7 +60,7 @@ $app->register
                 'host'      => 'localhost',
                 'dbname'    => 'custom_shirt',
                 'user'      => 'root',
-                'password'  => 'root',
+                'password'  => '',
                 'charset'   => 'utf8'
 
             ]
