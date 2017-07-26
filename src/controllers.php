@@ -43,10 +43,12 @@ $app
     ->match('/basket/delete/{idProduitEnSession}', 'basket.controller:deleteAction')
     ->bind('basket_delete');
 
-//$app
-//    ->match('/basket/pay', 'basket.controller:payAction')
-//    ->bind('basket_pay');
+//Celle d'Edouard, la seule utilisée (utilisée dans la vue du panier)
+$app
+    ->match('/basket/pay', 'basket.controller:payAction')
+    ->bind('basket_pay');
 
+//Celle de Julien (à virer)
 $app
     ->match('/basket/paiement', 'basket.controller:payAction')
     ->bind('basket_pay')

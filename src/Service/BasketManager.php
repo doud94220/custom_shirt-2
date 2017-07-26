@@ -115,6 +115,7 @@ class BasketManager
     }
     
     //Méthode qui retourne la position d'une config dans le panier de la session (si elle existe), si elle n'existe pas on retourne -1
+    //PLUS UTILISE A LA DATE DU 26 JUILLET, Mais on la laisse
     public function findConfigInBasket(Custom $config)
     {
         $productsAndConfigs = $this->readBasket(); //Récupérer le panier en session
@@ -201,21 +202,9 @@ class BasketManager
            $productsAndConfigs = $this->session->get('basket'); //Je recup le panier
         }
 
-        ///// Ajout de la config dans le panier (soit incrémenter quantité ou mettre une nouvelle config en quantité = 1)
-        if($this->findConfigInBasket($config) != -1) //Si la config est deja présent dans le panier
-        {
-            //Alors aller incrémenter la quantité de cette config
-            $positionDansPanier = $this->findConfigInBasket($config);
-            $configDontQuantiteFautIncrementer = $productsAndConfigs[$positionDansPanier];
-            $quantiteAvantIncrementation = $configDontQuantiteFautIncrementer->getQuantite();
-            $configDontQuantiteFautIncrementer->setQuantite($quantiteAvantIncrementation + 1);
-            $productsAndConfigs[$positionDansPanier] = $configDontQuantiteFautIncrementer;
-        }
-        else //La config n'etait pas encore dans le panier
-        {
-            //Ajouter la config (en arg de la fonction) dans le $productsAndConfigs[] du panier à la fin
-            array_push($productsAndConfigs, $config);
-        }
+        ///// Ajout de la config dans le panier
+        //Ajouter la config (en arg de la fonction) dans le $productsAndConfigs[] du panier à la fin
+        array_push($productsAndConfigs, $config);
 
         ///// Maj panier en session
         $this->session->set('basket', $productsAndConfigs);
@@ -230,7 +219,13 @@ class BasketManager
     }
     
     
-    
+    //Fonction qui retire toutes les infos basket de la session
+    public function flushBasketAndBasketAmount()
+    {
+        $this->session->remove('basket');
+        $this->session->remove('basketTotalAmount');   
+    }
+
                             //////FONCTION COMMENTEE CAR FAITE EN JQUERY
                             //Méthode calculateAmountBasket() qui va calculer me montant total du panier
                             //

@@ -55,5 +55,11 @@ class CustomRepository extends RepositoryAbstract
         
         return $custom;
    }
-
+   
+   
+   //Edouard pour Guillaume pour recup dernier id dans table custom
+   public function getLastInsertId()
+   {
+       return $this->db->lastInsertId();
+   }
 }

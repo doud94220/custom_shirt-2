@@ -3,14 +3,20 @@
 namespace Service;
 
 use Symfony\Component\HttpFoundation\Session\Session;
+use Repository\BoutonRepository;
+use Repository\TissuRepository;
+use Entity\Custom;
 
 class CustomManager {
 
     private $session;
+    
+    private $app;
 
     //Création de la session
-    public function __construct(Session $session) {
-        $this->session = $session;
+    public function __construct(\Silex\Application $app) {
+        $this->session = $app['session'];
+        $this->app = $app;
     }
     
     //Si pas de session > set session appelé custom + création d'un array
@@ -124,5 +130,49 @@ class CustomManager {
 //
 //    }
 
+    
+    //Par edouard pour info
+    //Fonction qui calcule le prix d'une custom shirt à partir de id tissu et id bouton
+    public function calculateCustomPrice($idTissu, $idBouton) 
+    {
+        //Recup prix tissu
+        $dbTabTissu = $this->app['tissu.repository']->findTissuById(1); //Note : pour faire $this->app, on a rajouté app au custom manager dans app.php
+        $prixTissu = $dbTabTissu['prix'];
+        
+        //Recup prix bouton
+        $dbTabBouton = $this->app['bouton.repository']->findBoutonById($idBouton);
+        $prixBouton = $dbTabBouton['prix_bouton'];
+        
+        //Calcul prix chemise, et return de ce prix
+        $prixChemiseCusto = $prixTissu + $prixBouton;
+        return $prixChemiseCusto;
+    }
+    
+    //Par edouard pour info
+    //Fonction qui lit le custom en session, recupère qques infos, et instancie un objet Custom pour le setter avec les infos requises pour le panier, et renvoie cet objet Custom
+    public function getCustomSessionAndMoreAndCreateCustomObjectForSessionBasket ()
+    {
+        //Recup custom en session
+        $customSessionArray =  $this->readCustom();
+        
+        //Mettre les infos utiles en variable dans cette fonction
+        $idCustomShirt = $customSessionArray['id_custom'];
+        $idTissu = $customSessionArray['tissu'];
+        $idBouton = $customSessionArray['bouton'];
+        $titreCustomShirt = $customSessionArray['titre_custom'];
+                
+        //Recup infos custom absentes
+        $prixChemiseCustom =$this->calculateCustomPrice($idTissu, $idBouton);
+        $quantiteChemiseCustom = 1;
+        
+        //Creer un objet "Custom" et le setter
+        $customShirt = new Custom();
+        $customShirt->setId_custom($idCustomShirt);
+        $customShirt->setTitre_custom($titreCustomShirt);
+        $customShirt->setPrix($prixChemiseCustom);
+        $customShirt->setQuantite($quantiteChemiseCustom);
 
+        //Retourner l'objet
+        return $customShirt;
+    }
 }
