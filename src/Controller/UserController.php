@@ -208,32 +208,56 @@ class UserController extends ControllerAbstract
         );
     }
 
+    // méthode créée par Julien pour afficher les commandes d'un utilisateur
     public function showProfile(){
+        // je récupère l'utilisateur connecté
         $user = $this->app['user.manager']->getUser();
-        //echo '<pre>';print_r($user);echo '</pre>';
+        
+        // je récupère toutes les commandes de l'utilisateur
         $commandes = $this->app['commande.repository']->findAllByUser($user);
-        $details_commandes =[];
+        
+        // je déclare un tableau pour stocker les détails de chaque commande
+        //$details_commandes =[];
+        //$detailsCommandes = [];
+        //$customs = [];
+        //$produits = [];
+        
+        // je boucle sur les commandes pour récupérer les détails associés
         foreach($commandes as $commande){
-            $detailsCurrentCommande = $this->app['detail.commande.repository']->findAllByCommande($commande->getId_commande());
-            //echo '<pre>'; print_r($detailsCurrentCommande); echo '</pre><hr>';
-            foreach ($detailsCurrentCommande as $currentDetails) {
-                
-                //echo '<pre>'; print_r($currentDetails->getCustom_id()); echo '</pre><hr>';
-                $custom = $this->app['custom.repository']->find($currentDetails->getCustom_id());
-                //echo '<pre>'; print_r($custom); echo '</pre><hr>';
-                $currentDetails->setCustom($custom);
+
+            $detailsCommande = $this->app['detail.commande.repository']->findAllByCommande($commande->getId_commande());
+            
+            foreach ($detailsCommande as $detailCommande) {
+               
+                if(!is_null($detailCommande->getCustom_id())){
+                  
+                    $custom = $this->app['custom.repository']->find($detailCommande->getCustom_id());
+                   
+                    $detailCommande->setCustom($custom);
+                }else{
+                    $produit = $this->app['produit.repository']->findById($detailCommande->getProduit_Id());
+                    $detailCommande->setProduit($produit);
+                } 
             }
             
-            $details_commandes[] = $detailsCurrentCommande;
+            $commande->setDetails($detailsCommande);
+            
+            //echo '<pre>'; var_dump($detailsCommandes); echo '</pre>';
+            //$details_commandes[] = $detailsCurrentCommande;
+            //echo '<pre>'; var_dump($customs); echo '</pre>';
         }
-        //echo '<pre>'; print_r($commandes); echo '</pre><hr>';
-        //echo '<pre>'; print_r($details_commandes); echo '</pre>';
+        
+        
+        //echo '<pre>'; var_dump($detailsCommandes); echo '</pre>';
+
         return $this->render(
         'user/profile.html.twig',
             [
                 'user' => $user,
                 'commandes' => $commandes,
-                'details_commandes' => $details_commandes
+          //      'customs' => $customs,
+            //    'produit' => $produit,
+              //  'detailsCommandes' => $detailsCommandes
             ]        
         );
 

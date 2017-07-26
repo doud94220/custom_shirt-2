@@ -18,6 +18,16 @@ class CommandeController extends ControllerAbstract
     public function listAction(){
         $commandes = $this->app['commande.repository']->findAll();
         
+        if(!empty($_POST)){
+            $id_commande = $_POST['id_commande'];
+            $commande = $this->app['commande.repository']->find($id_commande);
+            $etat = $commande->setEtat($_POST['etat']);
+            $this->app['commande.repository']->save($commande);
+            $this->addFlashMessage("L'état de la commande a été mis à jour");
+        
+            return $this->redirectRoute('admin_commandes');
+        }
+        
         return $this->render(
             'admin/commande/list.html.twig',
             ['commandes' => $commandes]
@@ -57,7 +67,7 @@ class CommandeController extends ControllerAbstract
     /**
      * cette méthode sert à modifier l'état d'une commande
      */
-    public function editAction($id){
+    /*public function editAction($id){
         $commande = $this->app['commande.repository']->find($id);
         echo "<pre>";print_r($commande);echo"</pre>";
         $commande->app['commande.repository']->edit($commande);
@@ -65,7 +75,7 @@ class CommandeController extends ControllerAbstract
         $this->addFlashMessage("L'état de la commande a été mis à jour");
         
         return $this->redirectRoute('admin_commandes');
-    }
+    }*/
     
     public function deleteAction($id){
         $commande = $this->app['commande.repository']->find($id);

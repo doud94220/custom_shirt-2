@@ -37,11 +37,7 @@
         </tr>
         {% for detail_commande in detail_commandes %}  
             <tr>
-                {#{% if detail_commande.produit_id is defined %}
-                    <td>{{ detail_commande.titre }}</td>
-                {% else  %}
-                    <td> {{ detail_commande.titre_custom }}</td>
-                {% endif %}#}<td colspan="4"></td>
+                <td colspan="4">{{ detail_commande.titre }}</td>
                 <td colspan="1">{{ detail_commande.quantite }}</td>
                 <td colspan="1">{{ detail_commande.prix }}</td>
             </tr>

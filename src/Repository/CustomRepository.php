@@ -33,7 +33,7 @@ class CustomRepository extends RepositoryAbstract
             'SELECT * FROM custom WHERE id_custom = :id_custom',
             [':id_custom' => $id_custom]
         );
-        
+      
         if(!empty($dbCustom)){
             return $this->buildFromArray($dbCustom);
         }
