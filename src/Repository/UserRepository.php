@@ -5,18 +5,18 @@ namespace Repository;
 use DateTime;
 use Entity\User;
 
-class UserRepository extends RepositoryAbstract
-{
+class UserRepository extends RepositoryAbstract {
+
     public function getTable() {
         return 'user';
     }
-    
+
     public function save(User $user){
 
         $data = [
             'prenom' => $user->getPrenom(),
             'nom' => $user->getNom(),
-            'date_naissance'=> $user->getDate_naissance()->format('Y-m-d'),
+            //'date_naissance'=> $user->getDate_naissance()->format('Y-m-d'),
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'adresse' => $user->getAdresse(),
@@ -25,21 +25,20 @@ class UserRepository extends RepositoryAbstract
             'ville' => $user->getVille(),
             'tel' => $user->getTel(),
             'sexe' => $user->getSexe(),
-            'statut' => $user->getStatut()
+            'statut' => $user->getStatut(),
+
         ];
-        
+
         $where = !empty($user->getId_user())
             ? ['id_user' => $user->getId_user()]
             : null
         ;
-        
         $this->persist($data, $where);
     }
- 
-    public function saveMeasures(User $user)
-    {
-        $data=[
-                'id_user' => $user->getUser(),
+
+        
+    public function saveUserMeasure(User $user) {
+        $data = [
                 'taille' => $user->getTaille(),
                 'poids' => $user->getPoids(),
                 'tour_cou' => $user->getTour_cou(),
@@ -51,16 +50,17 @@ class UserRepository extends RepositoryAbstract
                 'poignet_droit' => $user->getPoignet_droit(),
                 'poignet_gauche' => $user->getPoignet_gauche(),
                 'carrure' => $user->getCarrure(),
-                'dos' => $user->getDos()            
-            ];
-        $this->persist($data);
-    }
+                'dos' => $user->getDos()
+        ];
 
-    
-    public function findByEmail($email){
+        $where = !empty($user->getId_user()) ? ['id' => $user->getId_user()] : null
+        ;
+        $this->persist($data, $where);
+    }    
+
+    public function findByEmail($email) {
         $dbUser = $this->db->fetchAssoc(
-            'SELECT * FROM user WHERE email = :email',
-            [':email' => $email]
+                'SELECT * FROM user WHERE email = :email', [':email' => $email]
         );
 
         if (!empty($dbUser)) {
@@ -70,12 +70,11 @@ class UserRepository extends RepositoryAbstract
         return null;
     }
 
-
     /**
      * @param array $dbUser
      * @return User
      */
-    public function buildFromArray($dbUser){
+    public function buildFromArray($dbUser) {
         $user = new User();
 
         $user
@@ -93,7 +92,7 @@ class UserRepository extends RepositoryAbstract
             ->setSexe($dbUser['sexe'])
             ->setStatut($dbUser['statut'])
         ;
-        
+
         return $user;
     }
 
@@ -129,7 +128,6 @@ EOS;
         return null;
     }
 
-
    /* public function removeUser($id_user){
        $dbuser = $this ->db->fetchAssoc(
            'DELETE id_user FROM user where id_user= :id_user',
@@ -151,13 +149,9 @@ EOS;
 
         }*/
 
-
-
     public function removeUser(User $user)
     {
         $this->db->delete('user', ['id_user' => $user->getId_user()]);
     }
-
-
 
 }

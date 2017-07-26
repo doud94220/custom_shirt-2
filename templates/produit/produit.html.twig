@@ -1,34 +1,45 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-{#{{ dump(produits) }}#}
+
+{{ dump(produits) }}
+
     <div class="container">
+
         <div class="row">
 
             <div class="col-sm-6">
-                <img class="img_template" src="{{ 'http://localhost/custom_hirt-2/web/img/' ~ produits.photo }}" alt="chemise">
+
+                <img class="img_template" src="{{ 'http://localhost/custom_shirt-2/web/img/' ~ produits.photo }}" alt="chemise">
             </div>
             <div class="col-sm-6">
                 <div class="row">
-                    <div class="col-sm-12 description-title">
+                    <div class="col-sm-12 description title">
                         <div class="row">
-                            <div class="col-sm-12 nom">
+                            <div class="col-sm-12 description title">
+
                                 <h2 id="{{ produits.id }}">{{ produits.tissu.nom }}</h2>
                                 <h4>{{ produits.prix ~ '€'}} </h4>
                             </div>
                         </div>
-                        <div class="row product_info_cool info">
-                            <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12 description desc">
                                 <p>{{ produits.description }}</p>
                             </div>
                         </div>
+                        <div class="row product_info_cool" style="max-height: 400px">
+                            <div class="col-sm-12 description desc">
+                                <h4 class="product_info_title">DESCRIPTION DU TISSU <span class="more">></span></h4>
+                            </div>
+                            <div class="show-hide">
                                 <div class="col-sm-12 info">
-                                    <h4 class="product_info_title">DESCRIPTION DU TISSU <span class="more"></span></h4>
-                                    <p class="info"><img src="http://www.cottonsociety.com/themes/WebCottonSociety/img/icon-composition.svg" alt="Icon composition tissu" width="16" height="16"> Composition: {{ produits.tissu.composition }}</p>
-                                    <p class="info"><img src="http://www.cottonsociety.com/themes/WebCottonSociety/img/icon-grammage.svg" alt="Icon grammage tissu" width="16" height="16"> Grammage: {{ produits.tissu.grammage }}</p>
+                                    <p class="info"><img src="http://www.cottonsociety.com/themes/WebCottonSociety/img/icon-composition.svg" alt="Icon composition tissu" width="16" height="16">Composition: {{ produits.tissu.composition }}</p>
+                                    <p class="info"><img src="http://www.cottonsociety.com/themes/WebCottonSociety/img/icon-grammage.svg" alt="Icon grammage tissu" width="16" height="16">Grammage: {{ produits.tissu.grammage }}</p>
                                     <p class="info"><img src="http://www.cottonsociety.com/themes/WebCottonSociety/img/icon-titrage.svg" alt="Icon tirage tissu" width="16" height="16"> Titrage: {{ produits.tissu.tirage }}</p>
-                                    <p class="info"><img src="http://www.cottonsociety.com/themes/WebCottonSociety/img/icon-fil.svg" alt="Icon fil tissu" width="16" height="16"> Fil: {{ produits.tissu.fil }}</p>
+                                    <p class="info"><img src="http://www.cottonsociety.com/themes/WebCottonSociety/img/icon-fil.svg" alt="Icon fil tissu" width="16" height="16">Fil: {{ produits.tissu.fil }}</p>
                                 </div>
+                            </div>
+                        </div>
                   </div>
                     <div class="row">
                         <div class="col-sm-12 button">

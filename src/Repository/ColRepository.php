@@ -18,8 +18,6 @@ SELECT *
 FROM col
 ORDER BY id_col DESC
 EOS;
-    
-
         $dbCols = $this->db->fetchAll($query);
         $collars = [];
 
@@ -37,12 +35,36 @@ EOS;
         
         $cols
                ->setId_col($dbCol['id_col'])
-               ->setTitre($dbCol['titre'])
+               ->setTitre_col($dbCol['titre_col'])
                ->setStock($dbCol['stock'])
-               ->setDescription($dbCol['description'])
-               ->setPhoto($dbCol['photo'])
-               ->setPrix($dbCol['prix'])
+               ->setDescription_col($dbCol['description_col'])
+               ->setPhoto_col($dbCol['photo_col'])
+               ->setPrix_col($dbCol['prix_col'])
         ;
         return $cols;
+    }
+    
+    public function findColById($id)
+    {
+        $query = <<<EOS
+SELECT id_col, titre_col, photo_col , prix_col 
+FROM col
+WHERE id_col = :id
+EOS;
+        $dbTabCols = $this->db->fetchAssoc(
+                $query,
+                ['id' => $id]
+                );
+        //$objetTabBoutons= [];
+        
+        //echo '<pre>';var_dump($dbTabTissus);echo '</pre>';die;
+        
+//        //foreach($dbTabTissus as $dbTabTissu)
+//        {
+//            $tissus = $this->buildFromArray($dbTabTissu);
+//            $objetTabTissus[] = $tissus;
+//            
+//        }
+        return $dbTabCols;
     }
 }

@@ -1,0 +1,173 @@
+{% extends "layout.html.twig" %}
+{% block title 'Récapitulatif' %}
+    {% block content %}
+
+        <h2 style="text-align:center"> Voici votre configuration </h2>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-6">
+                        <table class="table" style="border:1px solid #ccc;">
+                            <h3>Sélection de la chemise</h3>
+                            <tr style="border:1px solid #ccc;">
+                                <th>Titre</th>
+                                <th>Photo</th>
+                                <th>Prix</th>
+                                <th>Modifier</th>
+                             </tr>
+                             <tr>
+                                 <td>{{tissu.nom}}</td>
+                                 <td><img src="{{tissu.photo}}" alt="" width="200" class="select_img"></td>
+                                 <td>{{tissu.prix}}</td>
+                                 <td><a href="{{ path('etape_1_tissu') }}">Modifier votre chemise</td>
+                             </tr>
+                        </table>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-6">
+                        <table class="table" style="border:1px solid #ccc;">
+                            <h3>Sélection des boutons</h3>
+                            <tr style="border:1px solid #ccc;">
+                                <th>Titre</th>
+                                <th>Photo</th>
+                                <th>Prix</th>
+                                <th>Modifier</th>
+                             </tr>
+                             <tr>
+                                 <td>{{bouton.titre_bouton}}</td>
+                                 <td><img src="{{bouton.photo_bouton}}" alt="" width="200" class="select_img"></td>
+                                 <td>{{bouton.prix_bouton}}</td>
+                                 <td><a href="{{ path('etape_2_bouton')}}">Modifier le bouton</td>
+                             </tr>
+                        </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-6">
+                    <table class="table" style="border:1px solid #ccc;">
+                        <h3>Sélection du col</h3>
+                        <tr style="border:1px solid #ccc;">
+                            <th>Titre</th>
+                            <th>Photo</th>
+                            <th>Prix</th>
+                            <th>Modifier</th>
+                         </tr>
+                         <tr>
+                             <td>{{col.titre_col}}</td>
+                             <td><img src="{{col.photo_col}}" alt="" width="200" class="select_img"></td>
+                             <td>{{col.prix_col}}</td>
+                             <td><a href="{{ path('etape_3_col') }}">Modifier le col</td>
+                         </tr>
+                    </table>
+                   </div>
+                <div class="col-xs-12 col-md-6 col-lg-6">
+                        <table class="table" style="border:1px solid #ccc;">
+                            <h3>Sélection de la coupe</h3>
+                            <tr style="border:1px solid #ccc;">
+                                <th>Titre</th>
+                                <th>Photo</th>
+                                <th>Prix</th>
+                                <th>Modifier</th>
+                             </tr>
+                             <tr>
+                                 <td>{{coupe.titre_coupe}}</td>
+                                 <td><img src="{{coupe.photo_coupe}}" alt="" width="200" class="select_img"></td>
+                                 <td>{#{{}}#}</td>
+                                 <td><a href="{{ path('etape_4_coupe') }}">Modifier la coupe</a></td>
+                             </tr>
+                        </table>
+                </div>
+            </div>
+            <h2 style="text-align:center"> Vos mesures </h2>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-6">
+                    <table class="table" style="border:1px solid #ccc;">
+                        <tr>
+                            <th colspan="3">Poids et Taille</th
+                        </tr>
+
+                        <tr style="border:1px solid #ccc;">
+                            <th>Poids</th>
+                            <th>Taille</th>
+                            <th>Modifier</th>
+                        </tr>
+                        <tr>
+                            <td>{{poids}} kg</td>
+                            <td>{{taille}} cm</td>
+                            <td><a href="{{ path('etape_5_poidstaille') }}">Modifier</a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-6">
+                    <table class="table" style="border:1px solid #ccc;">
+                        <tr>
+                            <th colspan="3">Haut du corps</th>
+                        </tr>
+
+                        <tr style="border:1px solid #ccc;">
+                            <th>Tour de cou</th>
+                            <th>Tour de poitrine</th>
+                            <th>Tour de taille</th>
+                            <th>Tour de bassin</th>
+                            <th>Modifier</th>
+                        </tr>
+                        <tr>
+                            <td>{{tour_cou}} cm</td>
+                            <td>{{tour_poitrine}} cm</td>
+                            <td>{{tour_taille}} cm</td>
+                            <td>{{tour_bassin}} cm</td>
+                            <td><a href="{{ path('etape_5_tronc') }}">Modifier</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-6">
+                    <table class="table" style="border:1px solid #ccc;">
+                        <tr>
+                            <th colspan="7">Longueur de bras</th>
+                        <tr style="border:1px solid #ccc;">
+                            <th>Bras gauche</th>
+                            <th>Bras droit</th>
+                            <th>Poignet gauche</th>
+                            <th>Poignet droit</th>
+                            <th>Modifier</th>
+                        </tr>
+                         <tr>
+                             <td>{{manche_gauche}} cm</td>
+                             <td>{{manche_droite}} cm</td>
+                             <td>{{poignet_gauche}} cm</td>
+                             <td>{{poignet_droit}} cm</td>
+                             <td><a href="{{ path('etape_5_bras') }}">Modifier</a></td>
+                         </tr>
+                    </table>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-6">
+                    <table class="table" style="border:1px solid #ccc;">
+                        <tr>
+                            <th colspan="7">Longueur de bras</th>
+                        <tr style="border:1px solid #ccc;">
+                            <th>Carrure</th>
+                            <th>Epaule_droite</th>
+                            <th>Epaule_gauche</th>
+                            <th>Dos</th>
+                            <th>Modifier</th>
+                        </tr>
+                         <tr>
+                             <td>{{carrure}} cm</td>
+                             <td>{{epaule_droite}} cm</td>
+                             <td>{{epaule_gauche}} cm</td>
+                             <td>{{dos}} cm</td>
+                             <td><a href="{{ path('etape_5_bras') }}">Modifier</a></td>
+                         </tr>
+                    </table>
+                </div>
+            </div>
+        </div>                                 
+        
+        {# Lien vers le panier #}
+        <hr>
+       
+        <a href="{{path('custom_validate')}}">Valider votre configuration</a><br><br><br>
+
+        
+
+    {% endblock %}

@@ -7,9 +7,6 @@ use Entity\Categorie;
 use Entity\Type;
 use Entity\Tissu;
 
-
-
-
 /**
  * Created by PhpStorm.
  * User: Etudiant
@@ -33,7 +30,8 @@ class ProduitRepository extends RepositoryAbstract
     public function findAllforAdmin()
     {
         $query = <<<EOS
-SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie
+
+SELECT p.*, t.type, ti.nom, ti.descr, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie
 FROM produit p
 JOIN type t ON p.type_id=t.id
 JOIN categorie cat ON cat.id=t.categorie_id
@@ -59,7 +57,8 @@ EOS;
     public function findAll()
     {
         $query = <<<EOS
-SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie
+
+SELECT p.*, t.type, ti.nom, ti.descr, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie
 FROM produit p
 JOIN type t ON p.type_id=t.id
 JOIN categorie cat ON cat.id=t.categorie_id
@@ -71,7 +70,8 @@ EOS;
         $dbProduits = $this->db->fetchAll($query);
         $produits = []; // le tableau dans lequel vont être stockées les entités Article
 
-        foreach ($dbProduits as $dbProduit) {
+        foreach ($dbProduits as $dbProduit) 
+            {
             $produit = $this->buildFromArray($dbProduit);
 
             $produits[] = $produit;
@@ -84,7 +84,8 @@ EOS;
     public function findById($id)
     {
         $query = <<<EOS
-SELECT p.*, t.type, ti.nom, ti.desc, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie 
+
+SELECT p.*, t.type, ti.nom, ti.descr, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, cat.categorie 
 FROM produit p
 JOIN type t ON p.type_id=t.id
 JOIN categorie cat ON cat.id=t.categorie_id
@@ -97,14 +98,14 @@ EOS;
             [':id' => $id]
         );
 
-        if (!empty($dbProduit)) {
+        if (!empty($dbProduit)) 
+            {
             return $this->buildFromArray($dbProduit);
         }
 
         return null;
 
     }
-
 
     public function save(Produit $produit)
     {
@@ -158,8 +159,9 @@ EOS;
             ->setNom($dbProduit['nom'])
             ->setComposition($dbProduit['composition'])
             ->setGrammage($dbProduit['grammage'])
-            ->setDesc($dbProduit['desc'])
+            ->setDescr($dbProduit['descr'])
             ->setTirage($dbProduit['tirage'])
+
 //            ->setFil($dbProduit['fil'])
         ;
 

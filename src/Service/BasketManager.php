@@ -37,6 +37,7 @@ class BasketManager
             return $this->session->get('basket');
         }
     }
+
     
     //Méthode readBasketAmount() qui retourne le prix total du panier
     public function readBasketAmount()
@@ -64,8 +65,7 @@ class BasketManager
             return false;
         }
     }
-    
-    
+
     //Méthode qui retourne la position d'un produit dans le panier de la session (si il existe), si il n'existe pas il retourne -1
     public function findProductInBasket(Produit $produit)
     {
@@ -221,7 +221,7 @@ class BasketManager
         $this->session->set('basket', $productsAndConfigs);
         
     }//Fin putConfigToBasket()
-    
+   
     
     //Fonction qui met le montant total du panier en session dans la key basketTotalAmount
     public function putTotalAmountToBasket($basketTotalAmount)
@@ -252,5 +252,6 @@ class BasketManager
                             //
                             //        return $amountBasket;
                             //    }
+
 
 }//Fin BasketManager
