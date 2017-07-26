@@ -83,7 +83,7 @@ $app['basket.manager'] = function() use ($app)
             
 $app['custom.manager'] = function() use ($app)
 {
-   return new CustomManager($app['session']);
+  return new CustomManager($app); //Modifié par Edouard pour avoir app dans une fonction du 'custom manager' avec session of course (il est dans app)
 };
      
 /* Déclaration des CONTROLERS */
