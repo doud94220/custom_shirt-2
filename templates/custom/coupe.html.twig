@@ -3,16 +3,15 @@
 
 
     {% block content %}
-        <label>Etape suivante ! </label>
+        <h1>Etape suivante ! </h1>
         <div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:30%;">30%</div>
-        </div
-
-        <h1> Choix de votre coupe </h1>
+        </div>
+        <h2 class="sous_titre"> Choix de votre coupe </h2>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-12 col-md-8 col-lg-8">
-                    <form method="post">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <form name="choix_tissu" method="post">
                         <div class="form-group">
                             <table class="table">
                                 <tr>
@@ -28,22 +27,12 @@
                                     </tr>
                                 {% endfor %}
                             </table>
+                            <button type="submit" class="btn btn-primary" > Validation du formulaire </button>
+                            <input type="hidden" name="custom_product" id="custom_product">
                         </div>
-                        <button type="submit" class="btn btn-primary" > Validation du formulaire </button>
-                        <input type="hidden" name="custom_product" id="custom_product">
                     </form>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12 col-md-4 col-lg-4">
-
-                    {#rajouter les liens de la config et des mesures prises au fur et à mesure#}
-
-
-                </div>
-            </div>
-        </div>
-
     {% endblock %}
 
         {% block javascripts %}

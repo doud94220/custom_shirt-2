@@ -80,9 +80,8 @@ class CommandeController extends ControllerAbstract
             }
             else //Si c'est une config
             {
-                //// COMMENTAIRES TEMPORAIRES
-                //$idConfig = $productOrConfig->getId_config();
-                //$detailCommande->setCustom_id($idConfig);
+               $idCustom = $productOrConfig->getId_custom();
+               $detailCommande->setCustom_id($idCustom);
             }
 
             //Set de la quantite

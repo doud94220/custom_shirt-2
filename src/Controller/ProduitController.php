@@ -23,7 +23,7 @@ class ProduitController extends ControllerAbstract
     public function ajaxApi()
     {
 
-        $req = "SELECT p.*, t.type, ti.nom, ti.descr, ti.composition, ti.grammage, ti.tirage, t.categorie_id, c.categorie 
+        $req = "SELECT p.*, t.type, ti.nom, ti.descr, ti.composition, ti.grammage, ti.tirage, ti.fil, t.categorie_id, c.categorie 
                 FROM produit p
                 JOIN type t ON p.type_id = t.id
                 JOIN tissu ti ON p.tissu_id = ti.id
@@ -88,8 +88,7 @@ class ProduitController extends ControllerAbstract
             $produit = $this->app['produit.repository']->buildFromArray($result);
             $produits[] = $produit;
         }
-        echo ceil(count($produits)/3);
-        echo($req);
+
 
         return $this->render('produit/list.html.twig', ['produits' => $produits]);
         //return $this->app->json($results);

@@ -1,20 +1,10 @@
 {% extends "layout.html.twig" %}
-
 {% block title 'Admin produit' %}
-
 {% block content %}
-{{ dump(produits) }}
     <h1>Gestion de Stock</h1>
     <div class="row">
         <div class="col-md-2">
             <form method="POST" action="">
-                {#{% for produit in produits %}#}
-                    {#<div class="form-group">#}
-                        {#<label>{{ produit.taille.taille }}</label>#}
-                        {#<input name="taille_id-{{ produit.taille.taille }}" type="hidden" class="form-control" value="{{ produit.taille.id }}"></input>#}
-                        {#<input name="stock-{{ produit.taille.taille }}" type="text" class="form-control" value="{{ produit.stock }}"></input>#}
-                    {#</div>#}
-                {#{% endfor %}#}
                 <div class="form-group">
                     <label>XS</label>
                     <input name="taille_id-XS" type="hidden" class="form-control" value="1"></input>

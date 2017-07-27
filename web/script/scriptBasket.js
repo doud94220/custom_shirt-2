@@ -1,5 +1,7 @@
 $(function()
 {
+    ///// CALCUL DU PRIX TOTL DU PANIER
+    
     //Initialisation du montant total du panier
     let totalAmount = 0;
     
@@ -27,5 +29,24 @@ $(function()
     
     //On met le prix total du panier dans le bon champ (champ hidden) pour le passer en post lors de la validation du formulaire
     $('.montantPanierPourPost').val(totalAmount);
+    
+    
+    
+    ///// GESTION DE LA SOURIS SUR LE BOUTON
+   
+   $('button').mouseover(function()
+   {
+       $(this).css('background','#C8E6C9 ');
+   });
+   
+   $('button').mouseleave(function()
+   {
+       $(this).css('background', 'initial');
+   });
+   
+   $('button').mousedown(function()
+   {
+       $(this).css('background','#81C784 ');
+   });
     
 });//Fin fonction globale

@@ -17,7 +17,8 @@ class IndexController extends ControllerAbstract
 {
     public function homePage()
     {
-        return $this->render('index.html.twig');
+        $produits = $this->app['produit.repository']->findAll();
+        return $this->render('index.html.twig', ['produits' => $produits]);
     }
 
     public function indexAction()
@@ -29,8 +30,6 @@ class IndexController extends ControllerAbstract
 
     public function idAction($id)
     {
-        // Mike
-        echo json_encode ($this->app['session']);
         $produits = $this->app['produit.repository']->findById($id);
 
         return $this->render('produit/produit.html.twig', ['produits' => $produits]);
@@ -40,4 +39,3 @@ class IndexController extends ControllerAbstract
         return $this->render('annexes/page_contact.html.twig');
     }
 }
-

@@ -164,15 +164,6 @@ class BasketController extends ControllerAbstract
             return $this->redirectRoute('basket_consult');
         }
         
-        
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        //TEMPORAIRE -INSERTION DANS TABLE COMMANDE - JULIEN DOIT L'UTILISER DANS SA PARTIE PAIEMENT
-        $this->app['commande.controller']->createCommandAction();
-        //Virer basket et basketTotalAmount de la session
-        $this->app['basket.manager']->flushBasketAndBasketAmount();
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        
         //On va vers la page de paiment du panier en passant en param le montant total du panier
         return $this->render(
                                 'basket/basketPayment.html.twig',
@@ -183,7 +174,14 @@ class BasketController extends ControllerAbstract
     } //Fin payAction()
 
 
-    public function payChargeAction(){
+    public function payChargeAction()
+    {
+        //Creation de la commande en BDD
+       $this->app['commande.controller']->createCommandAction();
+       
+       //Retirer 'basket' et 'basketTotalAmount' de la session
+       $this->app['basket.manager']->flushBasketAndBasketAmount();
+       
         return $this->render(
             'paiement/charge.html.twig'
         );

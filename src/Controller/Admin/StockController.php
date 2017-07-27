@@ -28,9 +28,9 @@ class StockController extends ControllerAbstract
     //mise à jour de stock
     public function editAction($id = null)
     {
-        var_dump($id);
 
         $numeric_post = array_values($_POST);//pour transformer £_POST en array numérique
+
 
         $error = '';
 
@@ -46,6 +46,7 @@ class StockController extends ControllerAbstract
 
         $produits = $this->app['stock.repository']->findProduitTaille($id);//recupérer le data qui correspond à $id -> retourne
         // un array consistant de 5 objets
+        var_dump($produits);
 
         if(empty($produits)) {
 
@@ -57,6 +58,8 @@ class StockController extends ControllerAbstract
             }
         }
 
+        var_dump($produits);
+
         $data = array();
 
         $counter = 0;
@@ -64,9 +67,6 @@ class StockController extends ControllerAbstract
         for($i=0; $i<5; $i++) {//dans ce boucle on crée un array dans lequel on insere des subarrays qui eux contiennet
             //des valeurs couple 'taille' et 'stock'. Cela est nécessaire pour pouvoir transmettre ces couples une par une
             //dans un boucle à méthode persiste de RepositoryAbstract
-
-
-
 
             $sliced_data = array_slice($numeric_post, $counter, 2);//on récupère des couples 'taiile' et 'stock'
 
@@ -76,12 +76,26 @@ class StockController extends ControllerAbstract
             // car on a 10 valeurs dans le POST
         }
 
+        var_dump($data);
+
             $count = 0;
 
             foreach ($produits as $objet) {//on alimente les objets dans la variable $produits par $data(càd data de$_POST)
 
+                if($objet->getProduit() === null) {//si le produit n'est pas dans la table 'produit_taille' (dans ce cas là
+                    //$objet->getProduit() retournera 'null' car cet $objet fait partie de $produits qu'on a créé plus haut
+                    //dans la boucle for - new ProduitStock(), alors on crée une nouvelle variable $set et on lui attribue null...
+
+                    $set = null;
+
+                } else {//...sinon on attribue à $set le id du produit (récupéré de l'URL)
+
+                    $set = $id;
+                }
+
                 $objet
-                    ->setProduit($id)
+                    ->setProduit($set)//Si la requete de récupération des $produits (voir plus haut) retourne data du produit qui existe déjà dans la table
+                    //produit_talle alors setProsuit aura la valeur correspondant à $id sinon null
                     ->setTaille($data[$count][0])
                     ->setStock($data[$count][1])
                 ;
@@ -90,12 +104,11 @@ class StockController extends ControllerAbstract
 
             }
 
-            var_dump($produits);
-
+        var_dump($produits);
 
         if (empty($error)) {//si pas de champs vides on anvoie les objets à méthode 'save'
 
-            $this->app['stock.repository']->save($produits);
+            $this->app['stock.repository']->save($produits, $id);
             $this->addFlashMessage("Le stock a été mis à jour");
 
 
@@ -116,7 +129,7 @@ class StockController extends ControllerAbstract
             return $this->render(
                 'admin/produit/stock.html.twig',
                 [
-                    'produits' => $produits,
+                    'produits' => $produits
                 ]
             );
         }
@@ -124,4 +137,3 @@ class StockController extends ControllerAbstract
     }
 
 }
-
