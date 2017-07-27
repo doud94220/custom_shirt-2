@@ -42,11 +42,12 @@ class CommandeController extends ControllerAbstract
         if($this->app['user.manager']->getUser() == null) //Si le user n'est pas connecte
         {
             $this->addFlashMessage('Vous devez être loggué pour payer votre panier', 'error');
-            return $this->redirectRoute('basket_pay');
+            return $this->redirectRoute('login');
         }
 
         ////// Recup 'basket' et 'basketTotalAmount' à partir de la session
         $productsAndConfigs = $this->app['basket.manager']->readBasket();
+        //echo '<pre>';var_dump($this->app['basket.manager']->readBasket());echo'</pre>';
         $basketAmount = $this->app['basket.manager']->readBasketAmount();
         
         ////// Insertion d'une partie de la commande dans la table commande (etape 1 sur 2)

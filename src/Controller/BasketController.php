@@ -26,30 +26,33 @@ class BasketController extends ControllerAbstract
         /////////////////////////////////////////////////////////////////////////////////////////
 
         //Recup du dernier id dans table custom
-        $idCustom = $this->app['custom.repository']->getLastInsertId();
+        //$idCustom = $this->app['custom.repository']->getLastInsertId();
         
         //Creation d'un array custom pour session => BOUCHON
-        $custom = array(
-                    'tissu' => 1,
-                    'bouton'  => 1,
-                    'titre_custom'  => 'Ma premiere chemise custom',
-                    'id_custom' => 1
-                );
+//        $custom = array(
+//                    'tissu' => 1,
+//                    'bouton'  => 1,
+//                    'titre_custom'  => 'Ma premiere chemise custom',
+//                    'id_custom' => 1
+//                );
 
         //Mise en session du Custom
-        $this->session->set('custom', $custom);
+        //$this->session->set('custom', $custom);
         
         
         //Pour GUILLAUME
         
         //Creation d'un objet Custom à partir des données du custom en session
-        $customShirtObject = $this->app['custom.manager']->getCustomSessionAndMoreAndCreateCustomObjectForSessionBasket();
+        //$customShirtObject = $this->app['custom.manager']->getCustomSessionAndMoreAndCreateCustomObjectForSessionBasket();
         
         //Mise dans panier du Custom
-        $this->app['basket.manager']->putConfigToBasket($customShirtObject);
+        //$this->app['basket.manager']->putConfigToBasket($customShirtObject);
         
          /////////////////////////////////////////////////////////////////////////////////////////       
         //////////////////////////////// FIN FORCAGE EN DUR //////////////////////////////////////
+        
+        
+        
         
         //Je recupère le panier en session
         $productsAndConfigs = $this->app['basket.manager']->readBasket(); //auto-completion marche pas mais normal

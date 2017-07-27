@@ -33,16 +33,18 @@ class CustomRepository extends RepositoryAbstract
    }
 
       /****Recherche par ID récupéré en session les informations à afficher******/
-   public function find($id_custom){
-        $dbCustom = $this->db->fetchAssoc(
+   public function find($id_custom)
+   {
+           $dbCustom = $this->db->fetchAssoc(
             'SELECT * FROM custom WHERE id_custom = :id_custom',
             [':id_custom' => $id_custom]
         );
       
-        if(!empty($dbCustom)){
+        if(!empty($dbCustom))
+        {
             return $this->buildFromArray($dbCustom);
         }
-
+   }
    public function buildFromArray(array $dbCustom){
         $custom = new Custom();
         
